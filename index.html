@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KTI Registration Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+          from { opacity: 0; transform: translateY(-30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes blob {
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
+        }
+        @keyframes shimmer {
+          0% { background-position: -1000px 0; }
+          100% { background-position: 1000px 0; }
+        }
+        @keyframes pulse-ring {
+          0% { transform: scale(0.95); opacity: 1; }
+          50% { transform: scale(1); opacity: 0.7; }
+          100% { transform: scale(0.95); opacity: 1; }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.5s ease-in-out;
+        }
+        .animate-fade-in-down {
+          animation: fadeInDown 0.6s ease-out;
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out;
+        }
+        .animate-slide-in {
+          animation: slideIn 0.5s ease-out forwards;
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        .rtl {
+          direction: rtl;
+          text-align: right;
+        }
+        /* Enhanced input focus effects */
+        input:focus, select:focus, textarea:focus {
+          outline: none;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: translateY(-1px);
+        }
+        /* Enhanced button hover effects */
+        button:hover:not(:disabled) {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: translateY(-2px);
+        }
+        button:active:not(:disabled) {
+          transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: translateY(0);
+        }
+        /* Input placeholder styling */
+        input::placeholder {
+          color: #9ca3af;
+          opacity: 0.6;
+          font-style: italic;
+        }
+        input:focus::placeholder {
+          opacity: 0.4;
+        }
+        /* Radio button custom styling */
+        input[type="radio"] {
+          appearance: none;
+          width: 1rem;
+          height: 1rem;
+          border: 2px solid #d1d5db;
+          border-radius: 50%;
+          position: relative;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-left: 0.5rem;
+          margin-right: 0.25rem;
+        }
+        input[type="radio"]:hover {
+          border-color: #ef4444;
+          transform: scale(1.1);
+        }
+        input[type="radio"]:checked {
+          border-color: #ef4444;
+          background-color: #ef4444;
+          box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        input[type="radio"]:checked::after {
+          content: "";
+          position: absolute;
+          width: 0.5rem;
+          height: 0.5rem;
+          background: white;
+          border-radius: 50%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        /* Smooth transitions for all elements */
+        * {
+          transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-duration: 200ms;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+          width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+          background: linear-gradient(to bottom, #faf5ff, #fce7f3);
+          border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: linear-gradient(to bottom, #a855f7, #ec4899);
+          border-radius: 10px;
+          border: 2px solid #faf5ff;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(to bottom, #9333ea, #db2777);
+        }
+        /* Print specific styles */
+        @media print {
+          body {
+            margin: 0;
+            padding: 0;
+          }
+        }
+        /* Glass morphism effect for form sections */
+        .glass-effect {
+          background: rgba(255, 255, 255, 0.9);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        /* Gradient text animation */
+        @keyframes gradient-shift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient-shift 3s ease infinite;
+        }
+    </style>
+</head>
+<body>
+    <script type="importmap">
+    {
+        "imports": {
+            "@google/genai": "https://esm.sh/@google/genai@^0.7.0",
+            "react": "https://esm.sh/react@^19.0.0",
+            "react/": "https://esm.sh/react@^19.0.0/",
+            "react-dom/": "https://esm.sh/react-dom@^19.0.0/",
+            "jspdf": "https://esm.sh/jspdf@^2.5.1",
+            "html-to-image": "https://esm.sh/html-to-image@^1.11.11"
+        }
+    }
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
