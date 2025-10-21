@@ -628,11 +628,20 @@ function App() {
         console.log('PDF saved successfully');
         setShowSuccess(true);
       } catch (saveError) {
-        console.error('Error saving PDF:', saveError);
-        // Fallback: Try to open in new window
+        console.error(
+          'Error saving PDF, using fallback download method:',
+          saveError
+        );
+        // Fallback: Use anchor link to trigger download which is more reliable on mobile
         const pdfBlob = pdf.output('blob');
         const pdfUrl = URL.createObjectURL(pdfBlob);
-        window.open(pdfUrl, '_blank');
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = 'Kurdistan_Technical_Institute_Form.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(pdfUrl);
         setShowSuccess(true);
       }
     } catch (error) {
