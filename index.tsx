@@ -266,32 +266,26 @@ const FormContent: React.FC<FormContentProps> = ({
             )}
           </div>
           <div className="form-group-modern">
-            <label className="modern-label">ژ. مۆبایل (٢)</label>
+            <label className="modern-label">ژ. مۆبایل (٢) (ئارەزوومەندانە)</label>
             <input
               type="text"
               name="phone2"
               value={formData.phone2}
               onChange={handleChange}
-              className={`modern-input ${errors.phone2 ? 'border-red-500' : ''}`}
+              className="modern-input"
               placeholder="07XX XXX XXXX"
             />
-            {errors.phone2 && (
-              <p className="text-red-500 text-xs mt-1">{errors.phone2}</p>
-            )}
           </div>
           <div className="form-group-modern">
-            <label className="modern-label">ئیمەیڵ</label>
+            <label className="modern-label">ئیمەیڵ (ئارەزوومەندانە)</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`modern-input ${errors.email ? 'border-red-500' : ''}`}
+              className="modern-input"
               placeholder="example@email.com"
             />
-            {errors.email && (
-              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-            )}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
@@ -1301,9 +1295,6 @@ const FONT_EMBED_CSS = `
   src: url(https://fonts.gstatic.com/s/notokufiarabic/v22/CSRp3_VLxv2V2xG2_P4h4xH7t5AUg2g8.woff2) format('woff2');
 }
 `
-const LOGO_BASE64 =
-  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAgACADASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAgEAAwQF/8QAIxABAQACAgICAwEBAAAAAAAAAAECEQMhBBIxQVFhcSIyE//EABgBAQEBAQEAAAAAAAAAAAAAAAABAgME/8QAGBEBAQEBAQAAAAAAAAAAAAAAABEBEiH/2gAMAwEAAhEDEQA/APj4lCU4SnCU4SnCU4SnCU4e8UpSnCU4SnCU4SnCU4SnD3ilKU4SnCU4SnCU4SnCU4e8UpSnCU4SnCU4SnCU4SnD3ilKU4SnCU4SnCU4SnCU4e8UpSnCU4SnCU4SnCU4SnD3ilKU4SnCU4SnCU4SnCU4e8UpSnCU4SnCU4SnCU4SnD3ilKU4SnCU4SnCU4SnCU4e8UpSnCU4SnCU4SnCU4SnD3ilKU4SnCU4SnCU4SnCU4e8UpSnCU4SnCU4SnCU4SnD3ilKU4SnCU4SnCU4SnCU4e8UpSnCU4SnCU4SnCU4SnD3ilKU4SnCU4SnCU4SnCU4e8UpSnCU4SnCU4SnCU4SnD3jwnCeE8J4TwnhPCeH0J4TwnhPCeE8J4Tw+hPCeE8J4TwnhPCeH0J4TwnhPCeE8J4Tw+hPCeE8J4TwnhPCeH0J4TwnhPCeE8J4Tw+hPCeE8J4TwnhPCeH0J4TwnhPCeE8J4Tw+hPCeE8J4TwnhPCeH0J4TwnhPCeE8J4Tw+hPCeE8J4TwnhPCeH0J4TwnhPCeE8J4Tw+hPCeE8J4TwnhPCeH0J4TwnhPCeE8J4Tw//Z'
-
 export function App() {
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
@@ -1494,8 +1485,6 @@ export function App() {
       'city',
       'district',
       'phone1',
-      'phone2',
-      'email',
       'guardianName',
       'guardianRelation',
       'guardianOccupation',
@@ -1530,12 +1519,7 @@ export function App() {
     ]
 
     let fieldsToValidate: (keyof FormData)[] = []
-    if (step === 1) {
-      fieldsToValidate = page1Fields
-      if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-        newErrors.email = 'فۆرماتی ئیمەیڵ هەڵەیە'
-      }
-    }
+    if (step === 1) fieldsToValidate = page1Fields
     if (step === 2) fieldsToValidate = page2Fields
 
     fieldsToValidate.forEach((field) => {
@@ -1759,6 +1743,7 @@ export function App() {
               <a
                 href={generatedPdfUrl}
                 download="Kurdistan_Technical_Institute_Form_Complete.pdf"
+                onClick={() => setTimeout(() => setGeneratedPdfUrl(null), 100)}
                 className="w-full group relative bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-red-500/50 text-white px-8 py-4 rounded-xl transition-all duration-300 font-bold text-lg flex items-center justify-center gap-3 transform hover:scale-105"
               >
                 <svg
@@ -1844,7 +1829,7 @@ export function App() {
                       </div>
                       <div className="text-center flex-1 mx-4">
                         <img
-                          src={LOGO_BASE64}
+                          src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
                           alt="Logo"
                           className="h-16 mx-auto mb-3 drop-shadow-lg"
                         />
@@ -2088,7 +2073,7 @@ export function App() {
                   </div>
                   <div className="text-center flex-1 mx-3">
                     <img
-                      src={LOGO_BASE64}
+                      src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
                       alt="Logo"
                       className="h-20 mx-auto mb-2"
                     />
