@@ -2,13 +2,94 @@ import React, { useEffect, useState, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
+
+// FIX: Define a type for the form data to provide strong typing for props and fix property access errors.
+type FormData = {
+  personalName: string
+  birthPlace: string
+  address: string
+  city: string
+  district: string
+  cityArea: string
+  neighborhood: string
+  gender: string
+  phone1: string
+  phone2: string
+  email: string
+  educationLevel: string
+  graduationYear: string
+  department: string
+  birthYear: string
+  educationSystem: string
+  examRound: string
+  province: string
+  education: string
+  district2: string
+  studyYear: string
+  examTestNumbers: string
+  subjects: string[]
+  firstGradesNumeric: string[]
+  firstGradesWritten: string[]
+  secondGradesNumeric: string[]
+  secondGradesWritten: string[]
+  fatherName: string
+  motherName: string
+  nationality: string
+  idNumber: string
+  idIssueDate: string
+  deptPref1: string
+  deptPref2: string
+  deptPref3: string
+  deptPref4: string
+  deptPref5: string
+  deptPref6: string
+  schoolName: string
+  schoolLocation: string
+  certificateNumber: string
+  totalGrade: string
+  successRate: string
+  guardianName: string
+  guardianRelation: string
+  guardianOccupation: string
+  guardianPhone: string
+  declaration: boolean
+  signatureDate: string
+  instituteName: string
+  directorName: string
+  directorPhone: string
+  educationDirectorName: string
+  decision: string
+  nationality2: string
+  nationalityNumber: string
+  registrationNumber: string
+  issueYearPlace: string
+  familyCardNumber: string
+  familyCardIssuePlace: string
+  familyCardIssueDate: string
+  familyCode: string
+  departmentChoices: string[]
+  certificate1: string
+  certificate2: string
+  certificate3: string
+  certificate4: string
+}
+
+// FIX: Define props for FormContent component to fix TypeScript errors.
+interface FormContentProps {
+  formData: FormData
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleArrayChange: (arrayName: string, index: number, value: string) => void
+  // FIX: Changed errors prop from optional to required to match its usage and prevent type errors.
+  errors: { [key: string]: string }
+}
+
 // Form content component moved outside to prevent re-creation on each render
-const FormContent = ({
+const FormContent: React.FC<FormContentProps> = ({
   formData,
   handleChange,
   handleArrayChange,
-  isMobile = false,
-  isPdf = false,
+  // FIX: Removed default value '{}' for errors, which was causing incorrect type inference.
+  errors,
 }) => (
   <form className="space-y-6">
     {/* Personal Info */}
@@ -44,9 +125,12 @@ const FormContent = ({
               name="personalName"
               value={formData.personalName}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.personalName ? 'border-red-500' : ''}`}
               placeholder="ناوی چواری"
             />
+            {errors.personalName && (
+              <p className="text-red-500 text-xs mt-1">{errors.personalName}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ڕەگەز</label>
@@ -74,6 +158,9 @@ const FormContent = ({
                 <span>مێ</span>
               </label>
             </div>
+            {errors.gender && (
+              <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ساڵی لەدایکبوون</label>
@@ -82,8 +169,11 @@ const FormContent = ({
               name="birthYear"
               value={formData.birthYear}
               onChange={handleChange}
-              className="modern-input text-right"
+              className={`modern-input text-right ${errors.birthYear ? 'border-red-500' : ''}`}
             />
+            {errors.birthYear && (
+              <p className="text-red-500 text-xs mt-1">{errors.birthYear}</p>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-6">
@@ -94,9 +184,12 @@ const FormContent = ({
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.address ? 'border-red-500' : ''}`}
               placeholder="پارێزگا"
             />
+            {errors.address && (
+              <p className="text-red-500 text-xs mt-1">{errors.address}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">شار/ناوچە</label>
@@ -105,9 +198,12 @@ const FormContent = ({
               name="cityArea"
               value={formData.cityArea}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.cityArea ? 'border-red-500' : ''}`}
               placeholder="شار/ناوچە"
             />
+            {errors.cityArea && (
+              <p className="text-red-500 text-xs mt-1">{errors.cityArea}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">گەڕەک</label>
@@ -116,9 +212,14 @@ const FormContent = ({
               name="neighborhood"
               value={formData.neighborhood}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.neighborhood ? 'border-red-500' : ''}`}
               placeholder="گەڕەک"
             />
+            {errors.neighborhood && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.neighborhood}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">کۆڵان</label>
@@ -127,9 +228,12 @@ const FormContent = ({
               name="city"
               value={formData.city}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.city ? 'border-red-500' : ''}`}
               placeholder="کۆڵان"
             />
+            {errors.city && (
+              <p className="text-red-500 text-xs mt-1">{errors.city}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">خانوو</label>
@@ -138,9 +242,12 @@ const FormContent = ({
               name="district"
               value={formData.district}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.district ? 'border-red-500' : ''}`}
               placeholder="خانوو"
             />
+            {errors.district && (
+              <p className="text-red-500 text-xs mt-1">{errors.district}</p>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
@@ -151,12 +258,15 @@ const FormContent = ({
               name="phone1"
               value={formData.phone1}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.phone1 ? 'border-red-500' : ''}`}
               placeholder="07XX XXX XXXX"
             />
+            {errors.phone1 && (
+              <p className="text-red-500 text-xs mt-1">{errors.phone1}</p>
+            )}
           </div>
           <div className="form-group-modern">
-            <label className="modern-label">ژ. مۆبایل (٢)</label>
+            <label className="modern-label">ژ. مۆبایل (٢) (ئارەزوومەندانە)</label>
             <input
               type="text"
               name="phone2"
@@ -167,7 +277,7 @@ const FormContent = ({
             />
           </div>
           <div className="form-group-modern">
-            <label className="modern-label">ئیمەیڵ</label>
+            <label className="modern-label">ئیمەیڵ (ئارەزوومەندانە)</label>
             <input
               type="email"
               name="email"
@@ -186,9 +296,14 @@ const FormContent = ({
               name="guardianName"
               value={formData.guardianName || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.guardianName ? 'border-red-500' : ''}`}
               placeholder="ناوی بەخێوکەر"
             />
+            {errors.guardianName && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.guardianName}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">پلەی خزمایەتی</label>
@@ -197,9 +312,14 @@ const FormContent = ({
               name="guardianRelation"
               value={formData.guardianRelation || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.guardianRelation ? 'border-red-500' : ''}`}
               placeholder="پلەی خزمایەتی"
             />
+            {errors.guardianRelation && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.guardianRelation}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">پیشە</label>
@@ -208,9 +328,14 @@ const FormContent = ({
               name="guardianOccupation"
               value={formData.guardianOccupation || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.guardianOccupation ? 'border-red-500' : ''}`}
               placeholder="پیشە"
             />
+            {errors.guardianOccupation && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.guardianOccupation}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ژ.مۆبایل</label>
@@ -219,9 +344,14 @@ const FormContent = ({
               name="guardianPhone"
               value={formData.guardianPhone || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.guardianPhone ? 'border-red-500' : ''}`}
               placeholder="07XX XXX XXXX"
             />
+            {errors.guardianPhone && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.guardianPhone}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -263,8 +393,13 @@ const FormContent = ({
               name="graduationYear"
               value={formData.graduationYear}
               onChange={handleChange}
-              className="modern-input text-right"
+              className={`modern-input text-right ${errors.graduationYear ? 'border-red-500' : ''}`}
             />
+            {errors.graduationYear && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.graduationYear}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">جۆری سیستەم</label>
@@ -292,6 +427,11 @@ const FormContent = ({
                 <span>سویدی</span>
               </label>
             </div>
+            {errors.educationSystem && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.educationSystem}
+              </p>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -321,6 +461,9 @@ const FormContent = ({
                 <span>دووەم</span>
               </label>
             </div>
+            {errors.examRound && (
+              <p className="text-red-500 text-xs mt-1">{errors.examRound}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ژمارەی تاقیکردنەوە</label>
@@ -329,12 +472,17 @@ const FormContent = ({
               name="examTestNumbers"
               value={formData.examTestNumbers}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.examTestNumbers ? 'border-red-500' : ''}`}
               placeholder="٠١٢٣٤٥٦٧٨٩٠١٢"
               maxLength={13}
               inputMode="numeric"
               autoComplete="off"
             />
+            {errors.examTestNumbers && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.examTestNumbers}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -393,9 +541,12 @@ const FormContent = ({
               name="province"
               value={formData.province}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.province ? 'border-red-500' : ''}`}
               placeholder="پارێزگا"
             />
+            {errors.province && (
+              <p className="text-red-500 text-xs mt-1">{errors.province}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">پەروەردە</label>
@@ -404,9 +555,12 @@ const FormContent = ({
               name="education"
               value={formData.education}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.education ? 'border-red-500' : ''}`}
               placeholder="پەروەردە"
             />
+            {errors.education && (
+              <p className="text-red-500 text-xs mt-1">{errors.education}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">گەڕەک</label>
@@ -415,9 +569,12 @@ const FormContent = ({
               name="district2"
               value={formData.district2}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.district2 ? 'border-red-500' : ''}`}
               placeholder="گەڕەک"
             />
+            {errors.district2 && (
+              <p className="text-red-500 text-xs mt-1">{errors.district2}</p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ساڵی خوێندن</label>
@@ -426,8 +583,11 @@ const FormContent = ({
               name="studyYear"
               value={formData.studyYear}
               onChange={handleChange}
-              className="modern-input text-right"
+              className={`modern-input text-right ${errors.studyYear ? 'border-red-500' : ''}`}
             />
+            {errors.studyYear && (
+              <p className="text-red-500 text-xs mt-1">{errors.studyYear}</p>
+            )}
           </div>
         </div>
         <div className="modern-table-container mt-6">
@@ -523,13 +683,24 @@ const FormContent = ({
     </div>
   </form>
 )
-const SecondFormContent = ({
+
+// FIX: Define props for SecondFormContent component to fix TypeScript errors.
+interface SecondFormContentProps {
+  formData: FormData
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleArrayChange: (arrayName: string, index: number, value: string) => void
+  handleDepartmentToggle: (departmentName: string) => void
+  // FIX: Changed errors prop from optional to required to match its usage and prevent type errors.
+  errors: { [key: string]: string }
+}
+
+const SecondFormContent: React.FC<SecondFormContentProps> = ({
   formData,
   handleChange,
   handleArrayChange,
   handleDepartmentToggle,
-  isMobile = false,
-  isPdf = false,
+  // FIX: Removed default value '{}' for errors, which was causing incorrect type inference.
+  errors,
 }) => (
   <form className="space-y-6">
     {/* Top Two Sections */}
@@ -567,9 +738,14 @@ const SecondFormContent = ({
                 name="instituteName"
                 value={formData.instituteName || ''}
                 onChange={handleChange}
-                className="modern-input"
+                className={`modern-input ${errors.instituteName ? 'border-red-500' : ''}`}
                 placeholder="ناوی خوێندنگە"
               />
+              {errors.instituteName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.instituteName}
+                </p>
+              )}
             </div>
             <div className="form-group-modern">
               <label className="modern-label">ناوی بەڕێوەبەر</label>
@@ -578,9 +754,14 @@ const SecondFormContent = ({
                 name="directorName"
                 value={formData.directorName || ''}
                 onChange={handleChange}
-                className="modern-input"
+                className={`modern-input ${errors.directorName ? 'border-red-500' : ''}`}
                 placeholder="ناوی بەڕێوەبەر"
               />
+              {errors.directorName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.directorName}
+                </p>
+              )}
             </div>
             <div className="form-group-modern">
               <label className="modern-label">ژ. تەلەفۆن</label>
@@ -589,9 +770,14 @@ const SecondFormContent = ({
                 name="directorPhone"
                 value={formData.directorPhone || ''}
                 onChange={handleChange}
-                className="modern-input"
+                className={`modern-input ${errors.directorPhone ? 'border-red-500' : ''}`}
                 placeholder="07XX XXX XXXX"
               />
+              {errors.directorPhone && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.directorPhone}
+                </p>
+              )}
             </div>
             <div className="form-group-modern">
               <label className="modern-label text-center">
@@ -640,9 +826,14 @@ const SecondFormContent = ({
                 name="educationDirectorName"
                 value={formData.educationDirectorName || ''}
                 onChange={handleChange}
-                className="modern-input"
+                className={`modern-input ${errors.educationDirectorName ? 'border-red-500' : ''}`}
                 placeholder="ناوی بەڕێوەبەرێتی"
               />
+              {errors.educationDirectorName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.educationDirectorName}
+                </p>
+              )}
             </div>
             <div className="form-group-modern">
               <label className="modern-label">قەزا</label>
@@ -651,9 +842,12 @@ const SecondFormContent = ({
                 name="decision"
                 value={formData.decision || ''}
                 onChange={handleChange}
-                className="modern-input"
+                className={`modern-input ${errors.decision ? 'border-red-500' : ''}`}
                 placeholder="قەزا..."
               />
+              {errors.decision && (
+                <p className="text-red-500 text-xs mt-1">{errors.decision}</p>
+              )}
             </div>
             <div className="form-group-modern">
               <label className="modern-label text-center">واژۆ و مۆر</label>
@@ -724,6 +918,11 @@ const SecondFormContent = ({
             )
           })}
         </div>
+        {errors.departmentChoices && (
+          <p className="text-red-500 text-xs mt-2 text-center">
+            {errors.departmentChoices}
+          </p>
+        )}
       </div>
     </div>
     {/* Medical Declaration */}
@@ -809,9 +1008,14 @@ const SecondFormContent = ({
               name="certificate1"
               value={formData.certificate1 || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.certificate1 ? 'border-red-500' : ''}`}
               placeholder="..."
             />
+            {errors.certificate1 && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.certificate1}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ژمارەی تۆمار</label>
@@ -820,9 +1024,14 @@ const SecondFormContent = ({
               name="certificate2"
               value={formData.certificate2 || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.certificate2 ? 'border-red-500' : ''}`}
               placeholder="..."
             />
+            {errors.certificate2 && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.certificate2}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ژمارەی لاپەڕە</label>
@@ -831,9 +1040,14 @@ const SecondFormContent = ({
               name="certificate3"
               value={formData.certificate3 || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.certificate3 ? 'border-red-500' : ''}`}
               placeholder="..."
             />
+            {errors.certificate3 && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.certificate3}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">شوێنی دەرچوون</label>
@@ -842,9 +1056,14 @@ const SecondFormContent = ({
               name="certificate4"
               value={formData.certificate4 || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.certificate4 ? 'border-red-500' : ''}`}
               placeholder="..."
             />
+            {errors.certificate4 && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.certificate4}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -896,6 +1115,11 @@ const SecondFormContent = ({
             <span>هی تر</span>
           </label>
         </div>
+        {errors.nationality2 && (
+          <p className="text-red-500 text-xs -mt-4 mb-4">
+            {errors.nationality2}
+          </p>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="form-group-modern">
             <label className="modern-label">ژمارەی ڕەگەزنامە</label>
@@ -904,9 +1128,14 @@ const SecondFormContent = ({
               name="nationalityNumber"
               value={formData.nationalityNumber || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.nationalityNumber ? 'border-red-500' : ''}`}
               placeholder="ژمارەی ڕەگەزنامە"
             />
+            {errors.nationalityNumber && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.nationalityNumber}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ژمارەی تۆمار</label>
@@ -915,9 +1144,14 @@ const SecondFormContent = ({
               name="registrationNumber"
               value={formData.registrationNumber || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.registrationNumber ? 'border-red-500' : ''}`}
               placeholder="ژمارەی تۆمار"
             />
+            {errors.registrationNumber && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.registrationNumber}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ساڵ و شوێنی دەرچوون</label>
@@ -926,9 +1160,14 @@ const SecondFormContent = ({
               name="issueYearPlace"
               value={formData.issueYearPlace || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.issueYearPlace ? 'border-red-500' : ''}`}
               placeholder="ساڵ و شوێن..."
             />
+            {errors.issueYearPlace && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.issueYearPlace}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -966,9 +1205,14 @@ const SecondFormContent = ({
               name="familyCardNumber"
               value={formData.familyCardNumber || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.familyCardNumber ? 'border-red-500' : ''}`}
               placeholder="ژمارەی کارت"
             />
+            {errors.familyCardNumber && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.familyCardNumber}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">شوێنی دەرچوون</label>
@@ -977,9 +1221,14 @@ const SecondFormContent = ({
               name="familyCardIssuePlace"
               value={formData.familyCardIssuePlace || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.familyCardIssuePlace ? 'border-red-500' : ''}`}
               placeholder="شوێنی دەرچوون"
             />
+            {errors.familyCardIssuePlace && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.familyCardIssuePlace}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ڕێکەوتی دەرچوون</label>
@@ -988,8 +1237,13 @@ const SecondFormContent = ({
               name="familyCardIssueDate"
               value={formData.familyCardIssueDate || ''}
               onChange={handleChange}
-              className="modern-input text-right"
+              className={`modern-input text-right ${errors.familyCardIssueDate ? 'border-red-500' : ''}`}
             />
+            {errors.familyCardIssueDate && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.familyCardIssueDate}
+              </p>
+            )}
           </div>
           <div className="form-group-modern">
             <label className="modern-label">کۆدی خێزانی</label>
@@ -998,9 +1252,12 @@ const SecondFormContent = ({
               name="familyCode"
               value={formData.familyCode || ''}
               onChange={handleChange}
-              className="modern-input"
+              className={`modern-input ${errors.familyCode ? 'border-red-500' : ''}`}
               placeholder="کۆدی خێزانی"
             />
+            {errors.familyCode && (
+              <p className="text-red-500 text-xs mt-1">{errors.familyCode}</p>
+            )}
           </div>
         </div>
       </div>
@@ -1040,7 +1297,7 @@ const FONT_EMBED_CSS = `
 `
 export function App() {
   const [currentStep, setCurrentStep] = useState(1)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     personalName: '',
     birthPlace: '',
     address: '',
@@ -1127,6 +1384,9 @@ export function App() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showError, setShowError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null)
   const pageOnePrintRef = useRef(null)
   const pageTwoPrintRef = useRef(null)
   useEffect(() => {
@@ -1138,60 +1398,154 @@ export function App() {
       return () => clearTimeout(timer)
     }
   }, [showSuccess, showError])
-  const handleChange = (e) => {
+  useEffect(() => {
+    // This function will be called when the component unmounts or generatedPdfUrl changes.
+    // It's a cleanup function to prevent memory leaks from blob URLs.
+    return () => {
+      if (generatedPdfUrl) {
+        URL.revokeObjectURL(generatedPdfUrl)
+      }
+    }
+  }, [generatedPdfUrl])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
+    let sanitizedValue: string | boolean = value
+
+    // Sanitize text-like inputs to prevent XSS by escaping HTML tags
+    if (type === 'text' || type === 'email' || type === 'date') {
+      sanitizedValue = value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    }
     if (name === 'examTestNumbers') {
-      const sanitizedValue = value.replace(/\D/g, '').slice(0, 13)
-      setFormData((prevState) => ({
-        ...prevState,
-        examTestNumbers: sanitizedValue,
-      }))
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: type === 'checkbox' ? checked : value,
-      }))
+      // This specific field has its own numeric-only sanitization
+      sanitizedValue = value.replace(/\D/g, '').slice(0, 13)
+    }
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: type === 'checkbox' ? checked : sanitizedValue,
+    }))
+
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors }
+        delete newErrors[name]
+        return newErrors
+      })
     }
   }
-  const handleArrayChange = (arrayName, index, value) => {
+  const handleArrayChange = (
+    arrayName: keyof FormData,
+    index: number,
+    value: string,
+  ) => {
     setFormData((prevState) => {
-      const newArray = [...prevState[arrayName]]
-      newArray[index] = value
+      const newArray = [...(prevState[arrayName] as string[])]
+      // Sanitize array inputs as well
+      newArray[index] = value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       return {
         ...prevState,
         [arrayName]: newArray,
       }
     })
   }
-  const handleDepartmentToggle = (departmentName) => {
+  const handleDepartmentToggle = (departmentName: string) => {
     setFormData((prev) => {
       const selections = [...prev.departmentChoices]
       const existingIndex = selections.indexOf(departmentName)
       if (existingIndex > -1) {
-        // Already selected, so remove it
         selections.splice(existingIndex, 1)
       } else if (selections.length < 3) {
-        // Not selected and we have room, so add it
         selections.push(departmentName)
       }
-      // If already 3 and not selected, do nothing.
       return { ...prev, departmentChoices: selections }
     })
+    // Clear error for department choices when user interacts
+    if (errors.departmentChoices) {
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors }
+        delete newErrors.departmentChoices
+        return newErrors
+      })
+    }
   }
+
+  const validate = (step: number) => {
+    const newErrors: { [key: string]: string } = {}
+    const requiredErrorMsg = 'ئەم خانەیە پێویستە'
+    const page1Fields: (keyof FormData)[] = [
+      'personalName',
+      'gender',
+      'birthYear',
+      'address',
+      'cityArea',
+      'neighborhood',
+      'city',
+      'district',
+      'phone1',
+      'guardianName',
+      'guardianRelation',
+      'guardianOccupation',
+      'guardianPhone',
+      'graduationYear',
+      'educationSystem',
+      'examRound',
+      'examTestNumbers',
+      'province',
+      'education',
+      'district2',
+      'studyYear',
+    ]
+    const page2Fields: (keyof FormData)[] = [
+      'instituteName',
+      'directorName',
+      'directorPhone',
+      'educationDirectorName',
+      'decision',
+      'certificate1',
+      'certificate2',
+      'certificate3',
+      'certificate4',
+      'nationality2',
+      'nationalityNumber',
+      'registrationNumber',
+      'issueYearPlace',
+      'familyCardNumber',
+      'familyCardIssuePlace',
+      'familyCardIssueDate',
+      'familyCode',
+    ]
+
+    let fieldsToValidate: (keyof FormData)[] = []
+    if (step === 1) fieldsToValidate = page1Fields
+    if (step === 2) fieldsToValidate = page2Fields
+
+    fieldsToValidate.forEach((field) => {
+      if (!formData[field] || formData[field].toString().trim() === '') {
+        newErrors[field] = requiredErrorMsg
+      }
+    })
+
+    if (step === 2) {
+      if (formData.departmentChoices.length === 0) {
+        newErrors.departmentChoices = 'تکایە بە لایەنی کەمەوە یەک بەش هەڵبژێرە'
+      }
+    }
+
+    return newErrors
+  }
+
   const handleNextStep = () => {
     setCurrentStep(2)
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
   const handlePreviousStep = () => {
     setCurrentStep(1)
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
   const generatePDF = async () => {
     setIsGenerating(true)
     setShowError(false)
@@ -1212,16 +1566,13 @@ export function App() {
         backgroundColor: '#ffffff',
         fontEmbedCss: FONT_EMBED_CSS,
         cacheBust: true,
-        style: {
-          transform: 'scale(1)',
-          transformOrigin: 'top left',
-        },
+        style: { transform: 'scale(1)', transformOrigin: 'top left' },
       }
+
       // Capture first page
       console.log('Capturing first page...')
-      if (!pageOnePrintRef.current) {
+      if (!pageOnePrintRef.current)
         throw new Error('First page reference for PDF not found')
-      }
       await new Promise((resolve) => setTimeout(resolve, 800))
       const firstPageDataUrl = await toPng(
         pageOnePrintRef.current,
@@ -1237,11 +1588,11 @@ export function App() {
         undefined,
         'FAST',
       )
+
       // Capture second page
       console.log('Capturing second page...')
-      if (!pageTwoPrintRef.current) {
+      if (!pageTwoPrintRef.current)
         throw new Error('Second page reference for PDF not found')
-      }
       await new Promise((resolve) => setTimeout(resolve, 800))
       const secondPageDataUrl = await toPng(
         pageTwoPrintRef.current,
@@ -1258,25 +1609,48 @@ export function App() {
         undefined,
         'FAST',
       )
-      // Save PDF
-      pdf.save('Kurdistan_Technical_Institute_Form_Complete.pdf')
-      console.log('PDF generated successfully')
-      setShowSuccess(true)
+
+      const isMobileOrTablet = window.matchMedia(
+        '(max-width: 1024px)',
+      ).matches
+      if (isMobileOrTablet) {
+        const pdfBlob = pdf.output('blob')
+        const url = URL.createObjectURL(pdfBlob)
+        setGeneratedPdfUrl(url) // This will show the new modal
+      } else {
+        pdf.save('Kurdistan_Technical_Institute_Form_Complete.pdf')
+        setShowSuccess(true) // Keep original behavior for desktop
+      }
+      console.log('PDF processing complete.')
     } catch (error) {
       console.error('PDF generation failed:', error)
+      setErrorMessage(
+        'دروستکردنی پی دی ئێف سەرکەوتوو نەبوو. تکایە دووبارە هەوڵ بدەوە.',
+      )
       setShowError(true)
     } finally {
       setIsGenerating(false)
     }
   }
-  const handleSubmit = (e) => {
+
+  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    const validationErrors = validate(currentStep)
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      setErrorMessage('تکایە خانە پێویستەکان پڕبکەرەوە.')
+      setShowError(true)
+      return
+    }
+
+    setErrors({})
     if (currentStep === 1) {
       handleNextStep()
     } else {
       generatePDF()
     }
   }
+
   return (
     <div
       className="min-h-screen bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50 rtl relative overflow-hidden font-bold"
@@ -1290,7 +1664,7 @@ export function App() {
       </div>
       {/* Success/Error Notifications */}
       {showSuccess && (
-        <div className="fixed top-4 right-4 left-4 sm:left-auto sm:right-4 sm:max-w-md bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-slide-in backdrop-blur-sm">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
           <div className="bg-emerald-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
               className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600"
@@ -1312,7 +1686,7 @@ export function App() {
         </div>
       )}
       {showError && (
-        <div className="fixed top-4 right-4 left-4 sm:left-auto sm:right-4 sm:max-w-md bg-white border-r-4 border-rose-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-slide-in backdrop-blur-sm">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-white border-r-4 border-rose-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
           <div className="bg-rose-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
               className="h-5 w-5 sm:h-6 sm:w-6 text-rose-600"
@@ -1330,11 +1704,96 @@ export function App() {
           </div>
           <div>
             <p className="font-bold text-sm sm:text-base md:text-lg">
-              دروستکردنی پی دی ئێف سەرکەوتوو نەبوو
+              {errorMessage}
             </p>
-            <p className="text-xs sm:text-sm text-gray-600">
-              تکایە دووبارە هەوڵ بدەوە
+          </div>
+        </div>
+      )}
+      {/* New PDF Options Modal for Mobile/Tablet */}
+      {generatedPdfUrl && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+          dir="rtl"
+        >
+          <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center animate-fade-in-up">
+            <div className="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg">
+              <svg
+                className="w-8 h-8 text-emerald-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
+              فایل ئامادەیە
+            </h3>
+            <p className="text-gray-600 mb-6">
+              فایلی PDF بە سەرکەوتوویی دروستکرا.
             </p>
+            <div className="flex flex-col gap-3">
+              <a
+                href={generatedPdfUrl}
+                download="Kurdistan_Technical_Institute_Form_Complete.pdf"
+                onClick={() => setTimeout(() => setGeneratedPdfUrl(null), 100)}
+                className="w-full group relative bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-red-500/50 text-white px-8 py-4 rounded-xl transition-all duration-300 font-bold text-lg flex items-center justify-center gap-3 transform hover:scale-105"
+              >
+                <svg
+                  className="h-6 w-6 group-hover:animate-bounce"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                <span>داگرتن</span>
+              </a>
+              <a
+                href={generatedPdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setTimeout(() => setGeneratedPdfUrl(null), 100)}
+                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transform hover:scale-105 transition-all duration-300"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+                <span>بینین</span>
+              </a>
+            </div>
+            <button
+              onClick={() => setGeneratedPdfUrl(null)}
+              className="mt-6 text-gray-500 hover:text-gray-800 text-sm font-medium transition-colors"
+            >
+              داخستن
+            </button>
           </div>
         </div>
       )}
@@ -1394,8 +1853,7 @@ export function App() {
                     formData={formData}
                     handleChange={handleChange}
                     handleArrayChange={handleArrayChange}
-                    isMobile={false}
-                    isPdf={false}
+                    errors={errors}
                   />
                 </div>
                 {/* Footer */}
@@ -1490,8 +1948,7 @@ export function App() {
                     handleChange={handleChange}
                     handleArrayChange={handleArrayChange}
                     handleDepartmentToggle={handleDepartmentToggle}
-                    isMobile={false}
-                    isPdf={false}
+                    errors={errors}
                   />
                 </div>
               </div>
@@ -1524,7 +1981,7 @@ export function App() {
           )}
           <button
             onClick={handleSubmit}
-            type="button"
+            type="submit"
             disabled={isGenerating}
             className={`w-full sm:w-auto group relative ${isGenerating ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-red-600 via-red-600 to-red-700 hover:from-red-700 hover:via-red-700 hover:to-red-800 shadow-2xl hover:shadow-red-500/50'} text-white px-6 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 rounded-xl sm:rounded-2xl transition-all duration-500 font-bold text-sm sm:text-base md:text-lg lg:text-xl flex items-center justify-center transform hover:scale-105 active:scale-95 overflow-hidden`}
           >
@@ -1556,19 +2013,6 @@ export function App() {
               ) : currentStep === 1 ? (
                 <>
                   <span>هەنگاوی دواتر</span>
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5 md:h-6 md:w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
                 </>
               ) : (
                 <>
@@ -1615,7 +2059,7 @@ export function App() {
             padding: '3mm',
           }}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-grow">
             {/* Header */}
             <div className="shrink-0 mb-4">
               <div className="border-b-2 border-red-500 pb-3 mb-2">
@@ -2198,7 +2642,7 @@ export function App() {
             padding: '3mm',
           }}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-grow">
             <div className="flex-grow min-h-0 space-y-3">
               {/* Top Two Sections */}
               <div className="grid grid-cols-2 gap-2">
