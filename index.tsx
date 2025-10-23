@@ -1615,9 +1615,10 @@ export function App() {
         '(max-width: 1024px)',
       ).matches
       if (isMobileOrTablet) {
-        // Use datauristring for better compatibility on iOS devices to trigger a proper file download.
-        const pdfDataUri = pdf.output('datauristring')
-        setGeneratedPdfUrl(pdfDataUri) // This will show the new modal
+        // Use a blob to create a downloadable link, which is more reliable on mobile devices.
+        const pdfBlob = pdf.output('blob')
+        const pdfUrl = URL.createObjectURL(pdfBlob)
+        setGeneratedPdfUrl(pdfUrl) // This will show the new modal
       } else {
         pdf.save('Kurdistan_Technical_Institute_Form_Complete.pdf')
         setShowSuccess(true) // Keep original behavior for desktop
