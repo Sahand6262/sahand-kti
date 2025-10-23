@@ -1402,7 +1402,8 @@ export function App() {
     // This function will be called when the component unmounts or generatedPdfUrl changes.
     // It's a cleanup function to prevent memory leaks from blob URLs.
     return () => {
-      if (generatedPdfUrl) {
+      // Only attempt to revoke the URL if it's a blob URL. Data URIs don't need revocation.
+      if (generatedPdfUrl && generatedPdfUrl.startsWith('blob:')) {
         URL.revokeObjectURL(generatedPdfUrl)
       }
     }
@@ -1614,9 +1615,9 @@ export function App() {
         '(max-width: 1024px)',
       ).matches
       if (isMobileOrTablet) {
-        const pdfBlob = pdf.output('blob')
-        const url = URL.createObjectURL(pdfBlob)
-        setGeneratedPdfUrl(url) // This will show the new modal
+        // Use datauristring for better compatibility on iOS devices to trigger a proper file download.
+        const pdfDataUri = pdf.output('datauristring')
+        setGeneratedPdfUrl(pdfDataUri) // This will show the new modal
       } else {
         pdf.save('Kurdistan_Technical_Institute_Form_Complete.pdf')
         setShowSuccess(true) // Keep original behavior for desktop
