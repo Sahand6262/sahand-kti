@@ -106,10 +106,6 @@
       .info-box-warning {
         @apply bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg border border-amber-300;
       }
-      /* Exam Box Styling - Better mobile sizing */
-      .exam-box {
-        @apply border-2 border-blue-300 rounded-lg text-center font-bold text-blue-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white shadow-sm transition-all text-xs sm:text-sm;
-      }
       /* Table Styling - Improved responsive */
       .table-container {
         @apply overflow-x-auto border border-gray-200 shadow-md rounded-b-lg;
@@ -118,19 +114,19 @@
         @apply bg-gradient-to-r from-red-600 to-red-700 text-white font-bold text-center rounded-t-lg;
       }
       .table-cell {
-        @apply border border-gray-200 text-center font-medium rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all min-w-[2rem];
+        @apply border border-gray-200 text-center font-medium rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all min-w-[2rem] text-black;
       }
       .table-label-red {
         @apply bg-gradient-to-r from-red-500 to-red-600 text-white font-bold text-center flex items-center justify-center rounded min-w-[3rem];
       }
       .table-cell-red {
-        @apply border border-red-200 text-center font-bold text-red-700 rounded bg-white focus:outline-none focus:ring-2 focus:ring-red-400 transition-all min-w-[2rem];
+        @apply border border-red-200 text-center font-bold text-black rounded bg-white focus:outline-none focus:ring-2 focus:ring-red-400 transition-all min-w-[2rem];
       }
       .table-label-yellow {
         @apply bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-bold text-center flex items-center justify-center rounded min-w-[3rem];
       }
       .table-cell-yellow {
-        @apply border border-yellow-200 text-center font-bold text-yellow-700 rounded bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all min-w-[2rem];
+        @apply border border-yellow-200 text-center font-bold text-black rounded bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all min-w-[2rem];
       }
       /* Custom Scrollbar */
       ::-webkit-scrollbar {
@@ -247,7 +243,7 @@
         @apply flex items-center gap-3 cursor-pointer px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl transition-all duration-300 hover:border-red-300 hover:shadow-md hover:scale-[1.02];
       }
       .modern-radio-label:has(input:checked) {
-        @apply bg-gradient-to-r from-red-50 to-rose-50 border-red-400 shadow-md;
+        @apply bg-gradient-to-r from-red-100 to-rose-100 border-red-400 shadow-md;
       }
       .modern-radio {
         @apply w-5 h-5 text-red-600 border-gray-300 focus:ring-red-500 cursor-pointer transition-all duration-300;
@@ -264,10 +260,6 @@
       .modern-warning-box {
         @apply bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 rounded-xl border-2 border-amber-300 p-6 shadow-md transform transition-all duration-300 hover:shadow-lg;
       }
-      /* Modern Exam Box */
-      .modern-exam-box {
-        @apply w-12 h-12 border-2 border-blue-300 rounded-xl text-center font-bold text-blue-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110 focus:scale-110 text-base;
-      }
       /* Modern Table */
       .modern-table-header {
         @apply bg-gradient-to-r from-red-600 via-red-600 to-rose-700 text-white font-bold text-center rounded-t-xl p-4 shadow-lg;
@@ -276,13 +268,13 @@
         @apply overflow-x-auto border-2 border-gray-200 shadow-xl rounded-b-xl bg-white/80 backdrop-blur-sm;
       }
       .modern-table-cell {
-        @apply border-2 border-gray-200 text-center font-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md hover:scale-105 p-3 text-sm;
+        @apply border-2 border-gray-200 text-center font-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md hover:scale-105 p-3 text-sm text-black;
       }
       .modern-table-label {
         @apply text-white font-bold text-center flex items-center justify-center rounded-lg shadow-md p-3 text-sm;
       }
       .modern-table-cell-colored {
-        @apply border-2 text-center font-bold rounded-lg bg-white focus:outline-none focus:ring-2 transition-all duration-300 hover:shadow-md hover:scale-105 p-3 text-sm;
+        @apply border-2 text-center font-bold rounded-lg bg-white focus:outline-none focus:ring-2 transition-all duration-300 hover:shadow-md hover:scale-105 p-3 text-sm text-black;
       }
       /* Modern Department Option */
       .modern-department-option {

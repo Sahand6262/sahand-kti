@@ -222,23 +222,22 @@ const FormContent = ({
             </div>
           </div>
         </div>
-        <div className="modern-info-box mt-6">
+        <div className="modern-warning-box mt-6">
           <label className="modern-label text-center block mb-4">
             ژمارەی تاقیکردنەوە
           </label>
-          <div className="flex flex-wrap justify-center gap-2">
-            {[...Array(13)].map((_, i) => (
-              <input
-                key={i}
-                type="text"
-                maxLength={1}
-                value={formData.examTestNumbers[i]}
-                onChange={(e) =>
-                  handleArrayChange('examTestNumbers', i, e.target.value)
-                }
-                className="modern-exam-box"
-              />
-            ))}
+          <div className="px-4 md:px-16">
+            <input
+              type="text"
+              name="examTestNumbers"
+              value={formData.examTestNumbers}
+              onChange={handleChange}
+              className="modern-input text-center tracking-[.5em] font-mono bg-gradient-to-r from-red-100 to-rose-100 border-red-300"
+              placeholder="٠١٢٣٤٥٦٧٨٩٠١٢"
+              maxLength={13}
+              inputMode="numeric"
+              autoComplete="off"
+            />
           </div>
         </div>
       </div>
@@ -930,9 +929,7 @@ const SecondFormContent = ({
       </div>
       <div className="modern-card-enhanced">
         <label className="modern-label text-center block mb-4">
-          ڕێکەوت
-          <br />
-          واژو
+          ڕێکەوت / واژو
         </label>
         <div className="modern-signature-line"></div>
       </div>
@@ -976,7 +973,7 @@ export function App() {
     education: '',
     district2: '',
     studyYear: '',
-    examTestNumbers: Array(13).fill(''),
+    examTestNumbers: '',
     subjects: [
       'وانەکان',
       '',
@@ -1048,10 +1045,18 @@ export function App() {
   }, [showSuccess, showError])
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: type === 'checkbox' ? checked : value,
-    }))
+    if (name === 'examTestNumbers') {
+      const sanitizedValue = value.replace(/\D/g, '').slice(0, 13)
+      setFormData((prevState) => ({
+        ...prevState,
+        examTestNumbers: sanitizedValue,
+      }))
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: type === 'checkbox' ? checked : value,
+      }))
+    }
   }
   const handleArrayChange = (arrayName, index, value) => {
     setFormData((prevState) => {
@@ -1092,8 +1097,8 @@ export function App() {
       const pageWidth = 210
       const pageHeight = 297
       const toPngOptions = {
-        quality: 0.95,
-        pixelRatio: 3,
+        quality: 0.98,
+        pixelRatio: 4,
         backgroundColor: '#ffffff',
         fontEmbedCss: FONT_EMBED_CSS,
         cacheBust: true,
@@ -1497,11 +1502,11 @@ export function App() {
         >
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="shrink-0 mb-2">
-              <div className="border-b-2 border-red-500 pb-1.5 mb-1.5">
+            <div className="shrink-0 mb-4">
+              <div className="border-b-2 border-red-500 pb-2 mb-2">
                 <div className="flex justify-between items-start">
-                  <div className="border-2 border-red-500 rounded-lg p-1.5 w-16 h-20 flex items-center justify-center">
-                    <p className="text-[9px] text-gray-600 text-center">
+                  <div className="border-2 border-red-500 rounded-lg p-2 w-20 h-24 flex items-center justify-center">
+                    <p className="text-xs text-gray-600 text-center">
                       وێنەی فێرخواز
                     </p>
                   </div>
@@ -1509,13 +1514,13 @@ export function App() {
                     <img
                       src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
                       alt="Logo"
-                      className="h-12 mx-auto mb-0.5"
+                      className="h-16 mx-auto mb-2"
                     />
-                    <div className="text-blue-700 font-bold text-xs">
+                    <div className="text-blue-700 font-bold text-base">
                       <p>KURDISTAN TECHNICAL INSTITUTE</p>
                     </div>
                   </div>
-                  <div className="text-right text-xs text-blue-700 w-28 flex-shrink-0">
+                  <div className="text-right text-sm text-blue-700 w-32 flex-shrink-0">
                     <p className="font-semibold">هەرێمی كوردستان - عێراق</p>
                     <p>وەزارەتی خوێندنی باڵا</p>
                     <p>پەیمانگەی تەكنیكی كوردستان</p>
@@ -1524,19 +1529,19 @@ export function App() {
               </div>
             </div>
             {/* Form Content */}
-            <div className="flex-grow min-h-0 overflow-hidden">
-              <div className="space-y-1.5">
+            <div className="flex-grow min-h-0">
+              <div className="space-y-3">
                 {/* Personal Info */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-1 text-[11px]">
+                  <div className="section-header-modern text-white text-center py-2 text-sm">
                     <span className="font-bold tracking-wider">
                       زانیاری كەسی
                     </span>
                   </div>
-                  <div className="modern-card p-2 space-y-1.5">
-                    <div className="grid grid-cols-3 gap-1.5">
+                  <div className="modern-card p-3 space-y-2">
+                    <div className="grid grid-cols-3 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           ناوی فێرخواز
                         </label>
                         <input
@@ -1544,39 +1549,37 @@ export function App() {
                           name="personalName"
                           value={formData.personalName}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="ناوی سیانی"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">ڕەگەز</label>
-                        <div className="flex gap-3 mt-1">
-                          <label className="radio-label">
-                            <input
-                              type="radio"
-                              name="gender"
-                              value="male"
-                              checked={formData.gender === 'male'}
-                              readOnly
-                              className="radio-input"
-                            />
-                            <span className="text-[10px]">نێر</span>
-                          </label>
-                          <label className="radio-label">
-                            <input
-                              type="radio"
-                              name="gender"
-                              value="female"
-                              checked={formData.gender === 'female'}
-                              readOnly
-                              className="radio-input"
-                            />
-                            <span className="text-[10px]">مێ</span>
-                          </label>
+                        <label className="form-label text-xs">ڕەگەز</label>
+                        <div className="flex gap-2 mt-1">
+                          <div
+                            className={`flex items-center gap-1.5 p-1 rounded-md ${formData.gender === 'male' ? 'bg-red-100' : ''}`}
+                          >
+                            <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                              {formData.gender === 'male' && (
+                                <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                              )}
+                            </div>
+                            <span className="text-xs">نێر</span>
+                          </div>
+                          <div
+                            className={`flex items-center gap-1.5 p-1 rounded-md ${formData.gender === 'female' ? 'bg-red-100' : ''}`}
+                          >
+                            <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                              {formData.gender === 'female' && (
+                                <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                              )}
+                            </div>
+                            <span className="text-xs">مێ</span>
+                          </div>
                         </div>
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           ساڵی لەدایکبوون
                         </label>
                         <input
@@ -1584,13 +1587,13 @@ export function App() {
                           name="birthYear"
                           value={formData.birthYear}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                         />
                       </div>
                     </div>
-                    <div className="grid grid-cols-3 gap-1.5">
+                    <div className="grid grid-cols-3 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           ناونیشان
                         </label>
                         <input
@@ -1598,12 +1601,12 @@ export function App() {
                           name="address"
                           value={formData.address}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="ناونیشانی نیشتەجێبوون"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           شار/ناوچە
                         </label>
                         <input
@@ -1611,25 +1614,25 @@ export function App() {
                           name="city"
                           value={formData.city}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="شار"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">گەڕەک</label>
+                        <label className="form-label text-xs">گەڕەک</label>
                         <input
                           type="text"
                           name="district"
                           value={formData.district}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="گەڕەک"
                         />
                       </div>
                     </div>
-                    <div className="grid grid-cols-3 gap-1.5">
+                    <div className="grid grid-cols-3 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           ژ. مۆبایل(١)
                         </label>
                         <input
@@ -1637,12 +1640,12 @@ export function App() {
                           name="phone1"
                           value={formData.phone1}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="07XX XXX XXXX"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           ژ. مۆبایل(٢)
                         </label>
                         <input
@@ -1650,18 +1653,18 @@ export function App() {
                           name="phone2"
                           value={formData.phone2}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="07XX XXX XXXX"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">ئیمەیل</label>
+                        <label className="form-label text-xs">ئیمەیل</label>
                         <input
                           type="email"
                           name="email"
                           value={formData.email}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="example@email.com"
                         />
                       </div>
@@ -1670,21 +1673,21 @@ export function App() {
                 </div>
                 {/* Education Info */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-1 text-[11px]">
+                  <div className="section-header-modern text-white text-center py-2 text-sm">
                     <span className="font-bold tracking-wider">
                       ئاستی خوێندن
                     </span>
                   </div>
-                  <div className="modern-card p-2 space-y-1.5">
-                    <div className="grid grid-cols-3 gap-1.5">
+                  <div className="modern-card p-3 space-y-2">
+                    <div className="grid grid-cols-3 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           دەرچووی دەورانەی
                         </label>
-                        <div className="badge-red py-1 text-[10px]">زانستی</div>
+                        <div className="badge-red py-1.5 text-xs">زانستی</div>
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           ساڵی دەرچوون
                         </label>
                         <input
@@ -1692,86 +1695,81 @@ export function App() {
                           name="graduationYear"
                           value={formData.graduationYear}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           jۆری سیستەم
                         </label>
-                        <div className="flex gap-3 mt-1">
-                          <label className="radio-label">
-                            <input
-                              type="radio"
-                              name="educationSystem"
-                              value="regular"
-                              checked={formData.educationSystem === 'regular'}
-                              readOnly
-                              className="radio-input"
-                            />
-                            <span className="text-[10px]">ئاسایی</span>
-                          </label>
-                          <label className="radio-label">
-                            <input
-                              type="radio"
-                              name="educationSystem"
-                              value="swedish"
-                              checked={formData.educationSystem === 'swedish'}
-                              readOnly
-                              className="radio-input"
-                            />
-                            <span className="text-[10px]">سودی</span>
-                          </label>
+                        <div className="flex gap-2 mt-1">
+                          <div
+                            className={`flex items-center gap-1.5 p-1 rounded-md ${formData.educationSystem === 'regular' ? 'bg-red-100' : ''}`}
+                          >
+                            <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                              {formData.educationSystem === 'regular' && (
+                                <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                              )}
+                            </div>
+                            <span className="text-xs">ئاسایی</span>
+                          </div>
+                          <div
+                            className={`flex items-center gap-1.5 p-1 rounded-md ${formData.educationSystem === 'swedish' ? 'bg-red-100' : ''}`}
+                          >
+                            <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                              {formData.educationSystem === 'swedish' && (
+                                <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                              )}
+                            </div>
+                            <span className="text-xs">سودی</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="info-box-blue rounded-lg p-1.5">
-                      <label className="form-label text-center block mb-1 text-[9px]">
+                    <div className="info-box-warning rounded-lg p-2">
+                      <label className="form-label text-center block mb-2 text-xs">
                         ژمارەی تاقیکردنەوە
                       </label>
-                      <div className="flex flex-wrap justify-center gap-0.5">
-                        {[...Array(13)].map((_, i) => (
-                          <input
-                            key={i}
-                            type="text"
-                            maxLength={1}
-                            value={formData.examTestNumbers[i]}
-                            readOnly
-                            className="exam-box w-6 h-6 text-[9px]"
-                          />
-                        ))}
+                      <div className="px-2">
+                        <input
+                          type="text"
+                          name="examTestNumbers"
+                          value={formData.examTestNumbers}
+                          readOnly
+                          className="form-input h-9 text-sm text-center tracking-[0.4em] font-mono bg-red-100 border-red-300"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
                 {/* Grades Info */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-1 text-[11px]">
+                  <div className="section-header-modern text-white text-center py-2 text-sm">
                     <span className="font-bold tracking-wider">
                       زانیاری نمرەی فێرخواز
                     </span>
                   </div>
-                  <div className="modern-card p-2 space-y-1.5">
-                    <div className="info-box-warning rounded-lg p-1.5">
-                      <p className="text-gray-800 text-[9px] leading-tight">
+                  <div className="modern-card p-3 space-y-2">
+                    <div className="info-box-warning rounded-lg p-2">
+                      <p className="text-gray-800 text-xs leading-tight">
                         بەڕێوەبەری بەڕێز: نمرەکانی خوارەوە دەبێت هاوتای بڕوانامە
                         بێت کە دەهێنرێت بۆ پەیمانگە.
                       </p>
                     </div>
-                    <div className="grid grid-cols-4 gap-1.5">
+                    <div className="grid grid-cols-4 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-[9px]">پارێزگا</label>
+                        <label className="form-label text-xs">پارێزگا</label>
                         <input
                           type="text"
                           name="province"
                           value={formData.province}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="پارێزگا"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           پەروەردە
                         </label>
                         <input
@@ -1779,23 +1777,23 @@ export function App() {
                           name="education"
                           value={formData.education}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="پەروەردە"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">گەڕەک</label>
+                        <label className="form-label text-xs">گەڕەک</label>
                         <input
                           type="text"
                           name="district2"
                           value={formData.district2}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                           placeholder="گەڕەک"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-[9px]">
+                        <label className="form-label text-xs">
                           ساڵی خوێندن
                         </label>
                         <input
@@ -1803,7 +1801,7 @@ export function App() {
                           name="studyYear"
                           value={formData.studyYear}
                           readOnly
-                          className="form-input h-7 text-[10px]"
+                          className="form-input h-8 text-xs"
                         />
                       </div>
                     </div>
@@ -1811,9 +1809,9 @@ export function App() {
                 </div>
                 {/* Subjects Table */}
                 <div>
-                  <div className="table-header p-1.5 text-[11px]">وانەکان</div>
+                  <div className="table-header p-2 text-sm">وانەکان</div>
                   <div className="table-container">
-                    <div className="grid grid-cols-9 gap-0.5 p-1.5 bg-gray-50">
+                    <div className="grid grid-cols-9 gap-1 p-2 bg-gray-50">
                       {formData.subjects.map((subject, i) => {
                         const isReadOnly = i === 0 || i === 7 || i === 8
                         const placeholderText =
@@ -1824,14 +1822,14 @@ export function App() {
                             type="text"
                             value={subject}
                             readOnly
-                            className={`table-cell ${isReadOnly ? 'bg-gray-100 font-bold' : ''} h-7 text-[9px] p-0.5`}
+                            className={`table-cell ${isReadOnly ? 'bg-gray-100 font-bold' : ''} h-8 text-[10px] p-1`}
                             placeholder={placeholderText}
                           />
                         )
                       })}
                     </div>
-                    <div className="grid grid-cols-10 gap-0.5 p-1.5 bg-red-50">
-                      <div className="table-label-red text-[9px] py-1">
+                    <div className="grid grid-cols-10 gap-1 p-2 bg-red-50">
+                      <div className="table-label-red text-xs py-1.5">
                         بە ژمارە
                       </div>
                       {formData.firstGradesNumeric.map((grade, i) => (
@@ -1840,13 +1838,13 @@ export function App() {
                           type="text"
                           value={grade}
                           readOnly
-                          className="table-cell-red h-7 text-[9px] p-0.5"
+                          className="table-cell-red h-8 text-[10px] p-1"
                           placeholder="نمرە"
                         />
                       ))}
                     </div>
-                    <div className="grid grid-cols-10 gap-0.5 p-1.5 bg-red-50">
-                      <div className="table-label-red text-[9px] py-1">
+                    <div className="grid grid-cols-10 gap-1 p-2 bg-red-50">
+                      <div className="table-label-red text-xs py-1.5">
                         بەنووسین
                       </div>
                       {formData.firstGradesWritten.map((grade, i) => (
@@ -1855,13 +1853,13 @@ export function App() {
                           type="text"
                           value={grade}
                           readOnly
-                          className="table-cell-red h-7 text-[9px] p-0.5"
+                          className="table-cell-red h-8 text-[10px] p-1"
                           placeholder="نمرە"
                         />
                       ))}
                     </div>
-                    <div className="grid grid-cols-10 gap-0.5 p-1.5 bg-yellow-50">
-                      <div className="table-label-yellow text-[9px] py-1">
+                    <div className="grid grid-cols-10 gap-1 p-2 bg-yellow-50">
+                      <div className="table-label-yellow text-xs py-1.5">
                         خولی دووەم
                       </div>
                       {formData.secondGradesNumeric.map((grade, i) => (
@@ -1870,13 +1868,13 @@ export function App() {
                           type="text"
                           value={grade}
                           readOnly
-                          className="table-cell-yellow h-7 text-[9px] p-0.5"
+                          className="table-cell-yellow h-8 text-[10px] p-1"
                           placeholder="نمرە"
                         />
                       ))}
                     </div>
-                    <div className="grid grid-cols-10 gap-0.5 p-1.5 bg-yellow-50">
-                      <div className="table-label-yellow text-[9px] py-1">
+                    <div className="grid grid-cols-10 gap-1 p-2 bg-yellow-50">
+                      <div className="table-label-yellow text-xs py-1.5">
                         بەنووسین
                       </div>
                       {formData.secondGradesWritten.map((grade, i) => (
@@ -1885,7 +1883,7 @@ export function App() {
                           type="text"
                           value={grade}
                           readOnly
-                          className="table-cell-yellow h-7 text-[9px] p-0.5"
+                          className="table-cell-yellow h-8 text-[10px] p-1"
                           placeholder="نمرە"
                         />
                       ))}
@@ -1895,11 +1893,11 @@ export function App() {
               </div>
             </div>
             {/* Footer */}
-            <div className="shrink-0 mt-2 pt-1.5 border-t-2 border-red-500">
-              <div className="grid grid-cols-4 gap-1.5 text-[10px] mb-1.5">
-                <div className="flex items-center gap-1.5 bg-gradient-to-r from-red-50 to-red-100 p-1.5 rounded-lg">
+            <div className="shrink-0 mt-auto pt-2 border-t-2 border-red-500">
+              <div className="grid grid-cols-4 gap-2 text-xs mb-2">
+                <div className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-red-100 p-2 rounded-lg">
                   <svg
-                    className="w-3 h-3 text-red-600 flex-shrink-0"
+                    className="w-4 h-4 text-red-600 flex-shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -1913,9 +1911,9 @@ export function App() {
                   </svg>
                   <span className="font-medium">0772 911 21 21</span>
                 </div>
-                <div className="flex items-center gap-1.5 bg-gradient-to-r from-red-50 to-red-100 p-1.5 rounded-lg">
+                <div className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-red-100 p-2 rounded-lg">
                   <svg
-                    className="w-3 h-3 text-red-600 flex-shrink-0"
+                    className="w-4 h-4 text-red-600 flex-shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -1929,9 +1927,9 @@ export function App() {
                   </svg>
                   <span className="font-medium">0751 911 21 21</span>
                 </div>
-                <div className="flex items-center gap-1.5 bg-gradient-to-r from-blue-50 to-blue-100 p-1.5 rounded-lg">
+                <div className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-blue-100 p-2 rounded-lg">
                   <svg
-                    className="w-3 h-3 text-blue-600 flex-shrink-0"
+                    className="w-4 h-4 text-blue-600 flex-shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -1947,9 +1945,9 @@ export function App() {
                     www.kti.edu.iq
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 bg-gradient-to-r from-blue-50 to-blue-100 p-1.5 rounded-lg">
+                <div className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-blue-100 p-2 rounded-lg">
                   <svg
-                    className="w-3 h-3 text-blue-600 flex-shrink-0"
+                    className="w-4 h-4 text-blue-600 flex-shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -1966,7 +1964,7 @@ export function App() {
                   </span>
                 </div>
               </div>
-              <p className="text-center text-[9px] text-gray-600">
+              <p className="text-center text-xs text-gray-600">
                 Kurdistan Technical Institute - Sulaymaniyah Heights, Kurdistan
                 Region - Iraq
               </p>
@@ -1986,19 +1984,19 @@ export function App() {
           }}
         >
           <div className="flex flex-col h-full">
-            <div className="flex-grow min-h-0 overflow-hidden space-y-1.5">
+            <div className="flex-grow min-h-0 space-y-3">
               {/* Top Two Sections */}
-              <div className="grid grid-cols-2 gap-1.5">
+              <div className="grid grid-cols-2 gap-2">
                 {/* Right Section */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-1 text-[11px]">
+                  <div className="section-header-modern text-white text-center py-2 text-sm">
                     <span className="font-bold tracking-wider">
                       خانەی تایبەت بە بەریوەبەری خوێندنگە
                     </span>
                   </div>
-                  <div className="modern-card p-2 space-y-1.5">
+                  <div className="modern-card p-3 space-y-2">
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ناوی خوێندنگە
                       </label>
                       <input
@@ -2006,12 +2004,12 @@ export function App() {
                         name="instituteName"
                         value={formData.instituteName || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="ناوی خوێندنگە"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ناوی بەریوەبەر
                       </label>
                       <input
@@ -2019,12 +2017,12 @@ export function App() {
                         name="directorName"
                         value={formData.directorName || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="ناوی بەڕێوەبەر"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ژ. تەلەفۆن
                       </label>
                       <input
@@ -2032,28 +2030,28 @@ export function App() {
                         name="directorPhone"
                         value={formData.directorPhone || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="07XX XXX XXXX"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-center text-[9px]">
+                      <label className="form-label text-center text-xs">
                         واژو و ڕێکەوت و مۆر
                       </label>
-                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-14"></div>
+                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-20"></div>
                     </div>
                   </div>
                 </div>
                 {/* Left Section */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-1 text-[11px]">
+                  <div className="section-header-modern text-white text-center py-2 text-sm">
                     <span className="font-bold tracking-wider">
                       پەسەندکردن و پێشنیارسەندکردنەوەی نمرەکان
                     </span>
                   </div>
-                  <div className="modern-card p-2 space-y-1.5">
+                  <div className="modern-card p-3 space-y-2">
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         لە بەریوەبەرێتی پەروەردەی
                       </label>
                       <input
@@ -2061,12 +2059,12 @@ export function App() {
                         name="educationDirection"
                         value={formData.educationDirection || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="پەروەردەی..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ناوی بەریوەبەرێتی
                       </label>
                       <input
@@ -2074,39 +2072,39 @@ export function App() {
                         name="educationDirectorName"
                         value={formData.educationDirectorName || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="ناوی بەڕێوەبەرێتی"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">قەرا</label>
+                      <label className="form-label text-xs">قەرا</label>
                       <input
                         type="text"
                         name="decision"
                         value={formData.decision || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="بڕیار..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-center text-[9px]">
+                      <label className="form-label text-center text-xs">
                         واژو و مۆر
                       </label>
-                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-14"></div>
+                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-20"></div>
                     </div>
                   </div>
                 </div>
               </div>
               {/* Department Selection */}
               <div>
-                <div className="section-header-blue text-white text-center py-1 text-[11px]">
+                <div className="section-header-blue text-white text-center py-2 text-sm">
                   <span className="font-bold tracking-wider">
                     پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
                   </span>
                 </div>
-                <div className="modern-card p-2">
-                  <div className="grid grid-cols-3 gap-1.5">
+                <div className="modern-card p-3">
+                  <div className="grid grid-cols-3 gap-x-2 gap-y-1.5">
                     {[
                       'دەرماسازی',
                       'بەرسارانی',
@@ -2121,30 +2119,30 @@ export function App() {
                       'تەکنەلۆجیای ڕووینێتینگ و ئۆتۆمەیشن',
                       'تەندرارانی دیکۆر',
                     ].map((dept, i) => (
-                      <label key={i} className="radio-label py-0.5">
-                        <input
-                          type="radio"
-                          name="departmentChoice"
-                          value={dept}
-                          checked={formData.departmentChoice === dept}
-                          readOnly
-                          className="radio-input"
-                        />
-                        <span className="text-[10px] font-medium">{dept}</span>
-                      </label>
+                      <div
+                        key={i}
+                        className={`flex items-center gap-1.5 p-1 rounded-md ${formData.departmentChoice === dept ? 'bg-red-100' : ''}`}
+                      >
+                        <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center flex-shrink-0">
+                          {formData.departmentChoice === dept && (
+                            <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                          )}
+                        </div>
+                        <span className="text-xs font-medium">{dept}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
               </div>
               {/* Medical Declaration */}
               <div>
-                <div className="section-header-modern text-white text-center py-1 text-[11px]">
+                <div className="section-header-modern text-white text-center py-2 text-sm">
                   <span className="font-bold tracking-wider">
                     ئەو بەشەی دەتەوێت تێیدا بخوێنیت
                   </span>
                 </div>
-                <div className="info-box-warning p-1.5">
-                  <p className="text-[9px] leading-tight text-gray-800">
+                <div className="info-box-warning p-2">
+                  <p className="text-xs leading-tight text-gray-800">
                     پێویستە زانیاری و سەرەدانێکی وردبێتەوە، زانای(١٩٥٠)
                     لەڕێکەوتی(٢٠٢٥/١/١٨)، بەکەم خانی (٧)، بەکەم خانی (٢)
                     هەماڵاران پرێکەمەوە، بەڵام بەکشتنی هەماڵاردن بەکەم بیوەری
@@ -2156,13 +2154,13 @@ export function App() {
               </div>
               {/* Certificate Section */}
               <div>
-                <div className="section-header-blue text-white text-center py-1 text-[11px]">
+                <div className="section-header-blue text-white text-center py-2 text-sm">
                   <span className="font-bold tracking-wider">شوێننامە</span>
                 </div>
-                <div className="modern-card p-2 space-y-1.5">
-                  <div className="grid grid-cols-5 gap-1.5">
+                <div className="modern-card p-3 space-y-2">
+                  <div className="grid grid-cols-5 gap-2">
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ناساندنی بازی شارستانی
                       </label>
                       <input
@@ -2170,12 +2168,12 @@ export function App() {
                         name="certificate0"
                         value={formData.certificate0 || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ژمارەی ناسنامە
                       </label>
                       <input
@@ -2183,12 +2181,12 @@ export function App() {
                         name="certificate1"
                         value={formData.certificate1 || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ژمارەی تۆمار
                       </label>
                       <input
@@ -2196,12 +2194,12 @@ export function App() {
                         name="certificate2"
                         value={formData.certificate2 || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ژمارەی لایەو
                       </label>
                       <input
@@ -2209,12 +2207,12 @@ export function App() {
                         name="certificate3"
                         value={formData.certificate3 || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         شوێنی دەرچوون
                       </label>
                       <input
@@ -2222,7 +2220,7 @@ export function App() {
                         name="certificate4"
                         value={formData.certificate4 || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="..."
                       />
                     </div>
@@ -2231,37 +2229,35 @@ export function App() {
               </div>
               {/* Nationality Section */}
               <div>
-                <div className="section-header-gray text-white text-center py-1 text-[11px]">
+                <div className="section-header-gray text-white text-center py-2 text-sm">
                   <span className="font-bold tracking-wider">ڕەگەزنامە</span>
                 </div>
-                <div className="modern-card p-2 space-y-1.5">
-                  <div className="flex gap-3">
-                    <label className="radio-label">
-                      <input
-                        type="radio"
-                        name="nationality2"
-                        value="iraqi"
-                        checked={formData.nationality2 === 'iraqi'}
-                        readOnly
-                        className="radio-input"
-                      />
-                      <span className="text-[10px]">عێراقی</span>
-                    </label>
-                    <label className="radio-label">
-                      <input
-                        type="radio"
-                        name="nationality2"
-                        value="other"
-                        checked={formData.nationality2 === 'other'}
-                        readOnly
-                        className="radio-input"
-                      />
-                      <span className="text-[10px]">هی تر</span>
-                    </label>
+                <div className="modern-card p-3 space-y-2">
+                  <div className="flex gap-4">
+                    <div
+                      className={`flex items-center gap-1.5 p-1 rounded-md ${formData.nationality2 === 'iraqi' ? 'bg-red-100' : ''}`}
+                    >
+                      <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                        {formData.nationality2 === 'iraqi' && (
+                          <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                        )}
+                      </div>
+                      <span className="text-xs">عێراقی</span>
+                    </div>
+                    <div
+                      className={`flex items-center gap-1.5 p-1 rounded-md ${formData.nationality2 === 'other' ? 'bg-red-100' : ''}`}
+                    >
+                      <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                        {formData.nationality2 === 'other' && (
+                          <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                        )}
+                      </div>
+                      <span className="text-xs">هی تر</span>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-3 gap-1.5">
+                  <div className="grid grid-cols-3 gap-2">
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ژمارەی پەگەزنامە
                       </label>
                       <input
@@ -2269,12 +2265,12 @@ export function App() {
                         name="nationalityNumber"
                         value={formData.nationalityNumber || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="ژمارەی ڕەگەزنامە"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ژمارەی تۆمار
                       </label>
                       <input
@@ -2282,12 +2278,12 @@ export function App() {
                         name="registrationNumber"
                         value={formData.registrationNumber || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="ژمارەی تۆمار"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ساڵ و شوێنی دەرچوون
                       </label>
                       <input
@@ -2295,7 +2291,7 @@ export function App() {
                         name="issueYearPlace"
                         value={formData.issueYearPlace || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                       />
                     </div>
                   </div>
@@ -2303,15 +2299,15 @@ export function App() {
               </div>
               {/* Family Card Section */}
               <div>
-                <div className="section-header-gray text-white text-center py-1 text-[11px]">
+                <div className="section-header-gray text-white text-center py-2 text-sm">
                   <span className="font-bold tracking-wider">
                     کارتی نیشتیمانی
                   </span>
                 </div>
-                <div className="modern-card p-2 space-y-1.5">
-                  <div className="grid grid-cols-4 gap-1.5">
+                <div className="modern-card p-3 space-y-2">
+                  <div className="grid grid-cols-4 gap-2">
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ژمارەی کارت
                       </label>
                       <input
@@ -2319,12 +2315,12 @@ export function App() {
                         name="familyCardNumber"
                         value={formData.familyCardNumber || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="ژمارەی کارت"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         شوێنی دەرچوون
                       </label>
                       <input
@@ -2332,12 +2328,12 @@ export function App() {
                         name="familyCardIssuePlace"
                         value={formData.familyCardIssuePlace || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="شوێنی دەرچوون"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         ڕێکەوتی دەرچوون
                       </label>
                       <input
@@ -2345,11 +2341,11 @@ export function App() {
                         name="familyCardIssueDate"
                         value={formData.familyCardIssueDate || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-[9px]">
+                      <label className="form-label text-xs">
                         کۆدی خێزانی
                       </label>
                       <input
@@ -2357,7 +2353,7 @@ export function App() {
                         name="familyCode"
                         value={formData.familyCode || ''}
                         readOnly
-                        className="form-input h-7 text-[10px]"
+                        className="form-input h-8 text-xs"
                         placeholder="کۆدی خێزانی"
                       />
                     </div>
@@ -2365,20 +2361,18 @@ export function App() {
                 </div>
               </div>
               {/* Bottom Signature Section */}
-              <div className="grid grid-cols-2 gap-1.5">
-                <div className="modern-card p-2">
-                  <label className="block text-gray-700 font-bold text-center text-[10px] mb-1">
+              <div className="grid grid-cols-2 gap-2 mt-auto">
+                <div className="modern-card p-3">
+                  <label className="block text-gray-700 font-bold text-center text-sm mb-2">
                     ناوی سیاڵی فێرخواز
                   </label>
-                  <div className="border-t-2 border-gray-400 mt-3"></div>
+                  <div className="border-t-2 border-gray-400 mt-8"></div>
                 </div>
-                <div className="modern-card p-2">
-                  <label className="block text-gray-700 font-bold text-center text-[10px] mb-1">
-                    ڕێکەوت
-                    <br />
-                    واژو
+                <div className="modern-card p-3">
+                  <label className="block text-gray-700 font-bold text-center text-sm mb-2">
+                    ڕێکەوت / واژو
                   </label>
-                  <div className="border-t-2 border-gray-400 mt-3"></div>
+                  <div className="border-t-2 border-gray-400 mt-8"></div>
                 </div>
               </div>
             </div>
