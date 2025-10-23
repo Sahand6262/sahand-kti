@@ -30,20 +30,22 @@ const FormContent = ({
               />
             </svg>
           </div>
-          <span className="font-bold tracking-wider text-lg">زانیاری كەسی</span>
+          <span className="font-bold tracking-wider text-lg">
+            زانیاری کەسی
+          </span>
         </div>
       </div>
       <div className="modern-card-enhanced">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="form-group-modern">
-            <label className="modern-label">ناوی فێرخواز</label>
+            <label className="modern-label">ناوی چواری فێرخواز</label>
             <input
               type="text"
               name="personalName"
               value={formData.personalName}
               onChange={handleChange}
               className="modern-input"
-              placeholder="ناوی سیانی"
+              placeholder="ناوی چواری"
             />
           </div>
           <div className="form-group-modern">
@@ -80,48 +82,70 @@ const FormContent = ({
               name="birthYear"
               value={formData.birthYear}
               onChange={handleChange}
-              className="modern-input"
+              className="modern-input text-right"
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-6">
           <div className="form-group-modern">
-            <label className="modern-label">ناونیشان</label>
+            <label className="modern-label">پارێزگا</label>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
               className="modern-input"
-              placeholder="ناونیشانی نیشتەجێبوون"
+              placeholder="پارێزگا"
             />
           </div>
           <div className="form-group-modern">
             <label className="modern-label">شار/ناوچە</label>
             <input
               type="text"
-              name="city"
-              value={formData.city}
+              name="cityArea"
+              value={formData.cityArea}
               onChange={handleChange}
               className="modern-input"
-              placeholder="شار"
+              placeholder="شار/ناوچە"
             />
           </div>
           <div className="form-group-modern">
             <label className="modern-label">گەڕەک</label>
             <input
               type="text"
-              name="district"
-              value={formData.district}
+              name="neighborhood"
+              value={formData.neighborhood}
               onChange={handleChange}
               className="modern-input"
               placeholder="گەڕەک"
             />
           </div>
+          <div className="form-group-modern">
+            <label className="modern-label">کۆڵان</label>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="modern-input"
+              placeholder="کۆڵان"
+            />
+          </div>
+          <div className="form-group-modern">
+            <label className="modern-label">خانوو</label>
+            <input
+              type="text"
+              name="district"
+              value={formData.district}
+              onChange={handleChange}
+              className="modern-input"
+              placeholder="خانوو"
+            />
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           <div className="form-group-modern">
-            <label className="modern-label">ژ. مۆبایل(١)</label>
+            <label className="modern-label">ژ. مۆبایل (١)</label>
             <input
               type="text"
               name="phone1"
@@ -132,7 +156,7 @@ const FormContent = ({
             />
           </div>
           <div className="form-group-modern">
-            <label className="modern-label">ژ. مۆبایل(٢)</label>
+            <label className="modern-label">ژ. مۆبایل (٢)</label>
             <input
               type="text"
               name="phone2"
@@ -143,7 +167,7 @@ const FormContent = ({
             />
           </div>
           <div className="form-group-modern">
-            <label className="modern-label">ئیمەیل</label>
+            <label className="modern-label">ئیمەیڵ</label>
             <input
               type="email"
               name="email"
@@ -151,6 +175,52 @@ const FormContent = ({
               onChange={handleChange}
               className="modern-input"
               placeholder="example@email.com"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+          <div className="form-group-modern">
+            <label className="modern-label">ناوی بەخێوکەر</label>
+            <input
+              type="text"
+              name="guardianName"
+              value={formData.guardianName || ''}
+              onChange={handleChange}
+              className="modern-input"
+              placeholder="ناوی بەخێوکەر"
+            />
+          </div>
+          <div className="form-group-modern">
+            <label className="modern-label">پلەی خزمایەتی</label>
+            <input
+              type="text"
+              name="guardianRelation"
+              value={formData.guardianRelation || ''}
+              onChange={handleChange}
+              className="modern-input"
+              placeholder="پلەی خزمایەتی"
+            />
+          </div>
+          <div className="form-group-modern">
+            <label className="modern-label">پیشە</label>
+            <input
+              type="text"
+              name="guardianOccupation"
+              value={formData.guardianOccupation || ''}
+              onChange={handleChange}
+              className="modern-input"
+              placeholder="پیشە"
+            />
+          </div>
+          <div className="form-group-modern">
+            <label className="modern-label">ژ.مۆبایل</label>
+            <input
+              type="text"
+              name="guardianPhone"
+              value={formData.guardianPhone || ''}
+              onChange={handleChange}
+              className="modern-input"
+              placeholder="07XX XXX XXXX"
             />
           </div>
         </div>
@@ -175,13 +245,15 @@ const FormContent = ({
               />
             </svg>
           </div>
-          <span className="font-bold tracking-wider text-lg">ئاستی خوێندن</span>
+          <span className="font-bold tracking-wider text-lg">
+            ئاستی خوێندن
+          </span>
         </div>
       </div>
       <div className="modern-card-enhanced">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="form-group-modern">
-            <label className="modern-label">دەرچووی دەورانەی</label>
+            <label className="modern-label">دەرچووی دوانزەی ئامادەیی</label>
             <div className="modern-badge">زانستی</div>
           </div>
           <div className="form-group-modern">
@@ -191,11 +263,11 @@ const FormContent = ({
               name="graduationYear"
               value={formData.graduationYear}
               onChange={handleChange}
-              className="modern-input"
+              className="modern-input text-right"
             />
           </div>
           <div className="form-group-modern">
-            <label className="modern-label">jۆری سیستەم</label>
+            <label className="modern-label">جۆری سیستەم</label>
             <div className="flex gap-4 mt-2">
               <label className="modern-radio-label">
                 <input
@@ -217,22 +289,47 @@ const FormContent = ({
                   onChange={handleChange}
                   className="modern-radio"
                 />
-                <span>سودی</span>
+                <span>سویدی</span>
               </label>
             </div>
           </div>
         </div>
-        <div className="modern-warning-box mt-6">
-          <label className="modern-label text-center block mb-4">
-            ژمارەی تاقیکردنەوە
-          </label>
-          <div className="px-4 md:px-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div className="form-group-modern">
+            <label className="modern-label">خولی</label>
+            <div className="flex gap-4 mt-2">
+              <label className="modern-radio-label">
+                <input
+                  type="radio"
+                  name="examRound"
+                  value="first"
+                  checked={formData.examRound === 'first'}
+                  onChange={handleChange}
+                  className="modern-radio"
+                />
+                <span>یەکەم</span>
+              </label>
+              <label className="modern-radio-label">
+                <input
+                  type="radio"
+                  name="examRound"
+                  value="second"
+                  checked={formData.examRound === 'second'}
+                  onChange={handleChange}
+                  className="modern-radio"
+                />
+                <span>دووەم</span>
+              </label>
+            </div>
+          </div>
+          <div className="form-group-modern">
+            <label className="modern-label">ژمارەی تاقیکردنەوە</label>
             <input
               type="text"
               name="examTestNumbers"
               value={formData.examTestNumbers}
               onChange={handleChange}
-              className="modern-input text-center tracking-[.5em] font-mono"
+              className="modern-input"
               placeholder="٠١٢٣٤٥٦٧٨٩٠١٢"
               maxLength={13}
               inputMode="numeric"
@@ -262,15 +359,15 @@ const FormContent = ({
             </svg>
           </div>
           <span className="font-bold tracking-wider text-lg">
-            زانیاری نمرەی فێرخواز
+            زانیاری سەبارەت بە نمرەی فێرخواز
           </span>
         </div>
       </div>
       <div className="modern-card-enhanced">
-        <div className="modern-warning-box mb-6">
+        <div className="bg-white rounded-xl border-2 border-red-200 p-6 shadow-md mb-6">
           <div className="flex items-start gap-3">
             <svg
-              className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5"
+              className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -283,8 +380,8 @@ const FormContent = ({
               />
             </svg>
             <p className="text-gray-700 text-sm leading-relaxed">
-              بەڕێوەبەری بەڕێز: نمرەکانی خوارەوە دەبێت هاوتای بڕوانامە بێت کە
-              دەهێنرێت بۆ پەیمانگە.
+              بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم بەشەدا
+              هەبێت، ئێمە لێی بەرپرس نین.
             </p>
           </div>
         </div>
@@ -329,104 +426,98 @@ const FormContent = ({
               name="studyYear"
               value={formData.studyYear}
               onChange={handleChange}
-              className="modern-input"
+              className="modern-input text-right"
             />
           </div>
         </div>
-      </div>
-    </div>
-    {/* Subjects Table */}
-    <div className="group">
-      <div className="modern-table-header">
-        <span className="font-bold text-lg">وانەکان</span>
-      </div>
-      <div className="modern-table-container">
-        <div className="grid grid-cols-3 md:grid-cols-9 gap-2 p-4 bg-gradient-to-br from-gray-50 to-gray-100">
-          {formData.subjects.map((subject, i) => {
-            const isReadOnly = i === 0 || i === 7 || i === 8
-            const placeholderText = i > 0 && i < 7 ? `وانە ${i}` : ''
-            return (
+        <div className="modern-table-container mt-6">
+          <div className="grid grid-cols-3 md:grid-cols-11 gap-2 p-4 bg-gradient-to-br from-gray-50 to-gray-100">
+            {formData.subjects.map((subject, i) => {
+              const isReadOnly = i === 0 || i === 9 || i === 10
+              const placeholderText = i > 0 && i < 9 ? `وانە ${i}` : ''
+              return (
+                <input
+                  key={i}
+                  type="text"
+                  value={subject}
+                  onChange={(e) =>
+                    handleArrayChange('subjects', i, e.target.value)
+                  }
+                  readOnly={isReadOnly}
+                  className={`modern-table-cell ${isReadOnly ? 'bg-gradient-to-br from-gray-100 to-gray-200 font-bold' : ''}`}
+                  placeholder={placeholderText}
+                />
+              )
+            })}
+          </div>
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 p-4 bg-gradient-to-br from-red-50 to-rose-50">
+            <div className="modern-table-label bg-gradient-to-br from-red-500 to-rose-600">
+              بە ژمارە
+            </div>
+            {formData.firstGradesNumeric.map((grade, i) => (
               <input
                 key={i}
                 type="text"
-                value={subject}
+                value={grade}
                 onChange={(e) =>
-                  handleArrayChange('subjects', i, e.target.value)
+                  handleArrayChange('firstGradesNumeric', i, e.target.value)
                 }
-                readOnly={isReadOnly}
-                className={`modern-table-cell ${isReadOnly ? 'bg-gradient-to-br from-gray-100 to-gray-200 font-bold' : ''}`}
-                placeholder={placeholderText}
+                className="modern-table-cell-colored border-red-200"
+                placeholder="نمرە"
               />
-            )
-          })}
-        </div>
-        <div className="grid grid-cols-4 md:grid-cols-10 gap-2 p-4 bg-gradient-to-br from-red-50 to-rose-50">
-          <div className="modern-table-label bg-gradient-to-br from-red-500 to-rose-600">
-            بە ژمارە
+            ))}
           </div>
-          {formData.firstGradesNumeric.map((grade, i) => (
-            <input
-              key={i}
-              type="text"
-              value={grade}
-              onChange={(e) =>
-                handleArrayChange('firstGradesNumeric', i, e.target.value)
-              }
-              className="modern-table-cell-colored border-red-200"
-              placeholder="نمرە"
-            />
-          ))}
-        </div>
-        <div className="grid grid-cols-4 md:grid-cols-10 gap-2 p-4 bg-gradient-to-br from-red-50 to-rose-50">
-          <div className="modern-table-label bg-gradient-to-br from-red-500 to-rose-600">
-            بەنووسین
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 p-4 bg-gradient-to-br from-red-50 to-rose-50">
+            <div className="modern-table-label bg-gradient-to-br from-red-500 to-rose-600">
+              بە نووسین
+            </div>
+            {formData.firstGradesWritten.map((grade, i) => (
+              <input
+                key={i}
+                type="text"
+                value={grade}
+                onChange={(e) =>
+                  handleArrayChange('firstGradesWritten', i, e.target.value)
+                }
+                className="modern-table-cell-colored border-red-200"
+                placeholder="نمرە"
+              />
+            ))}
           </div>
-          {formData.firstGradesWritten.map((grade, i) => (
-            <input
-              key={i}
-              type="text"
-              value={grade}
-              onChange={(e) =>
-                handleArrayChange('firstGradesWritten', i, e.target.value)
-              }
-              className="modern-table-cell-colored border-red-200"
-              placeholder="نمرە"
-            />
-          ))}
-        </div>
-        <div className="grid grid-cols-4 md:grid-cols-10 gap-2 p-4 bg-gradient-to-br from-yellow-50 to-amber-50">
-          <div className="modern-table-label bg-gradient-to-br from-yellow-500 to-amber-600">
-            خولی دووەم
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 p-4 bg-gradient-to-br from-yellow-50 to-amber-50">
+            <div className="modern-table-label bg-gradient-to-br from-yellow-500 to-amber-600">
+              خولی دووەم
+            </div>
+            {formData.secondGradesNumeric.map((grade, i) => (
+              <input
+                key={i}
+                type="text"
+                value={grade}
+                onChange={(e) =>
+                  handleArrayChange('secondGradesNumeric', i, e.target.value)
+                }
+                className="modern-table-cell-colored border-yellow-200"
+                placeholder="نمرە"
+              />
+            ))}
           </div>
-          {formData.secondGradesNumeric.map((grade, i) => (
-            <input
-              key={i}
-              type="text"
-              value={grade}
-              onChange={(e) =>
-                handleArrayChange('secondGradesNumeric', i, e.target.value)
-              }
-              className="modern-table-cell-colored border-yellow-200"
-              placeholder="نمرە"
-            />
-          ))}
-        </div>
-        <div className="grid grid-cols-4 md:grid-cols-10 gap-2 p-4 bg-gradient-to-br from-yellow-50 to-amber-50">
-          <div className="modern-table-label bg-gradient-to-br from-yellow-500 to-amber-600">
-            بەنووسین
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 p-4 bg-gradient-to-br from-yellow-50 to-amber-50">
+            <div className="modern-table-label bg-gradient-to-br from-yellow-500 to-amber-600">
+              بە نووسین
+            </div>
+            {formData.secondGradesWritten.map((grade, i) => (
+              <input
+                key={i}
+                type="text"
+                value={grade}
+                onChange={(e) =>
+                  handleArrayChange('secondGradesWritten', i, e.target.value)
+                }
+                className="modern-table-cell-colored border-yellow-200"
+                placeholder="نمرە"
+              />
+            ))}
           </div>
-          {formData.secondGradesWritten.map((grade, i) => (
-            <input
-              key={i}
-              type="text"
-              value={grade}
-              onChange={(e) =>
-                handleArrayChange('secondGradesWritten', i, e.target.value)
-              }
-              className="modern-table-cell-colored border-yellow-200"
-              placeholder="نمرە"
-            />
-          ))}
         </div>
       </div>
     </div>
@@ -436,6 +527,7 @@ const SecondFormContent = ({
   formData,
   handleChange,
   handleArrayChange,
+  handleDepartmentToggle,
   isMobile = false,
   isPdf = false,
 }) => (
@@ -462,7 +554,7 @@ const SecondFormContent = ({
               </svg>
             </div>
             <span className="font-bold tracking-wider text-sm md:text-base">
-              خانەی تایبەت بە بەریوەبەری خوێندنگە
+              خانەی تایبەت بە بەڕێوەبەری خوێندنگە
             </span>
           </div>
         </div>
@@ -480,7 +572,7 @@ const SecondFormContent = ({
               />
             </div>
             <div className="form-group-modern">
-              <label className="modern-label">ناوی بەریوەبەر</label>
+              <label className="modern-label">ناوی بەڕێوەبەر</label>
               <input
                 type="text"
                 name="directorName"
@@ -503,7 +595,7 @@ const SecondFormContent = ({
             </div>
             <div className="form-group-modern">
               <label className="modern-label text-center">
-                واژو و ڕێکەوت و مۆر
+                واژۆ و ڕێکەوت و مۆر
               </label>
               <div className="modern-signature-box"></div>
             </div>
@@ -530,25 +622,19 @@ const SecondFormContent = ({
               </svg>
             </div>
             <span className="font-bold tracking-wider text-sm md:text-base">
-              پەسەندکردن و پێشنیارسەندکردنەوەی نمرەکان
+              پەسەندکردن و پشتڕاستکردنەوەی نمرەکان
             </span>
           </div>
         </div>
         <div className="modern-card-enhanced">
           <div className="space-y-5">
-            <div className="form-group-modern">
-              <label className="modern-label">لە بەریوەبەرێتی پەروەردەی</label>
-              <input
-                type="text"
-                name="educationDirection"
-                value={formData.educationDirection || ''}
-                onChange={handleChange}
-                className="modern-input"
-                placeholder="پەروەردەی..."
-              />
+            <div className="text-center">
+              <p className="modern-label font-bold">
+                لە بەڕێوەبەرێتی پەروەردەی ڕۆژئاوا / ڕۆژهەڵات
+              </p>
             </div>
             <div className="form-group-modern">
-              <label className="modern-label">ناوی بەریوەبەرێتی</label>
+              <label className="modern-label">ناوی بەڕێوەبەرێتی</label>
               <input
                 type="text"
                 name="educationDirectorName"
@@ -559,18 +645,18 @@ const SecondFormContent = ({
               />
             </div>
             <div className="form-group-modern">
-              <label className="modern-label">قەرا</label>
+              <label className="modern-label">قەزا</label>
               <input
                 type="text"
                 name="decision"
                 value={formData.decision || ''}
                 onChange={handleChange}
                 className="modern-input"
-                placeholder="بڕیار..."
+                placeholder="قەزا..."
               />
             </div>
             <div className="form-group-modern">
-              <label className="modern-label text-center">واژو و مۆر</label>
+              <label className="modern-label text-center">واژۆ و مۆر</label>
               <div className="modern-signature-box"></div>
             </div>
           </div>
@@ -597,38 +683,46 @@ const SecondFormContent = ({
             </svg>
           </div>
           <span className="font-bold tracking-wider text-lg">
-            پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
+            بەشەکانی پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
           </span>
         </div>
       </div>
       <div className="modern-card-enhanced">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
-            'دەرماسازی',
-            'بەرسارانی',
+            'دەرمانسازی',
+            'پەرستاری',
             'شیکردنەوەی نەخۆشییەکان',
-            'دوانەگەری پزیشکی(پەرستاری)',
-            'سێژن',
-            'کارگێری گاز',
-            'زمانەرانی',
+            'جوانکاری پزیشکی (پەرستاری)',
+            'سڕکردن',
+            'یاریدەدەری پزیشکی ددان',
+            'کارگێڕی کار',
+            'ژمێریاری',
             'دیجیتاڵ میدیا و مارکێتینگ',
-            'تەکنەلۆجیای زانیاری',
-            'تەکنەلۆجیای ڕۆوێنێتینگ و ئۆتۆمەیشن',
-            'تەکنەلۆجیای ڕووینێتینگ و ئۆتۆمەیشن',
-            'تەندرارانی دیکۆر',
-          ].map((dept, i) => (
-            <label key={i} className="modern-department-option">
-              <input
-                type="radio"
-                name="departmentChoice"
-                value={dept}
-                checked={formData.departmentChoice === dept}
-                onChange={handleChange}
-                className="modern-radio"
-              />
-              <span className="font-medium">{dept}</span>
-            </label>
-          ))}
+            'تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن',
+            'تەکنەلۆژیای زانیاری',
+            'ئەندازیاری دیکۆر',
+          ].map((dept, i) => {
+            const selectionIndex = formData.departmentChoices.indexOf(dept)
+            const isSelected = selectionIndex !== -1
+            return (
+              <div
+                key={i}
+                onClick={() => handleDepartmentToggle(dept)}
+                className={`flex items-center gap-3 cursor-pointer px-4 py-4 bg-white/80 backdrop-blur-sm border-2 rounded-xl transition-all duration-300 hover:border-blue-300 hover:shadow-lg hover:scale-[1.02] ${isSelected ? 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-400 shadow-lg scale-[1.02]' : 'border-gray-200'}`}
+                role="checkbox"
+                aria-checked={isSelected}
+                tabIndex="0"
+              >
+                <div
+                  className={`w-6 h-6 border-2 rounded-md flex-shrink-0 flex items-center justify-center font-bold text-blue-600 text-sm transition-all duration-300 ${isSelected ? 'border-blue-500 bg-blue-100' : 'border-gray-300 bg-white'}`}
+                >
+                  {isSelected && <span>{selectionIndex + 1}</span>}
+                </div>
+                <span className="font-medium select-none">{dept}</span>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>
@@ -656,10 +750,10 @@ const SecondFormContent = ({
           </span>
         </div>
       </div>
-      <div className="modern-warning-box">
+      <div className="modern-card-enhanced bg-white">
         <div className="flex items-start gap-3">
           <svg
-            className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5"
+            className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -672,12 +766,12 @@ const SecondFormContent = ({
             />
           </svg>
           <p className="text-gray-700 text-sm leading-relaxed">
-            پێویستە زانیاری و سەرەدانێکی وردبێتەوە، زانای(١٩٥٠)
-            لەڕێکەوتی(٢٠٢٥/١/١٨)، بەکەم خانی (٧)، بەکەم خانی (٢) هەماڵاران
-            پرێکەمەوە، بەڵام بەکشتنی هەماڵاردن بەکەم بیوەری سەردەمی وەرگرتنە و
-            دوو هەماڵاردنەمی دیکە لە تەمەری هەموونیش گوسس بەتاڵ لیو بەتانە و
-            بەرێنی dۆاگاریس بەسەنەکە و کۆنەرەی فێرخواز و سەردەکانی وەزارەتی
-            خوێندنی باڵا، وەردەگیرێت.
+            بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی
+            (١٤/١٠/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی (٧)،
+            دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی هەڵبژاردنی یەکەم
+            پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی دیکە لە ئەگەری هەبوونی
+            کورسی بەتاڵ لەو بەشانە و بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و
+            مەرجەکانی وەزارەتی خوێندنی باڵا، وەردەگیرێت.
           </p>
         </div>
       </div>
@@ -701,22 +795,13 @@ const SecondFormContent = ({
               />
             </svg>
           </div>
-          <span className="font-bold tracking-wider text-lg">شوێننامە</span>
+          <span className="font-bold tracking-wider text-lg">
+            ناسنامەی باری شارستانی
+          </span>
         </div>
       </div>
       <div className="modern-card-enhanced">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          <div className="form-group-modern">
-            <label className="modern-label">ناساندنی بازی شارستانی</label>
-            <input
-              type="text"
-              name="certificate0"
-              value={formData.certificate0 || ''}
-              onChange={handleChange}
-              className="modern-input"
-              placeholder="..."
-            />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="form-group-modern">
             <label className="modern-label">ژمارەی ناسنامە</label>
             <input
@@ -740,7 +825,7 @@ const SecondFormContent = ({
             />
           </div>
           <div className="form-group-modern">
-            <label className="modern-label">ژمارەی لایەو</label>
+            <label className="modern-label">ژمارەی لاپەڕە</label>
             <input
               type="text"
               name="certificate3"
@@ -813,7 +898,7 @@ const SecondFormContent = ({
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="form-group-modern">
-            <label className="modern-label">ژمارەی پەگەزنامە</label>
+            <label className="modern-label">ژمارەی ڕەگەزنامە</label>
             <input
               type="text"
               name="nationalityNumber"
@@ -837,11 +922,12 @@ const SecondFormContent = ({
           <div className="form-group-modern">
             <label className="modern-label">ساڵ و شوێنی دەرچوون</label>
             <input
-              type="date"
+              type="text"
               name="issueYearPlace"
               value={formData.issueYearPlace || ''}
               onChange={handleChange}
               className="modern-input"
+              placeholder="ساڵ و شوێن..."
             />
           </div>
         </div>
@@ -902,7 +988,7 @@ const SecondFormContent = ({
               name="familyCardIssueDate"
               value={formData.familyCardIssueDate || ''}
               onChange={handleChange}
-              className="modern-input"
+              className="modern-input text-right"
             />
           </div>
           <div className="form-group-modern">
@@ -923,13 +1009,13 @@ const SecondFormContent = ({
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <div className="modern-card-enhanced">
         <label className="modern-label text-center block mb-4">
-          ناوی سیاڵی فێرخواز
+          ناوی سیانی فێرخواز
         </label>
         <div className="modern-signature-line"></div>
       </div>
       <div className="modern-card-enhanced">
         <label className="modern-label text-center block mb-4">
-          ڕێکەوت / واژو
+          ڕێکەوت / واژۆ
         </label>
         <div className="modern-signature-line"></div>
       </div>
@@ -960,6 +1046,8 @@ export function App() {
     address: '',
     city: '',
     district: '',
+    cityArea: '',
+    neighborhood: '',
     gender: '',
     phone1: '',
     phone2: '',
@@ -969,6 +1057,7 @@ export function App() {
     department: '',
     birthYear: '',
     educationSystem: '',
+    examRound: '',
     province: '',
     education: '',
     district2: '',
@@ -982,13 +1071,15 @@ export function App() {
       '',
       '',
       '',
+      '',
+      '',
       'کۆنمرەی پۆلی ١٢',
-      'ڕیژەی دەرچوون',
+      'ڕێژەی دەرچوون',
     ],
-    firstGradesNumeric: Array(9).fill(''),
-    firstGradesWritten: Array(9).fill(''),
-    secondGradesNumeric: Array(9).fill(''),
-    secondGradesWritten: Array(9).fill(''),
+    firstGradesNumeric: Array(11).fill(''),
+    firstGradesWritten: Array(11).fill(''),
+    secondGradesNumeric: Array(11).fill(''),
+    secondGradesWritten: Array(11).fill(''),
     // Second form fields
     fatherName: '',
     motherName: '',
@@ -1008,15 +1099,14 @@ export function App() {
     successRate: '',
     guardianName: '',
     guardianRelation: '',
+    guardianOccupation: '',
     guardianPhone: '',
-    guardianAddress: '',
     declaration: false,
     signatureDate: '',
     // Additional fields for second form
     instituteName: '',
     directorName: '',
     directorPhone: '',
-    educationDirection: '',
     educationDirectorName: '',
     decision: '',
     nationality2: '',
@@ -1027,7 +1117,12 @@ export function App() {
     familyCardIssuePlace: '',
     familyCardIssueDate: '',
     familyCode: '',
-    departmentChoice: '',
+    departmentChoices: [],
+    // FIX: Add missing certificate fields to the initial state
+    certificate1: '',
+    certificate2: '',
+    certificate3: '',
+    certificate4: '',
   })
   const [isGenerating, setIsGenerating] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -1068,6 +1163,21 @@ export function App() {
       }
     })
   }
+  const handleDepartmentToggle = (departmentName) => {
+    setFormData((prev) => {
+      const selections = [...prev.departmentChoices]
+      const existingIndex = selections.indexOf(departmentName)
+      if (existingIndex > -1) {
+        // Already selected, so remove it
+        selections.splice(existingIndex, 1)
+      } else if (selections.length < 3) {
+        // Not selected and we have room, so add it
+        selections.push(departmentName)
+      }
+      // If already 3 and not selected, do nothing.
+      return { ...prev, departmentChoices: selections }
+    })
+  }
   const handleNextStep = () => {
     setCurrentStep(2)
     window.scrollTo({
@@ -1097,8 +1207,8 @@ export function App() {
       const pageWidth = 210
       const pageHeight = 297
       const toPngOptions = {
-        quality: 0.98,
-        pixelRatio: 4,
+        quality: 0.99,
+        pixelRatio: 5,
         backgroundColor: '#ffffff',
         fontEmbedCss: FONT_EMBED_CSS,
         cacheBust: true,
@@ -1169,7 +1279,7 @@ export function App() {
   }
   return (
     <div
-      className="min-h-screen bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50 p-2 sm:p-4 md:p-6 lg:p-8 rtl relative overflow-hidden font-bold"
+      className="min-h-screen bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50 rtl relative overflow-hidden font-bold"
       dir="rtl"
     >
       {/* Animated Background Blobs */}
@@ -1197,7 +1307,7 @@ export function App() {
             </svg>
           </div>
           <span className="font-bold text-sm sm:text-base md:text-lg">
-            پی دی اف بە سەرکەوتووی دروست کرا!
+            پی دی ئێف بە سەرکەوتوویی دروست کرا!
           </span>
         </div>
       )}
@@ -1220,7 +1330,7 @@ export function App() {
           </div>
           <div>
             <p className="font-bold text-sm sm:text-base md:text-lg">
-              دروستکردنی پی دی اف سەرکەوتوو نەبوو
+              دروستکردنی پی دی ئێف سەرکەوتوو نەبوو
             </p>
             <p className="text-xs sm:text-sm text-gray-600">
               تکایە دووبارە هەوڵ بدەوە
@@ -1228,9 +1338,9 @@ export function App() {
           </div>
         </div>
       )}
-      <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center">
+      <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center p-4 md:p-8">
         {/* A4 Page Container - Responsive for viewing, fixed for PDF */}
-        <div className="w-full max-w-full sm:max-w-[95%] md:max-w-[90%] lg:max-w-[210mm] mx-auto mb-6">
+        <div className="w-full max-w-5xl mx-auto">
           {currentStep === 1 ? (
             <div className="animate-fade-in-up modern-page-container">
               <div className="p-6 sm:p-8 flex flex-col min-h-[500px] sm:min-h-[600px] lg:min-h-[297mm]">
@@ -1270,10 +1380,10 @@ export function App() {
                       </div>
                       <div className="text-right text-sm text-blue-700 w-32 flex-shrink-0">
                         <p className="font-semibold mb-1">
-                          هەرێمی كوردستان - عێراق
+                          هەرێمی کوردستان - عێراق
                         </p>
                         <p className="mb-0.5">وەزارەتی خوێندنی باڵا</p>
-                        <p>پەیمانگەی تەكنیكی كوردستان</p>
+                        <p>پەیمانگەی تەکنیکی کوردستان</p>
                       </div>
                     </div>
                   </div>
@@ -1291,7 +1401,10 @@ export function App() {
                 {/* Footer */}
                 <div className="shrink-0 mt-6 pt-6 modern-footer-border">
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm mb-4">
-                    <div className="modern-contact-card">
+                    <div className="modern-contact-card justify-center bg-white">
+                      <span className="font-medium text-black" dir="ltr">
+                        0772 911 21 21
+                      </span>
                       <svg
                         className="w-5 h-5 text-red-600 flex-shrink-0"
                         fill="none"
@@ -1305,9 +1418,11 @@ export function App() {
                           d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                         />
                       </svg>
-                      <span className="font-medium">0772 911 21 21</span>
                     </div>
-                    <div className="modern-contact-card">
+                    <div className="modern-contact-card justify-center bg-white">
+                      <span className="font-medium text-black" dir="ltr">
+                        0751 911 21 21
+                      </span>
                       <svg
                         className="w-5 h-5 text-red-600 flex-shrink-0"
                         fill="none"
@@ -1321,11 +1436,13 @@ export function App() {
                           d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                         />
                       </svg>
-                      <span className="font-medium">0751 911 21 21</span>
                     </div>
-                    <div className="modern-contact-card bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+                    <div className="modern-contact-card justify-center bg-white">
+                      <span className="font-medium text-black" dir="ltr">
+                        www.kti.edu.iq
+                      </span>
                       <svg
-                        className="w-5 h-5 text-blue-600 flex-shrink-0"
+                        className="w-5 h-5 text-red-600 flex-shrink-0"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -1337,13 +1454,13 @@ export function App() {
                           d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
                         />
                       </svg>
-                      <span className="font-medium text-blue-600">
-                        www.kti.edu.iq
-                      </span>
                     </div>
-                    <div className="modern-contact-card bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+                    <div className="modern-contact-card justify-center bg-white">
+                      <span className="font-medium text-black" dir="ltr">
+                        tomar@kti.edu.iq
+                      </span>
                       <svg
-                        className="w-5 h-5 text-blue-600 flex-shrink-0"
+                        className="w-5 h-5 text-red-600 flex-shrink-0"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -1355,9 +1472,6 @@ export function App() {
                           d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                         />
                       </svg>
-                      <span className="font-medium text-blue-600">
-                        tomar@kti.edu.iq
-                      </span>
                     </div>
                   </div>
                   <p className="text-center text-sm text-gray-600 tracking-wide">
@@ -1375,6 +1489,7 @@ export function App() {
                     formData={formData}
                     handleChange={handleChange}
                     handleArrayChange={handleArrayChange}
+                    handleDepartmentToggle={handleDepartmentToggle}
                     isMobile={false}
                     isPdf={false}
                   />
@@ -1436,7 +1551,7 @@ export function App() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  <span>دروستکردنی پی دی اف...</span>
+                  <span>دروستکردنی پی دی ئێف...</span>
                 </>
               ) : currentStep === 1 ? (
                 <>
@@ -1470,7 +1585,7 @@ export function App() {
                       d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                     />
                   </svg>
-                  <span>دروستکردنی پی دی اف</span>
+                  <span>دروستکردنی پی دی ئێف</span>
                 </>
               )}
             </div>
@@ -1494,19 +1609,19 @@ export function App() {
           className="bg-white flex flex-col font-bold"
           style={{
             width: '210mm',
-            height: '297mm',
+            height: 'auto',
+            minHeight: '297mm',
             boxSizing: 'border-box',
-            overflow: 'hidden',
-            padding: '10mm',
+            padding: '3mm',
           }}
         >
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col">
             {/* Header */}
             <div className="shrink-0 mb-4">
-              <div className="border-b-2 border-red-500 pb-2 mb-2">
+              <div className="border-b-2 border-red-500 pb-3 mb-2">
                 <div className="flex justify-between items-start">
                   <div className="border-2 border-red-500 rounded-lg p-2 w-20 h-24 flex items-center justify-center">
-                    <p className="text-xs text-gray-600 text-center">
+                    <p className="text-sm text-gray-600 text-center">
                       وێنەی فێرخواز
                     </p>
                   </div>
@@ -1514,48 +1629,48 @@ export function App() {
                     <img
                       src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
                       alt="Logo"
-                      className="h-16 mx-auto mb-2"
+                      className="h-20 mx-auto mb-2"
                     />
-                    <div className="text-blue-700 font-bold text-base">
+                    <div className="text-blue-700 font-bold text-lg">
                       <p>KURDISTAN TECHNICAL INSTITUTE</p>
                     </div>
                   </div>
-                  <div className="text-right text-sm text-blue-700 w-32 flex-shrink-0">
-                    <p className="font-semibold">هەرێمی كوردستان - عێراق</p>
+                  <div className="text-right text-base text-blue-700 w-36 flex-shrink-0">
+                    <p className="font-semibold">هەرێمی کوردستان - عێراق</p>
                     <p>وەزارەتی خوێندنی باڵا</p>
-                    <p>پەیمانگەی تەكنیكی كوردستان</p>
+                    <p>پەیمانگەی تەکنیکی کوردستان</p>
                   </div>
                 </div>
               </div>
             </div>
             {/* Form Content */}
             <div className="flex-grow min-h-0">
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {/* Personal Info */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-2 text-sm">
+                  <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
-                      زانیاری كەسی
+                      زانیاری کەسی
                     </span>
                   </div>
-                  <div className="modern-card p-3 space-y-2">
+                  <div className="modern-card p-4 space-y-3">
                     <div className="grid grid-cols-3 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-xs">
-                          ناوی فێرخواز
+                        <label className="form-label text-base">
+                          ناوی چواری فێرخواز
                         </label>
                         <input
                           type="text"
                           name="personalName"
                           value={formData.personalName}
                           readOnly
-                          className="form-input h-8 text-xs"
-                          placeholder="ناوی سیانی"
+                          className="form-input h-9 text-base"
+                          placeholder="ناوی چواری"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">ڕەگەز</label>
-                        <div className="flex gap-2 mt-1">
+                        <label className="form-label text-base">ڕەگەز</label>
+                        <div className="flex gap-2">
                           <div
                             className={`flex items-center gap-1.5 p-1 rounded-md ${formData.gender === 'male' ? 'bg-red-100' : ''}`}
                           >
@@ -1564,7 +1679,7 @@ export function App() {
                                 <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
                               )}
                             </div>
-                            <span className="text-xs">نێر</span>
+                            <span className="text-base">نێر</span>
                           </div>
                           <div
                             className={`flex items-center gap-1.5 p-1 rounded-md ${formData.gender === 'female' ? 'bg-red-100' : ''}`}
@@ -1574,12 +1689,12 @@ export function App() {
                                 <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
                               )}
                             </div>
-                            <span className="text-xs">مێ</span>
+                            <span className="text-base">مێ</span>
                           </div>
                         </div>
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">
+                        <label className="form-label text-base">
                           ساڵی لەدایکبوون
                         </label>
                         <input
@@ -1587,85 +1702,158 @@ export function App() {
                           name="birthYear"
                           value={formData.birthYear}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base text-right"
                         />
                       </div>
                     </div>
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-5 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-xs">
-                          ناونیشان
-                        </label>
+                        <label className="form-label text-base">پارێزگا</label>
                         <input
                           type="text"
                           name="address"
                           value={formData.address}
                           readOnly
-                          className="form-input h-8 text-xs"
-                          placeholder="ناونیشانی نیشتەجێبوون"
+                          className="form-input h-9 text-base"
+                          placeholder="پارێزگا"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">
+                        <label className="form-label text-base">
                           شار/ناوچە
                         </label>
+                        <input
+                          type="text"
+                          name="cityArea"
+                          value={formData.cityArea}
+                          readOnly
+                          className="form-input h-9 text-base"
+                          placeholder="شار/ناوچە"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label text-base">گەڕەک</label>
+                        <input
+                          type="text"
+                          name="neighborhood"
+                          value={formData.neighborhood}
+                          readOnly
+                          className="form-input h-9 text-base"
+                          placeholder="گەڕەک"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label text-base">کۆڵان</label>
                         <input
                           type="text"
                           name="city"
                           value={formData.city}
                           readOnly
-                          className="form-input h-8 text-xs"
-                          placeholder="شار"
+                          className="form-input h-9 text-base"
+                          placeholder="کۆڵان"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">گەڕەک</label>
+                        <label className="form-label text-base">خانوو</label>
                         <input
                           type="text"
                           name="district"
                           value={formData.district}
                           readOnly
-                          className="form-input h-8 text-xs"
-                          placeholder="گەڕەک"
+                          className="form-input h-9 text-base"
+                          placeholder="خانوو"
                         />
                       </div>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-xs">
-                          ژ. مۆبایل(١)
+                        <label className="form-label text-base">
+                          ژ. مۆبایل (١)
                         </label>
                         <input
                           type="text"
                           name="phone1"
                           value={formData.phone1}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base"
                           placeholder="07XX XXX XXXX"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">
-                          ژ. مۆبایل(٢)
+                        <label className="form-label text-base">
+                          ژ. مۆبایل (٢)
                         </label>
                         <input
                           type="text"
                           name="phone2"
                           value={formData.phone2}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base"
                           placeholder="07XX XXX XXXX"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">ئیمەیل</label>
+                        <label className="form-label text-base">ئیمەیڵ</label>
                         <input
                           type="email"
                           name="email"
                           value={formData.email}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base"
                           placeholder="example@email.com"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2">
+                      <div className="form-group">
+                        <label className="form-label text-base">
+                          ناوی بەخێوکەر
+                        </label>
+                        <input
+                          type="text"
+                          name="guardianName"
+                          value={formData.guardianName || ''}
+                          readOnly
+                          className="form-input h-9 text-base"
+                          placeholder="ناوی بەخێوکەر"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label text-base">
+                          پلەی خزمایەتی
+                        </label>
+                        <input
+                          type="text"
+                          name="guardianRelation"
+                          value={formData.guardianRelation || ''}
+                          readOnly
+                          className="form-input h-9 text-base"
+                          placeholder="پلەی خزمایەتی"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label text-base"> پیشە </label>
+                        <input
+                          type="text"
+                          name="guardianOccupation"
+                          value={formData.guardianOccupation || ''}
+                          readOnly
+                          className="form-input h-9 text-base"
+                          placeholder="پیشە"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label text-base">
+                          {' '}
+                          ژ.مۆبایل{' '}
+                        </label>
+                        <input
+                          type="text"
+                          name="guardianPhone"
+                          value={formData.guardianPhone || ''}
+                          readOnly
+                          className="form-input h-9 text-base"
+                          placeholder="07XX XXX XXXX"
                         />
                       </div>
                     </div>
@@ -1673,21 +1861,21 @@ export function App() {
                 </div>
                 {/* Education Info */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-2 text-sm">
+                  <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
                       ئاستی خوێندن
                     </span>
                   </div>
-                  <div className="modern-card p-3 space-y-2">
+                  <div className="modern-card p-4 space-y-3">
                     <div className="grid grid-cols-3 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-xs">
-                          دەرچووی دەورانەی
+                        <label className="form-label text-base">
+                          دەرچووی دوانزەی ئامادەیی
                         </label>
-                        <div className="badge-red py-1.5 text-xs">زانستی</div>
+                        <div className="badge-red py-3 text-base">زانستی</div>
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">
+                        <label className="form-label text-base">
                           ساڵی دەرچوون
                         </label>
                         <input
@@ -1695,14 +1883,14 @@ export function App() {
                           name="graduationYear"
                           value={formData.graduationYear}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base text-right"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">
-                          jۆری سیستەم
+                        <label className="form-label text-base">
+                          جۆری سیستەم
                         </label>
-                        <div className="flex gap-2 mt-1">
+                        <div className="flex gap-2">
                           <div
                             className={`flex items-center gap-1.5 p-1 rounded-md ${formData.educationSystem === 'regular' ? 'bg-red-100' : ''}`}
                           >
@@ -1711,7 +1899,7 @@ export function App() {
                                 <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
                               )}
                             </div>
-                            <span className="text-xs">ئاسایی</span>
+                            <span className="text-base">ئاسایی</span>
                           </div>
                           <div
                             className={`flex items-center gap-1.5 p-1 rounded-md ${formData.educationSystem === 'swedish' ? 'bg-red-100' : ''}`}
@@ -1721,22 +1909,48 @@ export function App() {
                                 <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
                               )}
                             </div>
-                            <span className="text-xs">سودی</span>
+                            <span className="text-base">سویدی</span>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="info-box-warning rounded-lg p-2">
-                      <label className="form-label text-center block mb-2 text-xs">
-                        ژمارەی تاقیکردنەوە
-                      </label>
-                      <div className="px-2">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="form-group">
+                        <label className="form-label text-base">خولی</label>
+                        <div className="flex gap-2">
+                          <div
+                            className={`flex items-center gap-1.5 p-1 rounded-md ${formData.examRound === 'first' ? 'bg-red-100' : ''}`}
+                          >
+                            <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                              {formData.examRound === 'first' && (
+                                <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                              )}
+                            </div>
+                            <span className="text-base">یەکەم</span>
+                          </div>
+                          <div
+                            className={`flex items-center gap-1.5 p-1 rounded-md ${formData.examRound === 'second' ? 'bg-red-100' : ''}`}
+                          >
+                            <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                              {formData.examRound === 'second' && (
+                                <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                              )}
+                            </div>
+                            <span className="text-base">دووەم</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label text-base">
+                          ژمارەی تاقیکردنەوە
+                        </label>
                         <input
                           type="text"
                           name="examTestNumbers"
                           value={formData.examTestNumbers}
                           readOnly
-                          className="form-input h-9 text-sm text-center tracking-[0.4em] font-mono bg-red-100 border-red-300"
+                          className="form-input h-9 text-base"
+                          placeholder="٠١٢٣٤٥٦٧٨٩٠١٢"
                         />
                       </div>
                     </div>
@@ -1744,56 +1958,54 @@ export function App() {
                 </div>
                 {/* Grades Info */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-2 text-sm">
+                  <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
-                      زانیاری نمرەی فێرخواز
+                      زانیاری سەبارەت بە نمرەی فێرخواز
                     </span>
                   </div>
-                  <div className="modern-card p-3 space-y-2">
-                    <div className="info-box-warning rounded-lg p-2">
-                      <p className="text-gray-800 text-xs leading-tight">
-                        بەڕێوەبەری بەڕێز: نمرەکانی خوارەوە دەبێت هاوتای بڕوانامە
-                        بێت کە دەهێنرێت بۆ پەیمانگە.
+                  <div className="modern-card p-4 space-y-3">
+                    <div className="bg-white border border-red-200 rounded-lg p-3">
+                      <p className="text-gray-800 text-base leading-normal">
+                        بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم
+                        بەشەدا هەبێت، ئێمە لێی بەرپرس نین.
                       </p>
                     </div>
                     <div className="grid grid-cols-4 gap-2">
                       <div className="form-group">
-                        <label className="form-label text-xs">پارێزگا</label>
+                        <label className="form-label text-base">پارێزگا</label>
                         <input
                           type="text"
                           name="province"
                           value={formData.province}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base"
                           placeholder="پارێزگا"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">
-                          پەروەردە
-                        </label>
+                        <label className="form-label text-base">پەروەردە</label>
                         <input
                           type="text"
                           name="education"
                           value={formData.education}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base"
                           placeholder="پەروەردە"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">گەڕەک</label>
+                        <label className="form-label text-base">گەڕەک</label>
                         <input
                           type="text"
                           name="district2"
                           value={formData.district2}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base"
                           placeholder="گەڕەک"
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label text-xs">
+                        <label className="form-label text-base">
                           ساڵی خوێندن
                         </label>
                         <input
@@ -1801,101 +2013,103 @@ export function App() {
                           name="studyYear"
                           value={formData.studyYear}
                           readOnly
-                          className="form-input h-8 text-xs"
+                          className="form-input h-9 text-base text-right"
                         />
                       </div>
                     </div>
-                  </div>
-                </div>
-                {/* Subjects Table */}
-                <div>
-                  <div className="table-header p-2 text-sm">وانەکان</div>
-                  <div className="table-container">
-                    <div className="grid grid-cols-9 gap-1 p-2 bg-gray-50">
-                      {formData.subjects.map((subject, i) => {
-                        const isReadOnly = i === 0 || i === 7 || i === 8
-                        const placeholderText =
-                          i > 0 && i < 7 ? `وانە ${i}` : ''
-                        return (
+                    <div
+                      className="table-container mt-1"
+                      style={{ overflowX: 'visible' }}
+                    >
+                      <div className="grid grid-cols-11 gap-0.5 p-1 bg-gray-50">
+                        {formData.subjects.map((subject, i) => {
+                          const isReadOnly = i === 0 || i === 9 || i === 10
+                          const placeholderText =
+                            i > 0 && i < 9 ? `وانە ${i}` : ''
+                          return (
+                            <input
+                              key={i}
+                              type="text"
+                              value={subject}
+                              readOnly
+                              className={`table-cell ${isReadOnly ? 'bg-gray-100 font-bold' : ''} h-9 text-sm p-1.5`}
+                              placeholder={placeholderText}
+                            />
+                          )
+                        })}
+                      </div>
+                      <div className="grid grid-cols-12 gap-0.5 p-1 bg-red-50">
+                        <div className="table-label-red text-base py-2">
+                          بە ژمارە
+                        </div>
+                        {formData.firstGradesNumeric.map((grade, i) => (
                           <input
                             key={i}
                             type="text"
-                            value={subject}
+                            value={grade}
                             readOnly
-                            className={`table-cell ${isReadOnly ? 'bg-gray-100 font-bold' : ''} h-8 text-[10px] p-1`}
-                            placeholder={placeholderText}
+                            className="table-cell-red h-9 text-sm p-1.5"
+                            placeholder="نمرە"
                           />
-                        )
-                      })}
-                    </div>
-                    <div className="grid grid-cols-10 gap-1 p-2 bg-red-50">
-                      <div className="table-label-red text-xs py-1.5">
-                        بە ژمارە
+                        ))}
                       </div>
-                      {formData.firstGradesNumeric.map((grade, i) => (
-                        <input
-                          key={i}
-                          type="text"
-                          value={grade}
-                          readOnly
-                          className="table-cell-red h-8 text-[10px] p-1"
-                          placeholder="نمرە"
-                        />
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-10 gap-1 p-2 bg-red-50">
-                      <div className="table-label-red text-xs py-1.5">
-                        بەنووسین
+                      <div className="grid grid-cols-12 gap-0.5 p-1 bg-red-50">
+                        <div className="table-label-red text-base py-2">
+                          بە نووسین
+                        </div>
+                        {formData.firstGradesWritten.map((grade, i) => (
+                          <input
+                            key={i}
+                            type="text"
+                            value={grade}
+                            readOnly
+                            className="table-cell-red h-9 text-sm p-1.5"
+                            placeholder="نمرە"
+                          />
+                        ))}
                       </div>
-                      {formData.firstGradesWritten.map((grade, i) => (
-                        <input
-                          key={i}
-                          type="text"
-                          value={grade}
-                          readOnly
-                          className="table-cell-red h-8 text-[10px] p-1"
-                          placeholder="نمرە"
-                        />
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-10 gap-1 p-2 bg-yellow-50">
-                      <div className="table-label-yellow text-xs py-1.5">
-                        خولی دووەم
+                      <div className="grid grid-cols-12 gap-0.5 p-1 bg-yellow-50">
+                        <div className="table-label-yellow text-base py-2">
+                          خولی دووەم
+                        </div>
+                        {formData.secondGradesNumeric.map((grade, i) => (
+                          <input
+                            key={i}
+                            type="text"
+                            value={grade}
+                            readOnly
+                            className="table-cell-yellow h-9 text-sm p-1.5"
+                            placeholder="نمرە"
+                          />
+                        ))}
                       </div>
-                      {formData.secondGradesNumeric.map((grade, i) => (
-                        <input
-                          key={i}
-                          type="text"
-                          value={grade}
-                          readOnly
-                          className="table-cell-yellow h-8 text-[10px] p-1"
-                          placeholder="نمرە"
-                        />
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-10 gap-1 p-2 bg-yellow-50">
-                      <div className="table-label-yellow text-xs py-1.5">
-                        بەنووسین
+                      <div className="grid grid-cols-12 gap-0.5 p-1 bg-yellow-50">
+                        <div className="table-label-yellow text-base py-2">
+                          بە نووسین
+                        </div>
+                        {formData.secondGradesWritten.map((grade, i) => (
+                          <input
+                            key={i}
+                            type="text"
+                            value={grade}
+                            readOnly
+                            className="table-cell-yellow h-9 text-sm p-1.5"
+                            placeholder="نمرە"
+                          />
+                        ))}
                       </div>
-                      {formData.secondGradesWritten.map((grade, i) => (
-                        <input
-                          key={i}
-                          type="text"
-                          value={grade}
-                          readOnly
-                          className="table-cell-yellow h-8 text-[10px] p-1"
-                          placeholder="نمرە"
-                        />
-                      ))}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             {/* Footer */}
-            <div className="shrink-0 mt-auto pt-2 border-t-2 border-red-500">
-              <div className="grid grid-cols-4 gap-2 text-xs mb-2">
-                <div className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-red-100 p-2 rounded-lg">
+            <div className="shrink-0 mt-auto pt-4 border-t-2 border-red-500">
+              <div className="grid grid-cols-4 gap-3 text-base mb-3">
+                <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
+                  <span className="font-medium text-black" dir="ltr">
+                    0772 911 21 21
+                  </span>
                   <svg
                     className="w-4 h-4 text-red-600 flex-shrink-0"
                     fill="none"
@@ -1909,9 +2123,11 @@ export function App() {
                       d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                     />
                   </svg>
-                  <span className="font-medium">0772 911 21 21</span>
                 </div>
-                <div className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-red-100 p-2 rounded-lg">
+                <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
+                  <span className="font-medium text-black" dir="ltr">
+                    0751 911 21 21
+                  </span>
                   <svg
                     className="w-4 h-4 text-red-600 flex-shrink-0"
                     fill="none"
@@ -1925,11 +2141,13 @@ export function App() {
                       d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                     />
                   </svg>
-                  <span className="font-medium">0751 911 21 21</span>
                 </div>
-                <div className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-blue-100 p-2 rounded-lg">
+                <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
+                  <span className="font-medium text-black" dir="ltr">
+                    www.kti.edu.iq
+                  </span>
                   <svg
-                    className="w-4 h-4 text-blue-600 flex-shrink-0"
+                    className="w-4 h-4 text-red-600 flex-shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -1941,13 +2159,13 @@ export function App() {
                       d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
                     />
                   </svg>
-                  <span className="font-medium text-blue-600">
-                    www.kti.edu.iq
-                  </span>
                 </div>
-                <div className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-blue-100 p-2 rounded-lg">
+                <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
+                  <span className="font-medium text-black" dir="ltr">
+                    tomar@kti.edu.iq
+                  </span>
                   <svg
-                    className="w-4 h-4 text-blue-600 flex-shrink-0"
+                    className="w-4 h-4 text-red-600 flex-shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -1959,12 +2177,9 @@ export function App() {
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     />
                   </svg>
-                  <span className="font-medium text-blue-600">
-                    tomar@kti.edu.iq
-                  </span>
                 </div>
               </div>
-              <p className="text-center text-xs text-gray-600">
+              <p className="text-center text-base text-gray-600">
                 Kurdistan Technical Institute - Sulaymaniyah Heights, Kurdistan
                 Region - Iraq
               </p>
@@ -1977,26 +2192,26 @@ export function App() {
           className="bg-white flex flex-col font-bold"
           style={{
             width: '210mm',
-            height: '297mm',
+            height: 'auto',
+            minHeight: '297mm',
             boxSizing: 'border-box',
-            overflow: 'hidden',
-            padding: '10mm',
+            padding: '3mm',
           }}
         >
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col">
             <div className="flex-grow min-h-0 space-y-3">
               {/* Top Two Sections */}
               <div className="grid grid-cols-2 gap-2">
                 {/* Right Section */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-2 text-sm">
+                  <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
-                      خانەی تایبەت بە بەریوەبەری خوێندنگە
+                      خانەی تایبەت بە بەڕێوەبەری خوێندنگە
                     </span>
                   </div>
-                  <div className="modern-card p-3 space-y-2">
+                  <div className="modern-card p-4 space-y-3">
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         ناوی خوێندنگە
                       </label>
                       <input
@@ -2004,25 +2219,25 @@ export function App() {
                         name="instituteName"
                         value={formData.instituteName || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="ناوی خوێندنگە"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
-                        ناوی بەریوەبەر
+                      <label className="form-label text-base">
+                        ناوی بەڕێوەبەر
                       </label>
                       <input
                         type="text"
                         name="directorName"
                         value={formData.directorName || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="ناوی بەڕێوەبەر"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         ژ. تەلەفۆن
                       </label>
                       <input
@@ -2030,150 +2245,141 @@ export function App() {
                         name="directorPhone"
                         value={formData.directorPhone || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="07XX XXX XXXX"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-center text-xs">
-                        واژو و ڕێکەوت و مۆر
+                      <label className="form-label text-center text-base">
+                        واژۆ و ڕێکەوت و مۆر
                       </label>
-                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-20"></div>
+                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-24"></div>
                     </div>
                   </div>
                 </div>
                 {/* Left Section */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-2 text-sm">
+                  <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
-                      پەسەندکردن و پێشنیارسەندکردنەوەی نمرەکان
+                      پەسەندکردن و پشتڕاستکردنەوەی نمرەکان
                     </span>
                   </div>
-                  <div className="modern-card p-3 space-y-2">
-                    <div className="form-group">
-                      <label className="form-label text-xs">
-                        لە بەریوەبەرێتی پەروەردەی
-                      </label>
-                      <input
-                        type="text"
-                        name="educationDirection"
-                        value={formData.educationDirection || ''}
-                        readOnly
-                        className="form-input h-8 text-xs"
-                        placeholder="پەروەردەی..."
-                      />
+                  <div className="modern-card p-4 space-y-3">
+                    <div className="text-center">
+                      <p className="form-label text-base font-bold">
+                        لە بەڕێوەبەرێتی پەروەردەی ڕۆژئاوا / ڕۆژهەڵات
+                      </p>
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
-                        ناوی بەریوەبەرێتی
+                      <label className="form-label text-base">
+                        ناوی بەڕێوەبەرێتی
                       </label>
                       <input
                         type="text"
                         name="educationDirectorName"
                         value={formData.educationDirectorName || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="ناوی بەڕێوەبەرێتی"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">قەرا</label>
+                      <label className="form-label text-base">قەزا</label>
                       <input
                         type="text"
                         name="decision"
                         value={formData.decision || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
-                        placeholder="بڕیار..."
+                        className="form-input h-9 text-base"
+                        placeholder="قەزا..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-center text-xs">
-                        واژو و مۆر
+                      <label className="form-label text-center text-base">
+                        واژۆ و مۆر
                       </label>
-                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-20"></div>
+                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-24"></div>
                     </div>
                   </div>
                 </div>
               </div>
               {/* Department Selection */}
               <div>
-                <div className="section-header-blue text-white text-center py-2 text-sm">
+                <div className="section-header-blue text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">
-                    پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
+                    بەشەکانی پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
                   </span>
                 </div>
-                <div className="modern-card p-3">
-                  <div className="grid grid-cols-3 gap-x-2 gap-y-1.5">
+                <div className="modern-card p-4">
+                  <div className="grid grid-cols-3 gap-x-4 gap-y-2">
                     {[
-                      'دەرماسازی',
-                      'بەرسارانی',
+                      'دەرمانسازی',
+                      'پەرستاری',
                       'شیکردنەوەی نەخۆشییەکان',
-                      'دوانەگەری پزیشکی(پەرستاری)',
-                      'سێژن',
-                      'کارگێری گاز',
-                      'زمانەرانی',
+                      'جوانکاری پزیشکی (پەرستاری)',
+                      'سڕکردن',
+                      'یاریدەدەری پزیشکی ددان',
+                      'کارگێڕی کار',
+                      'ژمێریاری',
                       'دیجیتاڵ میدیا و مارکێتینگ',
-                      'تەکنەلۆجیای زانیاری',
-                      'تەکنەلۆجیای ڕۆوێنێتینگ و ئۆتۆمەیشن',
-                      'تەکنەلۆجیای ڕووینێتینگ و ئۆتۆمەیشن',
-                      'تەندرارانی دیکۆر',
-                    ].map((dept, i) => (
-                      <div
-                        key={i}
-                        className={`flex items-center gap-1.5 p-1 rounded-md ${formData.departmentChoice === dept ? 'bg-red-100' : ''}`}
-                      >
-                        <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center flex-shrink-0">
-                          {formData.departmentChoice === dept && (
-                            <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
-                          )}
+                      'تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن',
+                      'تەکنەلۆژیای زانیاری',
+                      'ئەندازیاری دیکۆر',
+                    ].map((dept, i) => {
+                      const selectionIndex =
+                        formData.departmentChoices.indexOf(dept)
+                      const isSelected = selectionIndex !== -1
+                      return (
+                        <div
+                          key={i}
+                          className={`flex items-center gap-1.5 p-2 rounded-md ${isSelected ? 'bg-red-100' : ''}`}
+                        >
+                          <div
+                            className={`w-5 h-5 rounded-md border border-red-600 flex items-center justify-center flex-shrink-0 ${isSelected ? 'bg-white' : ''}`}
+                          >
+                            {isSelected && (
+                              <span className="font-bold text-red-700 text-xs">
+                                {selectionIndex + 1}
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-base font-medium">{dept}</span>
                         </div>
-                        <span className="text-xs font-medium">{dept}</span>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               </div>
               {/* Medical Declaration */}
               <div>
-                <div className="section-header-modern text-white text-center py-2 text-sm">
+                <div className="section-header-modern text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">
                     ئەو بەشەی دەتەوێت تێیدا بخوێنیت
                   </span>
                 </div>
-                <div className="info-box-warning p-2">
-                  <p className="text-xs leading-tight text-gray-800">
-                    پێویستە زانیاری و سەرەدانێکی وردبێتەوە، زانای(١٩٥٠)
-                    لەڕێکەوتی(٢٠٢٥/١/١٨)، بەکەم خانی (٧)، بەکەم خانی (٢)
-                    هەماڵاران پرێکەمەوە، بەڵام بەکشتنی هەماڵاردن بەکەم بیوەری
-                    سەردەمی وەرگرتنە و دوو هەماڵاردنەمی دیکە لە تەمەری هەموونیش
-                    گوسس بەتاڵ لیو بەتانە و بەرێنی dۆاگاریس بەسەنەکە و کۆنەرەی
-                    فێرخواز و سەردەکانی وەزارەتی خوێندنی باڵا، وەردەگیرێت.
+                <div className="modern-card p-4">
+                  <p className="text-base leading-normal text-gray-800">
+                    بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی
+                    (١٤/١٠/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی
+                    (٧)، دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی
+                    هەڵبژاردنی یەکەم پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی
+                    دیکە لە ئەگەری هەبوونی کورسی بەتاڵ لەو بەشانە و بە پێی
+                    داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی
+                    خوێندنی باڵا، وەردەگیرێت.
                   </p>
                 </div>
               </div>
               {/* Certificate Section */}
               <div>
-                <div className="section-header-blue text-white text-center py-2 text-sm">
-                  <span className="font-bold tracking-wider">شوێننامە</span>
+                <div className="section-header-blue text-white text-center py-3 text-lg">
+                  <span className="font-bold tracking-wider">
+                    ناسنامەی باری شارستانی
+                  </span>
                 </div>
-                <div className="modern-card p-3 space-y-2">
-                  <div className="grid grid-cols-5 gap-2">
+                <div className="modern-card p-4 space-y-3">
+                  <div className="grid grid-cols-4 gap-2">
                     <div className="form-group">
-                      <label className="form-label text-xs">
-                        ناساندنی بازی شارستانی
-                      </label>
-                      <input
-                        type="text"
-                        name="certificate0"
-                        value={formData.certificate0 || ''}
-                        readOnly
-                        className="form-input h-8 text-xs"
-                        placeholder="..."
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         ژمارەی ناسنامە
                       </label>
                       <input
@@ -2181,12 +2387,12 @@ export function App() {
                         name="certificate1"
                         value={formData.certificate1 || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         ژمارەی تۆمار
                       </label>
                       <input
@@ -2194,25 +2400,25 @@ export function App() {
                         name="certificate2"
                         value={formData.certificate2 || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
-                        ژمارەی لایەو
+                      <label className="form-label text-base">
+                        ژمارەی لاپەڕە
                       </label>
                       <input
                         type="text"
                         name="certificate3"
                         value={formData.certificate3 || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="..."
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         شوێنی دەرچوون
                       </label>
                       <input
@@ -2220,7 +2426,7 @@ export function App() {
                         name="certificate4"
                         value={formData.certificate4 || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="..."
                       />
                     </div>
@@ -2229,10 +2435,10 @@ export function App() {
               </div>
               {/* Nationality Section */}
               <div>
-                <div className="section-header-gray text-white text-center py-2 text-sm">
+                <div className="section-header-gray text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">ڕەگەزنامە</span>
                 </div>
-                <div className="modern-card p-3 space-y-2">
+                <div className="modern-card p-4 space-y-3">
                   <div className="flex gap-4">
                     <div
                       className={`flex items-center gap-1.5 p-1 rounded-md ${formData.nationality2 === 'iraqi' ? 'bg-red-100' : ''}`}
@@ -2242,7 +2448,7 @@ export function App() {
                           <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
                         )}
                       </div>
-                      <span className="text-xs">عێراقی</span>
+                      <span className="text-base">عێراقی</span>
                     </div>
                     <div
                       className={`flex items-center gap-1.5 p-1 rounded-md ${formData.nationality2 === 'other' ? 'bg-red-100' : ''}`}
@@ -2252,25 +2458,25 @@ export function App() {
                           <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
                         )}
                       </div>
-                      <span className="text-xs">هی تر</span>
+                      <span className="text-base">هی تر</span>
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     <div className="form-group">
-                      <label className="form-label text-xs">
-                        ژمارەی پەگەزنامە
+                      <label className="form-label text-base">
+                        ژمارەی ڕەگەزنامە
                       </label>
                       <input
                         type="text"
                         name="nationalityNumber"
                         value={formData.nationalityNumber || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="ژمارەی ڕەگەزنامە"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         ژمارەی تۆمار
                       </label>
                       <input
@@ -2278,20 +2484,21 @@ export function App() {
                         name="registrationNumber"
                         value={formData.registrationNumber || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="ژمارەی تۆمار"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         ساڵ و شوێنی دەرچوون
                       </label>
                       <input
-                        type="date"
+                        type="text"
                         name="issueYearPlace"
                         value={formData.issueYearPlace || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
+                        placeholder="ساڵ و شوێن..."
                       />
                     </div>
                   </div>
@@ -2299,15 +2506,15 @@ export function App() {
               </div>
               {/* Family Card Section */}
               <div>
-                <div className="section-header-gray text-white text-center py-2 text-sm">
+                <div className="section-header-gray text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">
                     کارتی نیشتیمانی
                   </span>
                 </div>
-                <div className="modern-card p-3 space-y-2">
+                <div className="modern-card p-4 space-y-3">
                   <div className="grid grid-cols-4 gap-2">
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         ژمارەی کارت
                       </label>
                       <input
@@ -2315,12 +2522,12 @@ export function App() {
                         name="familyCardNumber"
                         value={formData.familyCardNumber || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="ژمارەی کارت"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         شوێنی دەرچوون
                       </label>
                       <input
@@ -2328,12 +2535,12 @@ export function App() {
                         name="familyCardIssuePlace"
                         value={formData.familyCardIssuePlace || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="شوێنی دەرچوون"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         ڕێکەوتی دەرچوون
                       </label>
                       <input
@@ -2341,11 +2548,11 @@ export function App() {
                         name="familyCardIssueDate"
                         value={formData.familyCardIssueDate || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base text-right"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-xs">
+                      <label className="form-label text-base">
                         کۆدی خێزانی
                       </label>
                       <input
@@ -2353,7 +2560,7 @@ export function App() {
                         name="familyCode"
                         value={formData.familyCode || ''}
                         readOnly
-                        className="form-input h-8 text-xs"
+                        className="form-input h-9 text-base"
                         placeholder="کۆدی خێزانی"
                       />
                     </div>
@@ -2361,16 +2568,16 @@ export function App() {
                 </div>
               </div>
               {/* Bottom Signature Section */}
-              <div className="grid grid-cols-2 gap-2 mt-auto">
-                <div className="modern-card p-3">
-                  <label className="block text-gray-700 font-bold text-center text-sm mb-2">
-                    ناوی سیاڵی فێرخواز
+              <div className="grid grid-cols-2 gap-2 mt-auto pt-4">
+                <div className="modern-card p-4">
+                  <label className="block text-gray-700 font-bold text-center text-lg mb-2">
+                    ناوی سیانی فێرخواز
                   </label>
                   <div className="border-t-2 border-gray-400 mt-8"></div>
                 </div>
-                <div className="modern-card p-3">
-                  <label className="block text-gray-700 font-bold text-center text-sm mb-2">
-                    ڕێکەوت / واژو
+                <div className="modern-card p-4">
+                  <label className="block text-gray-700 font-bold text-center text-lg mb-2">
+                    ڕێکەوت / واژۆ
                   </label>
                   <div className="border-t-2 border-gray-400 mt-8"></div>
                 </div>
