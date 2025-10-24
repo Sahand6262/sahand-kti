@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Noto Kufi Arabic"', ...defaultTheme.fontFamily.sans],
+        sans: ['"Noto Naskh Arabic"', ...defaultTheme.fontFamily.sans],
       },
     },
   },

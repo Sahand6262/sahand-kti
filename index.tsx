@@ -126,11 +126,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="personalName"
               value={formData.personalName}
               onChange={handleChange}
-              className={`modern-input ${errors.personalName ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.personalName ? 'border-blue-500' : ''}`}
               placeholder="ناوی چواری"
             />
             {errors.personalName && (
-              <p className="text-red-500 text-xs mt-1">{errors.personalName}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.personalName}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -160,7 +160,7 @@ const FormContent: React.FC<FormContentProps> = ({
               </label>
             </div>
             {errors.gender && (
-              <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.gender}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -170,10 +170,10 @@ const FormContent: React.FC<FormContentProps> = ({
               name="birthYear"
               value={formData.birthYear}
               onChange={handleChange}
-              className={`modern-input text-right ${errors.birthYear ? 'border-red-500' : ''}`}
+              className={`modern-input text-right ${errors.birthYear ? 'border-blue-500' : ''}`}
             />
             {errors.birthYear && (
-              <p className="text-red-500 text-xs mt-1">{errors.birthYear}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.birthYear}</p>
             )}
           </div>
         </div>
@@ -185,11 +185,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className={`modern-input ${errors.address ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.address ? 'border-blue-500' : ''}`}
               placeholder="پارێزگا"
             />
             {errors.address && (
-              <p className="text-red-500 text-xs mt-1">{errors.address}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.address}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -199,11 +199,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="cityArea"
               value={formData.cityArea}
               onChange={handleChange}
-              className={`modern-input ${errors.cityArea ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.cityArea ? 'border-blue-500' : ''}`}
               placeholder="شار/ناوچە"
             />
             {errors.cityArea && (
-              <p className="text-red-500 text-xs mt-1">{errors.cityArea}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.cityArea}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -213,11 +213,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="neighborhood"
               value={formData.neighborhood}
               onChange={handleChange}
-              className={`modern-input ${errors.neighborhood ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.neighborhood ? 'border-blue-500' : ''}`}
               placeholder="گەڕەک"
             />
             {errors.neighborhood && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.neighborhood}
               </p>
             )}
@@ -229,11 +229,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="city"
               value={formData.city}
               onChange={handleChange}
-              className={`modern-input ${errors.city ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.city ? 'border-blue-500' : ''}`}
               placeholder="کۆڵان"
             />
             {errors.city && (
-              <p className="text-red-500 text-xs mt-1">{errors.city}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.city}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -243,11 +243,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="district"
               value={formData.district}
               onChange={handleChange}
-              className={`modern-input ${errors.district ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.district ? 'border-blue-500' : ''}`}
               placeholder="خانوو"
             />
             {errors.district && (
-              <p className="text-red-500 text-xs mt-1">{errors.district}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.district}</p>
             )}
           </div>
         </div>
@@ -259,11 +259,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="phone1"
               value={formData.phone1}
               onChange={handleChange}
-              className={`modern-input ${errors.phone1 ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.phone1 ? 'border-blue-500' : ''}`}
               placeholder="07XX XXX XXXX"
             />
             {errors.phone1 && (
-              <p className="text-red-500 text-xs mt-1">{errors.phone1}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.phone1}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -297,11 +297,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="guardianName"
               value={formData.guardianName || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.guardianName ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.guardianName ? 'border-blue-500' : ''}`}
               placeholder="ناوی بەخێوکەر"
             />
             {errors.guardianName && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.guardianName}
               </p>
             )}
@@ -313,11 +313,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="guardianRelation"
               value={formData.guardianRelation || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.guardianRelation ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.guardianRelation ? 'border-blue-500' : ''}`}
               placeholder="پلەی خزمایەتی"
             />
             {errors.guardianRelation && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.guardianRelation}
               </p>
             )}
@@ -329,11 +329,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="guardianOccupation"
               value={formData.guardianOccupation || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.guardianOccupation ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.guardianOccupation ? 'border-blue-500' : ''}`}
               placeholder="پیشە"
             />
             {errors.guardianOccupation && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.guardianOccupation}
               </p>
             )}
@@ -345,11 +345,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="guardianPhone"
               value={formData.guardianPhone || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.guardianPhone ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.guardianPhone ? 'border-blue-500' : ''}`}
               placeholder="07XX XXX XXXX"
             />
             {errors.guardianPhone && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.guardianPhone}
               </p>
             )}
@@ -394,10 +394,10 @@ const FormContent: React.FC<FormContentProps> = ({
               name="graduationYear"
               value={formData.graduationYear}
               onChange={handleChange}
-              className={`modern-input text-right ${errors.graduationYear ? 'border-red-500' : ''}`}
+              className={`modern-input text-right ${errors.graduationYear ? 'border-blue-500' : ''}`}
             />
             {errors.graduationYear && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.graduationYear}
               </p>
             )}
@@ -429,7 +429,7 @@ const FormContent: React.FC<FormContentProps> = ({
               </label>
             </div>
             {errors.educationSystem && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.educationSystem}
               </p>
             )}
@@ -463,7 +463,7 @@ const FormContent: React.FC<FormContentProps> = ({
               </label>
             </div>
             {errors.examRound && (
-              <p className="text-red-500 text-xs mt-1">{errors.examRound}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.examRound}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -473,14 +473,14 @@ const FormContent: React.FC<FormContentProps> = ({
               name="examTestNumbers"
               value={formData.examTestNumbers}
               onChange={handleChange}
-              className={`modern-input ${errors.examTestNumbers ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.examTestNumbers ? 'border-blue-500' : ''}`}
               placeholder="٠١٢٣٤٥٦٧٨٩٠١٢"
               maxLength={13}
               inputMode="numeric"
               autoComplete="off"
             />
             {errors.examTestNumbers && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.examTestNumbers}
               </p>
             )}
@@ -513,10 +513,10 @@ const FormContent: React.FC<FormContentProps> = ({
         </div>
       </div>
       <div className="modern-card-enhanced">
-        <div className="bg-white rounded-xl border-2 border-red-200 p-6 shadow-md mb-6">
+        <div className="bg-white rounded-xl border-2 border-blue-200 p-6 shadow-md mb-6">
           <div className="flex items-start gap-3">
             <svg
-              className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5"
+              className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -542,11 +542,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="province"
               value={formData.province}
               onChange={handleChange}
-              className={`modern-input ${errors.province ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.province ? 'border-blue-500' : ''}`}
               placeholder="پارێزگا"
             />
             {errors.province && (
-              <p className="text-red-500 text-xs mt-1">{errors.province}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.province}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -556,11 +556,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="education"
               value={formData.education}
               onChange={handleChange}
-              className={`modern-input ${errors.education ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.education ? 'border-blue-500' : ''}`}
               placeholder="پەروەردە"
             />
             {errors.education && (
-              <p className="text-red-500 text-xs mt-1">{errors.education}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.education}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -570,11 +570,11 @@ const FormContent: React.FC<FormContentProps> = ({
               name="district2"
               value={formData.district2}
               onChange={handleChange}
-              className={`modern-input ${errors.district2 ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.district2 ? 'border-blue-500' : ''}`}
               placeholder="گەڕەک"
             />
             {errors.district2 && (
-              <p className="text-red-500 text-xs mt-1">{errors.district2}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.district2}</p>
             )}
           </div>
           <div className="form-group-modern">
@@ -584,10 +584,10 @@ const FormContent: React.FC<FormContentProps> = ({
               name="studyYear"
               value={formData.studyYear}
               onChange={handleChange}
-              className={`modern-input text-right ${errors.studyYear ? 'border-red-500' : ''}`}
+              className={`modern-input text-right ${errors.studyYear ? 'border-blue-500' : ''}`}
             />
             {errors.studyYear && (
-              <p className="text-red-500 text-xs mt-1">{errors.studyYear}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.studyYear}</p>
             )}
           </div>
         </div>
@@ -623,8 +623,8 @@ const FormContent: React.FC<FormContentProps> = ({
               )
             })}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-red-50 to-rose-50">
-            <div className="modern-table-label bg-gradient-to-br from-red-500 to-rose-600">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-blue-50 to-cyan-50">
+            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988]">
               بە ژمارە
             </div>
             {formData.firstGradesNumeric.map((grade, i) => (
@@ -635,13 +635,13 @@ const FormContent: React.FC<FormContentProps> = ({
                 onChange={(e) =>
                   handleArrayChange('firstGradesNumeric', i, e.target.value)
                 }
-                className="modern-table-cell-colored border-red-200"
+                className="modern-table-cell-colored border-blue-200"
                 placeholder="نمرە"
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-red-50 to-rose-50">
-            <div className="modern-table-label bg-gradient-to-br from-red-500 to-rose-600">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-blue-50 to-cyan-50">
+            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988]">
               بە نووسین
             </div>
             {formData.firstGradesWritten.map((grade, i) => (
@@ -652,7 +652,7 @@ const FormContent: React.FC<FormContentProps> = ({
                 onChange={(e) =>
                   handleArrayChange('firstGradesWritten', i, e.target.value)
                 }
-                className="modern-table-cell-colored border-red-200"
+                className="modern-table-cell-colored border-blue-200"
                 placeholder="نمرە"
               />
             ))}
@@ -751,11 +751,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="instituteName"
                 value={formData.instituteName || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.instituteName ? 'border-red-500' : ''}`}
+                className={`modern-input ${errors.instituteName ? 'border-blue-500' : ''}`}
                 placeholder="ناوی خوێندنگە"
               />
               {errors.instituteName && (
-                <p className="text-red-500 text-xs mt-1">
+                <p className="text-blue-700 text-xs mt-1">
                   {errors.instituteName}
                 </p>
               )}
@@ -767,11 +767,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="directorName"
                 value={formData.directorName || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.directorName ? 'border-red-500' : ''}`}
+                className={`modern-input ${errors.directorName ? 'border-blue-500' : ''}`}
                 placeholder="ناوی بەڕێوەبەر"
               />
               {errors.directorName && (
-                <p className="text-red-500 text-xs mt-1">
+                <p className="text-blue-700 text-xs mt-1">
                   {errors.directorName}
                 </p>
               )}
@@ -783,11 +783,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="directorPhone"
                 value={formData.directorPhone || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.directorPhone ? 'border-red-500' : ''}`}
+                className={`modern-input ${errors.directorPhone ? 'border-blue-500' : ''}`}
                 placeholder="07XX XXX XXXX"
               />
               {errors.directorPhone && (
-                <p className="text-red-500 text-xs mt-1">
+                <p className="text-blue-700 text-xs mt-1">
                   {errors.directorPhone}
                 </p>
               )}
@@ -839,11 +839,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="educationDirectorName"
                 value={formData.educationDirectorName || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.educationDirectorName ? 'border-red-500' : ''}`}
+                className={`modern-input ${errors.educationDirectorName ? 'border-blue-500' : ''}`}
                 placeholder="ناوی بەڕێوەبەرێتی"
               />
               {errors.educationDirectorName && (
-                <p className="text-red-500 text-xs mt-1">
+                <p className="text-blue-700 text-xs mt-1">
                   {errors.educationDirectorName}
                 </p>
               )}
@@ -855,11 +855,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="decision"
                 value={formData.decision || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.decision ? 'border-red-500' : ''}`}
+                className={`modern-input ${errors.decision ? 'border-blue-500' : ''}`}
                 placeholder="قەزا..."
               />
               {errors.decision && (
-                <p className="text-red-500 text-xs mt-1">{errors.decision}</p>
+                <p className="text-blue-700 text-xs mt-1">{errors.decision}</p>
               )}
             </div>
             <div className="form-group-modern">
@@ -932,7 +932,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
           })}
         </div>
         {errors.departmentChoices && (
-          <p className="text-red-500 text-xs mt-2 text-center">
+          <p className="text-blue-700 text-xs mt-2 text-center">
             {errors.departmentChoices}
           </p>
         )}
@@ -965,7 +965,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
       <div className="modern-card-enhanced bg-white">
         <div className="flex items-start gap-3">
           <svg
-            className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5"
+            className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -1021,11 +1021,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="certificate1"
               value={formData.certificate1 || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.certificate1 ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.certificate1 ? 'border-blue-500' : ''}`}
               placeholder="..."
             />
             {errors.certificate1 && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.certificate1}
               </p>
             )}
@@ -1037,11 +1037,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="certificate2"
               value={formData.certificate2 || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.certificate2 ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.certificate2 ? 'border-blue-500' : ''}`}
               placeholder="..."
             />
             {errors.certificate2 && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.certificate2}
               </p>
             )}
@@ -1053,11 +1053,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="certificate3"
               value={formData.certificate3 || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.certificate3 ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.certificate3 ? 'border-blue-500' : ''}`}
               placeholder="..."
             />
             {errors.certificate3 && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.certificate3}
               </p>
             )}
@@ -1069,11 +1069,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="certificate4"
               value={formData.certificate4 || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.certificate4 ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.certificate4 ? 'border-blue-500' : ''}`}
               placeholder="..."
             />
             {errors.certificate4 && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.certificate4}
               </p>
             )}
@@ -1129,7 +1129,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
           </label>
         </div>
         {errors.nationality2 && (
-          <p className="text-red-500 text-xs -mt-4 mb-4">
+          <p className="text-blue-700 text-xs -mt-4 mb-4">
             {errors.nationality2}
           </p>
         )}
@@ -1141,11 +1141,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="nationalityNumber"
               value={formData.nationalityNumber || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.nationalityNumber ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.nationalityNumber ? 'border-blue-500' : ''}`}
               placeholder="ژمارەی ڕەگەزنامە"
             />
             {errors.nationalityNumber && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.nationalityNumber}
               </p>
             )}
@@ -1157,11 +1157,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="registrationNumber"
               value={formData.registrationNumber || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.registrationNumber ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.registrationNumber ? 'border-blue-500' : ''}`}
               placeholder="ژمارەی تۆمار"
             />
             {errors.registrationNumber && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.registrationNumber}
               </p>
             )}
@@ -1173,11 +1173,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="issueYearPlace"
               value={formData.issueYearPlace || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.issueYearPlace ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.issueYearPlace ? 'border-blue-500' : ''}`}
               placeholder="ساڵ و شوێن..."
             />
             {errors.issueYearPlace && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.issueYearPlace}
               </p>
             )}
@@ -1218,11 +1218,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="familyCardNumber"
               value={formData.familyCardNumber || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.familyCardNumber ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.familyCardNumber ? 'border-blue-500' : ''}`}
               placeholder="ژمارەی کارت"
             />
             {errors.familyCardNumber && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.familyCardNumber}
               </p>
             )}
@@ -1234,11 +1234,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="familyCardIssuePlace"
               value={formData.familyCardIssuePlace || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.familyCardIssuePlace ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.familyCardIssuePlace ? 'border-blue-500' : ''}`}
               placeholder="شوێنی دەرچوون"
             />
             {errors.familyCardIssuePlace && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.familyCardIssuePlace}
               </p>
             )}
@@ -1250,10 +1250,10 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="familyCardIssueDate"
               value={formData.familyCardIssueDate || ''}
               onChange={handleChange}
-              className={`modern-input text-right ${errors.familyCardIssueDate ? 'border-red-500' : ''}`}
+              className={`modern-input text-right ${errors.familyCardIssueDate ? 'border-blue-500' : ''}`}
             />
             {errors.familyCardIssueDate && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-blue-700 text-xs mt-1">
                 {errors.familyCardIssueDate}
               </p>
             )}
@@ -1265,11 +1265,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="familyCode"
               value={formData.familyCode || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.familyCode ? 'border-red-500' : ''}`}
+              className={`modern-input ${errors.familyCode ? 'border-blue-500' : ''}`}
               placeholder="کۆدی خێزانی"
             />
             {errors.familyCode && (
-              <p className="text-red-500 text-xs mt-1">{errors.familyCode}</p>
+              <p className="text-blue-700 text-xs mt-1">{errors.familyCode}</p>
             )}
           </div>
         </div>
@@ -1296,16 +1296,16 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
 // By embedding this directly, we ensure the PDF looks exactly like the screen.
 const FONT_EMBED_CSS = `
 @font-face {
-  font-family: 'Noto Kufi Arabic';
+  font-family: 'Noto Naskh Arabic';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/notokufiarabic/v22/CSRp3_VLxv2V2xG2_P4h4xH7t5AUg2g8.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
 }
 @font-face {
-  font-family: 'Noto Kufi Arabic';
+  font-family: 'Noto Naskh Arabic';
   font-style: normal;
   font-weight: 700;
-  src: url(https://fonts.gstatic.com/s/notokufiarabic/v22/CSRp3_VLxv2V2xG2_P4h4xH7t5AUg2g8.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
 }
 `
 export function App() {
@@ -1594,10 +1594,10 @@ export function App() {
         </div>
       )}
       {showError && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-white border-r-4 border-rose-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
-          <div className="bg-rose-100 rounded-full p-2 ml-2 sm:ml-4">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-white border-r-4 border-blue-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
+          <div className="bg-blue-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
-              className="h-5 w-5 sm:h-6 sm:w-6 text-rose-600"
+              className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -1626,7 +1626,7 @@ export function App() {
         <div className="mx-auto px-[5px] py-3">
           <div className="flex items-center gap-3">
             <img
-              src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+              src="https://kti.edu.iq/photo/kti_52_0.png"
               alt="Logo"
               className="h-12 drop-shadow-lg"
             />
@@ -1651,7 +1651,7 @@ export function App() {
                     <div className="flex justify-center items-start gap-4">
                       <div className="text-center flex-1 mx-4">
                         <img
-                          src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+                          src="https://kti.edu.iq/photo/kti_52_0.png"
                           alt="Logo"
                           className="h-16 mx-auto mb-3 drop-shadow-lg"
                         />
@@ -1679,7 +1679,7 @@ export function App() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 w-full max-w-4xl">
                       <div className="modern-contact-card">
                         <svg
-                          className="w-6 h-6 text-red-600 flex-shrink-0"
+                          className="w-6 h-6 text-blue-600 flex-shrink-0"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -1700,7 +1700,7 @@ export function App() {
                       </div>
                       <div className="modern-contact-card">
                         <svg
-                          className="w-6 h-6 text-red-600 flex-shrink-0"
+                          className="w-6 h-6 text-blue-600 flex-shrink-0"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -1721,7 +1721,7 @@ export function App() {
                       </div>
                       <div className="modern-contact-card">
                         <svg
-                          className="w-6 h-6 text-red-600 flex-shrink-0"
+                          className="w-6 h-6 text-blue-600 flex-shrink-0"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -1742,7 +1742,7 @@ export function App() {
                       </div>
                       <div className="modern-contact-card">
                         <svg
-                          className="w-6 h-6 text-red-600 flex-shrink-0"
+                          className="w-6 h-6 text-blue-600 flex-shrink-0"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -1801,7 +1801,7 @@ export function App() {
             onClick={handleSubmit}
             type="submit"
             disabled={isGenerating}
-            className={`w-full sm:w-auto group relative ${isGenerating ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-red-600 via-red-600 to-red-700 hover:from-red-700 hover:via-red-700 hover:to-red-800 shadow-2xl hover:shadow-red-500/50'} text-white px-6 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 rounded-xl sm:rounded-2xl transition-all duration-500 font-bold text-sm sm:text-base md:text-lg lg:text-xl flex items-center justify-center transform hover:scale-105 active:scale-95 overflow-hidden`}
+            className={`w-full sm:w-auto group relative ${isGenerating ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-[#0C8FCB] to-[#175988] hover:from-[#175988] hover:to-[#0C8FCB] shadow-2xl hover:shadow-blue-500/50'} text-white px-6 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 rounded-xl sm:rounded-2xl transition-all duration-500 font-bold text-sm sm:text-base md:text-lg lg:text-xl flex items-center justify-center transform hover:scale-105 active:scale-95 overflow-hidden`}
           >
             <div className="relative flex items-center gap-2 sm:gap-3">
               {isGenerating ? (
@@ -1856,12 +1856,12 @@ export function App() {
       </main>
 
       {/* Mobile/Tablet Footer (UI Only) */}
-      <footer className="bg-white/80 backdrop-blur-md mt-8 py-8 px-[5px] border-t-4 border-red-500">
+      <footer className="bg-white/80 backdrop-blur-md mt-8 py-8 px-[5px] border-t-4 border-[#0C8FCB]">
         <div className="mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="modern-contact-card flex-row-reverse justify-center">
               <svg
-                className="w-6 h-6 text-red-600 flex-shrink-0"
+                className="w-6 h-6 text-blue-600 flex-shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -1879,7 +1879,7 @@ export function App() {
             </div>
             <div className="modern-contact-card flex-row-reverse justify-center">
               <svg
-                className="w-6 h-6 text-red-600 flex-shrink-0"
+                className="w-6 h-6 text-blue-600 flex-shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -1897,7 +1897,7 @@ export function App() {
             </div>
             <div className="modern-contact-card flex-row-reverse justify-center">
               <svg
-                className="w-6 h-6 text-red-600 flex-shrink-0"
+                className="w-6 h-6 text-blue-600 flex-shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -1915,7 +1915,7 @@ export function App() {
             </div>
             <div className="modern-contact-card flex-row-reverse justify-center">
               <svg
-                className="w-6 h-6 text-red-600 flex-shrink-0"
+                className="w-6 h-6 text-blue-600 flex-shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -1973,7 +1973,7 @@ export function App() {
                   </div>
                   <div className="text-center flex-1 mx-3">
                     <img
-                      src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+                      src="https://kti.edu.iq/photo/kti_52_0.png"
                       alt="Logo"
                       className="h-20 mx-auto mb-2"
                     />
