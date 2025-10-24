@@ -1518,19 +1518,8 @@ export function App() {
         'FAST',
       )
 
-      // Generate blob and create a download link to force download
-      const pdfBlob = pdf.output('blob')
-      const pdfUrl = URL.createObjectURL(pdfBlob)
-
-      const downloadLink = document.createElement('a')
-      downloadLink.href = pdfUrl
-      downloadLink.download = 'Kurdistan_Technical_Institute_Form.pdf'
-      document.body.appendChild(downloadLink)
-      downloadLink.click()
-      document.body.removeChild(downloadLink)
-
-      // Clean up the object URL
-      setTimeout(() => URL.revokeObjectURL(pdfUrl), 1000)
+      // Use jsPDF's save method for a more reliable download across all devices, including iOS.
+      pdf.save('Kurdistan_Technical_Institute_Form.pdf')
 
       console.log('PDF download triggered successfully.')
       setShowSuccess(true)
