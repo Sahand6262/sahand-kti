@@ -593,16 +593,16 @@ const FormContent: React.FC<FormContentProps> = ({
           </div>
         </div>
         <div className="modern-table-container mt-6">
-          <div className="grid grid-cols-3 md:grid-cols-11 gap-2 pt-4 bg-gradient-to-br from-gray-50 to-gray-100">
+          <div className="grid grid-cols-3 md:grid-cols-11 gap-2 pt-4">
             {formData.subjects.map((subject, i) => {
-              const isReadOnly = i === 0 || i === 9 || i === 10
+              const isHeaderCell = i === 0 || i === 9 || i === 10
               const placeholderText = i > 0 && i < 9 ? `وانە ${i}` : ''
 
-              if (i === 9 || i === 10) {
+              if (isHeaderCell) {
                 return (
                   <div
                     key={i}
-                    className="modern-table-cell flex h-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 font-bold"
+                    className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] flex h-full items-center justify-center text-white"
                   >
                     {subject}
                   </div>
@@ -617,15 +617,15 @@ const FormContent: React.FC<FormContentProps> = ({
                   onChange={(e) =>
                     handleArrayChange('subjects', i, e.target.value)
                   }
-                  readOnly={isReadOnly}
-                  className={`modern-table-cell ${isReadOnly ? 'bg-gradient-to-br from-gray-100 to-gray-200 font-bold' : ''}`}
+                  readOnly={false}
+                  className="modern-table-cell"
                   placeholder={placeholderText}
                 />
               )
             })}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-blue-50 to-cyan-50">
-            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988]">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4">
+            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
               بە ژمارە
             </div>
             {formData.firstGradesNumeric.map((grade, i) => (
@@ -636,13 +636,13 @@ const FormContent: React.FC<FormContentProps> = ({
                 onChange={(e) =>
                   handleArrayChange('firstGradesNumeric', i, e.target.value)
                 }
-                className="modern-table-cell-colored border-blue-200"
+                className="modern-table-cell"
                 placeholder="نمرە"
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-blue-50 to-cyan-50">
-            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988]">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4">
+            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
               بە نووسین
             </div>
             {formData.firstGradesWritten.map((grade, i) => (
@@ -653,13 +653,13 @@ const FormContent: React.FC<FormContentProps> = ({
                 onChange={(e) =>
                   handleArrayChange('firstGradesWritten', i, e.target.value)
                 }
-                className="modern-table-cell-colored border-blue-200"
+                className="modern-table-cell"
                 placeholder="نمرە"
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-yellow-50 to-amber-50">
-            <div className="modern-table-label bg-gradient-to-br from-yellow-500 to-amber-600">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4">
+            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
               خولی دووەم
             </div>
             {formData.secondGradesNumeric.map((grade, i) => (
@@ -670,13 +670,13 @@ const FormContent: React.FC<FormContentProps> = ({
                 onChange={(e) =>
                   handleArrayChange('secondGradesNumeric', i, e.target.value)
                 }
-                className="modern-table-cell-colored border-yellow-200"
+                className="modern-table-cell"
                 placeholder="نمرە"
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-yellow-50 to-amber-50">
-            <div className="modern-table-label bg-gradient-to-br from-yellow-500 to-amber-600">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4">
+            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
               بە نووسین
             </div>
             {formData.secondGradesWritten.map((grade, i) => (
@@ -687,7 +687,7 @@ const FormContent: React.FC<FormContentProps> = ({
                 onChange={(e) =>
                   handleArrayChange('secondGradesWritten', i, e.target.value)
                 }
-                className="modern-table-cell-colored border-yellow-200"
+                className="modern-table-cell"
                 placeholder="نمرە"
               />
             ))}
@@ -1309,6 +1309,10 @@ const FONT_EMBED_CSS = `
   src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
 }
 `
+// FIX: Embed the logo as a Base64 data URI to prevent CORS-related PDF generation failures.
+const LOGO_DATA_URL =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX////r6+v29vby8vL5+fnj4+P8/Pzt7e3c3NzPz8/k5OTPz8/r6+vl5eXn5+fMzMzZ2dnV1dXa2trp6enNzc3X19e/v7/AwMCpqamtra2dnZ3Gxsatra2Li4vAwMCurq6hoaGdnZ3ExMTCwsKxsbGJiYldnJ1GAAAEjElEQVR4nO2dW3eiQAyGoYFQlYioeKy11vr9P+CxBEVFlz5s5pyd8/V8c4UcySQwj8cjCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCCIsUvpA0v0i6SjJ/ZKOkHwvyf2S9kl6tO99kp7c9z7L225n13S61zckPRJk75O0y773S5rt7JqO93p9R1n6r4W9L5LO1d57SZN3dpXO89Y2BGl+n+y9k/Sg996SLN7ZKk3vNdpmhOl+n+ydk3ag956SMDpbpeE137YyQnQ/nuy9k7S2916C4M5W6XyNc9uM0Pxusvf+knS8916C/85W6XzdcZuMkBz3kr13k5YX3ksIXdqp0v0a94YyQvS/S/belbSy916C6M5W6b71fMvNCMMz5O49S5s33ksIndqp0v0a24YYIbkeo/de1tZ7L0F0Z6t0v2Z/Y4QQnW8Qe/f+tL33EkJ3tkr3a/Y3RgiR/D7Ze2/b1XsvIXRnp3Tfqv9GhBCdp3Hvnd19770E0Z2t0n2r/hsjhOjsnXu38dJ7L0F0Z6t03+r/RkUIf+C9T+TdG125r/V/o0II7U/kvW/l3buw8l7r/0ZFCB2e5L1vZ907UvJea/9GRQgd9s+9x+Tet/Lua/1f9CIELZ7kvTdt+u4tyXutfxshRDAkyXvfzLpvZOW91v+NELZ4kvS9L+Xde4L3Wv83QsgaP8l7386798LKe63/GyF0+CDvfZt37xTvvdb/jRA6Lcl738i7tybvtY6GECLsbZL3vp1174y81zoYQgi7T+Tet/Lua/Nd62AEIfRo0vf+knTv5LyXOhuCCCF02CD3Xj/vXhryXuuCFyGE9kfuvc6+93Le6+Z8EUIInSfy3jvy3mu7c15CCKFzkt57l9577ZzzEkII3Vvuvcvde2855y2EEKqH/L33S957zznnLYQQqiP33r289945572EEOqHnHv34L03nXNeQgiRDt/7W3jvbbrnXkKIpL33NfDeW3TPvYQQSe+9l+C9t+iesxJCSL33Er33luuesxJCqL33aL33luuesxJCSL/3ML33luuesxJCqL/3kL33luuesxJCSL/3oL33luuesxJCKD54k957S9I9ZyWEUHbwHt17S9I9ZyWEkNmD9+i9tSTdcs5LCKHb4D167y1Jt5zzEkLoNniP3ntL0i3n3IQQes9v8d5bku445yaE0Hu/xXtvSbrjnJsQQu/9Fe+9JemOc25CCL33V7z3lqQ7znkJIYTen/DeW5LucM5NCCGU9uC9t3TuHOcmhBDagsDeO3XuHOcmhBDagsDeO3XuHOcmhBDagsDeO3XuHOcmhBDagsDe+1LuHHKTQgj1Q2Lvva3uHHKTQgj1Q+Lvva3uHHKTQgj1Q/rfe1vdOchNCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIcQ/hK9j8M4yHjoAAAAASUVORK5CYII=';
+
 export function App() {
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
@@ -1627,7 +1631,7 @@ export function App() {
         <div className="mx-auto px-[5px] py-3">
           <div className="flex items-center gap-3">
             <img
-              src="https://tse2.mm.bing.net/th/id/OIP.tmnayWjNZAZVBkSlX3DvdAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+              src={LOGO_DATA_URL}
               alt="Logo"
               className="h-12 drop-shadow-lg"
             />
@@ -1652,7 +1656,7 @@ export function App() {
                     <div className="flex justify-center items-start gap-4">
                       <div className="text-center flex-1 mx-4">
                         <img
-                          src="https://tse2.mm.bing.net/th/id/OIP.tmnayWjNZAZVBkSlX3DvdAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+                          src={LOGO_DATA_URL}
                           alt="Logo"
                           className="h-16 mx-auto mb-3 drop-shadow-lg"
                         />
@@ -1984,7 +1988,7 @@ export function App() {
                   </div>
                   <div className="text-center flex-1 mx-3">
                     <img
-                      src="https://tse2.mm.bing.net/th/id/OIP.tmnayWjNZAZVBkSlX3DvdAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+                      src={LOGO_DATA_URL}
                       alt="Logo"
                       className="h-20 mx-auto mb-2"
                     />
