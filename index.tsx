@@ -1561,11 +1561,11 @@ export function App() {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50 rtl relative overflow-hidden font-bold"
+      className="min-h-screen bg-white lg:bg-gradient-to-br lg:from-violet-50 lg:via-fuchsia-50 lg:to-pink-50 rtl relative overflow-hidden font-bold"
       dir="rtl"
     >
       {/* Animated Background Blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden lg:block">
         <div className="absolute top-20 left-20 w-64 h-64 sm:w-96 sm:h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute top-40 right-20 w-64 h-64 sm:w-96 sm:h-96 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-20 left-40 w-64 h-64 sm:w-96 sm:h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
@@ -1617,52 +1617,46 @@ export function App() {
           </div>
         </div>
       )}
-      <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center p-4 md:p-8">
+
+      {/* Mobile/Tablet Header (UI Only) */}
+      <header className="lg:hidden bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-20">
+        <div className="max-w-7xl mx-auto px-[10px] py-3">
+          <div className="flex justify-between items-center">
+            <img
+              src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+              alt="Logo"
+              className="h-12 drop-shadow-lg"
+            />
+            <div className="text-black font-bold text-left">
+              <p className="tracking-wide text-sm sm:text-base">
+                KURDISTAN TECHNICAL INSTITUTE
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto relative z-10 flex flex-col items-center px-[10px] py-4 md:py-8">
         {/* A4 Page Container - Responsive for viewing, fixed for PDF */}
         <div className="w-full max-w-5xl mx-auto">
           {currentStep === 1 ? (
-            <div className="animate-fade-in-up modern-page-container">
+            <div className="animate-fade-in-up lg:bg-white/90 lg:backdrop-blur-xl lg:shadow-2xl lg:rounded-2xl lg:overflow-hidden lg:border lg:border-white/20">
               <div className="p-6 sm:p-8 flex flex-col min-h-[500px] sm:min-h-[600px] lg:min-h-[297mm]">
-                {/* Header */}
-                <div className="shrink-0 mb-6">
+                {/* Header (Desktop UI and PDF) */}
+                <div className="hidden lg:block shrink-0 mb-6">
                   <div className="modern-header-border">
-                    <div className="flex justify-between items-start gap-4">
-                      <div className="modern-photo-placeholder">
-                        <svg
-                          className="w-8 h-8 text-gray-400"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                          />
-                        </svg>
-                        <p className="text-xs text-gray-500 text-center mt-2">
-                          وێنەی فێرخواز
-                        </p>
-                      </div>
+                    <div className="flex justify-center items-start gap-4">
                       <div className="text-center flex-1 mx-4">
                         <img
                           src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
                           alt="Logo"
                           className="h-16 mx-auto mb-3 drop-shadow-lg"
                         />
-                        <div className="text-blue-700 font-bold text-base">
+                        <div className="text-black font-bold text-base">
                           <p className="tracking-wide">
                             KURDISTAN TECHNICAL INSTITUTE
                           </p>
                         </div>
-                      </div>
-                      <div className="text-right text-sm text-blue-700 w-32 flex-shrink-0">
-                        <p className="font-semibold mb-1">
-                          هەرێمی کوردستان - عێراق
-                        </p>
-                        <p className="mb-0.5">وەزارەتی خوێندنی باڵا</p>
-                        <p>پەیمانگەی تەکنیکی کوردستان</p>
                       </div>
                     </div>
                   </div>
@@ -1676,91 +1670,105 @@ export function App() {
                     errors={errors}
                   />
                 </div>
-                {/* Footer */}
-                <div className="shrink-0 mt-6 pt-6 modern-footer-border">
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm mb-4">
-                    <div className="modern-contact-card justify-center bg-white">
-                      <span className="font-medium text-black" dir="ltr">
-                        0772 911 21 21
-                      </span>
-                      <svg
-                        className="w-5 h-5 text-red-600 flex-shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                        />
-                      </svg>
+                {/* Footer (Desktop UI and PDF) */}
+                <div className="hidden lg:block shrink-0 mt-6 pt-6 modern-footer-border">
+                  <div className="flex flex-col items-center gap-4 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 w-full max-w-4xl">
+                      <div className="modern-contact-card">
+                        <svg
+                          className="w-6 h-6 text-red-600 flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                          />
+                        </svg>
+                        <span
+                          className="font-medium text-black text-center"
+                          dir="ltr"
+                        >
+                          07729112121
+                        </span>
+                      </div>
+                      <div className="modern-contact-card">
+                        <svg
+                          className="w-6 h-6 text-red-600 flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                          />
+                        </svg>
+                        <span
+                          className="font-medium text-black text-center"
+                          dir="ltr"
+                        >
+                          07519112121
+                        </span>
+                      </div>
+                      <div className="modern-contact-card">
+                        <svg
+                          className="w-6 h-6 text-red-600 flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                          />
+                        </svg>
+                        <span
+                          className="font-medium text-black text-center"
+                          dir="ltr"
+                        >
+                          www.kti.edu.iq
+                        </span>
+                      </div>
+                      <div className="modern-contact-card">
+                        <svg
+                          className="w-6 h-6 text-red-600 flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                          />
+                        </svg>
+                        <span
+                          className="font-medium text-black text-center"
+                          dir="ltr"
+                        >
+                          tomar@kti.edu.iq
+                        </span>
+                      </div>
                     </div>
-                    <div className="modern-contact-card justify-center bg-white">
-                      <span className="font-medium text-black" dir="ltr">
-                        0751 911 21 21
-                      </span>
-                      <svg
-                        className="w-5 h-5 text-red-600 flex-shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                        />
-                      </svg>
-                    </div>
-                    <div className="modern-contact-card justify-center bg-white">
-                      <span className="font-medium text-black" dir="ltr">
-                        www.kti.edu.iq
-                      </span>
-                      <svg
-                        className="w-5 h-5 text-red-600 flex-shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                        />
-                      </svg>
-                    </div>
-                    <div className="modern-contact-card justify-center bg-white">
-                      <span className="font-medium text-black" dir="ltr">
-                        tomar@kti.edu.iq
-                      </span>
-                      <svg
-                        className="w-5 h-5 text-red-600 flex-shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </div>
+                    <p className="text-center text-sm text-gray-600 tracking-wide mt-2">
+                      Kurdistan Technical Institute - Sulaymaniyah Heights,
+                      Kurdistan Region - Iraq
+                    </p>
                   </div>
-                  <p className="text-center text-sm text-gray-600 tracking-wide">
-                    Kurdistan Technical Institute - Sulaymaniyah Heights,
-                    Kurdistan Region - Iraq
-                  </p>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="animate-fade-in-up modern-page-container">
+            <div className="animate-fade-in-up lg:bg-white/90 lg:backdrop-blur-xl lg:shadow-2xl lg:rounded-2xl lg:overflow-hidden lg:border lg:border-white/20">
               <div className="p-6 sm:p-8 flex flex-col min-h-[500px] sm:min-h-[600px] lg:min-h-[297mm]">
                 <div className="flex-grow">
                   <SecondFormContent
@@ -1781,21 +1789,8 @@ export function App() {
             <button
               onClick={handlePreviousStep}
               type="button"
-              className="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 transform hover:scale-105 transition-all duration-300"
+              className="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg flex items-center justify-center transform hover:scale-105 transition-all duration-300"
             >
-              <svg
-                className="w-4 h-4 sm:w-5 sm:h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
               گەڕانەوە
             </button>
           )}
@@ -1855,7 +1850,92 @@ export function App() {
             </div>
           </button>
         </div>
-      </div>
+      </main>
+
+      {/* Mobile/Tablet Footer (UI Only) */}
+      <footer className="lg:hidden bg-white/80 backdrop-blur-md mt-8 py-8 px-[10px] border-t-4 border-red-500">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="modern-contact-card justify-center">
+              <svg
+                className="w-6 h-6 text-red-600 flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
+              </svg>
+              <span className="font-medium text-black text-center" dir="ltr">
+                07729112121
+              </span>
+            </div>
+            <div className="modern-contact-card justify-center">
+              <svg
+                className="w-6 h-6 text-red-600 flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
+              </svg>
+              <span className="font-medium text-black text-center" dir="ltr">
+                07519112121
+              </span>
+            </div>
+            <div className="modern-contact-card justify-center">
+              <svg
+                className="w-6 h-6 text-red-600 flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                />
+              </svg>
+              <span className="font-medium text-black text-center" dir="ltr">
+                www.kti.edu.iq
+              </span>
+            </div>
+            <div className="modern-contact-card justify-center">
+              <svg
+                className="w-6 h-6 text-red-600 flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              <span className="font-medium text-black text-center" dir="ltr">
+                tomar@kti.edu.iq
+              </span>
+            </div>
+          </div>
+          <p className="text-center text-sm text-gray-600 tracking-wide mt-6">
+            Kurdistan Technical Institute - Sulaymaniyah Heights, Kurdistan
+            Region - Iraq
+          </p>
+        </div>
+      </footer>
+
       {/* Hidden container for PDF generation - ALWAYS DESKTOP STYLE */}
       <div
         style={{
@@ -1895,7 +1975,7 @@ export function App() {
                       alt="Logo"
                       className="h-20 mx-auto mb-2"
                     />
-                    <div className="text-blue-700 font-bold text-lg">
+                    <div className="text-black font-bold text-lg">
                       <p>KURDISTAN TECHNICAL INSTITUTE</p>
                     </div>
                   </div>
@@ -2382,7 +2462,7 @@ export function App() {
               <div className="grid grid-cols-4 gap-3 text-base mb-3">
                 <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
                   <span className="font-medium text-black" dir="ltr">
-                    0772 911 21 21
+                    07729112121
                   </span>
                   <svg
                     className="w-4 h-4 text-red-600 flex-shrink-0"
@@ -2400,7 +2480,7 @@ export function App() {
                 </div>
                 <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
                   <span className="font-medium text-black" dir="ltr">
-                    0751 911 21 21
+                    07519112121
                   </span>
                   <svg
                     className="w-4 h-4 text-red-600 flex-shrink-0"
