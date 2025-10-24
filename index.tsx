@@ -1620,23 +1620,23 @@ export function App() {
 
       {/* Mobile/Tablet Header (UI Only) */}
       <header className="lg:hidden bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-[10px] py-3">
+        <div className="max-w-7xl mx-auto px-[5px] py-3">
           <div className="flex justify-between items-center">
+            <div className="text-black font-bold text-right">
+              <p className="tracking-wide text-sm sm:text-base">
+                KURDISTAN TECHNICAL INSTITUTE
+              </p>
+            </div>
             <img
               src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
               alt="Logo"
               className="h-12 drop-shadow-lg"
             />
-            <div className="text-black font-bold text-left">
-              <p className="tracking-wide text-sm sm:text-base">
-                KURDISTAN TECHNICAL INSTITUTE
-              </p>
-            </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto relative z-10 flex flex-col items-center px-[10px] py-4 md:py-8">
+      <main className="max-w-7xl mx-auto relative z-10 flex flex-col items-center px-[5px] py-4 md:py-8">
         {/* A4 Page Container - Responsive for viewing, fixed for PDF */}
         <div className="w-full max-w-5xl mx-auto">
           {currentStep === 1 ? (
@@ -1853,10 +1853,10 @@ export function App() {
       </main>
 
       {/* Mobile/Tablet Footer (UI Only) */}
-      <footer className="lg:hidden bg-white/80 backdrop-blur-md mt-8 py-8 px-[10px] border-t-4 border-red-500">
+      <footer className="lg:hidden bg-white/80 backdrop-blur-md mt-8 py-8 px-[5px] border-t-4 border-red-500">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 gap-4">
-            <div className="modern-contact-card justify-center">
+            <div className="modern-contact-card flex-row-reverse">
               <svg
                 className="w-6 h-6 text-red-600 flex-shrink-0"
                 fill="none"
@@ -1874,7 +1874,7 @@ export function App() {
                 07729112121
               </span>
             </div>
-            <div className="modern-contact-card justify-center">
+            <div className="modern-contact-card flex-row-reverse">
               <svg
                 className="w-6 h-6 text-red-600 flex-shrink-0"
                 fill="none"
@@ -1892,7 +1892,7 @@ export function App() {
                 07519112121
               </span>
             </div>
-            <div className="modern-contact-card justify-center">
+            <div className="modern-contact-card flex-row-reverse">
               <svg
                 className="w-6 h-6 text-red-600 flex-shrink-0"
                 fill="none"
@@ -1910,7 +1910,7 @@ export function App() {
                 www.kti.edu.iq
               </span>
             </div>
-            <div className="modern-contact-card justify-center">
+            <div className="modern-contact-card flex-row-reverse">
               <svg
                 className="w-6 h-6 text-red-600 flex-shrink-0"
                 fill="none"
