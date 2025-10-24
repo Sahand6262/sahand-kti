@@ -1311,7 +1311,7 @@ const FONT_EMBED_CSS = `
 `
 // FIX: Embed the logo as a Base64 data URI to prevent CORS-related PDF generation failures.
 const LOGO_DATA_URL =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX////r6+v29vby8vL5+fnj4+P8/Pzt7e3c3NzPz8/k5OTPz8/r6+vl5eXn5+fMzMzZ2dnV1dXa2trp6enNzc3X19e/v7/AwMCpqamtra2dnZ3Gxsatra2Li4vAwMCurq6hoaGdnZ3ExMTCwsKxsbGJiYldnJ1GAAAEjElEQVR4nO2dW3eiQAyGoYFQlYioeKy11vr9P+CxBEVFlz5s5pyd8/V8c4UcySQwj8cjCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCCIsUvpA0v0i6SjJ/ZKOkHwvyf2S9kl6tO99kp7c9z7L225n13S61zckPRJk75O0y773S5rt7JqO93p9R1n6r4W9L5LO1d57SZN3dpXO89Y2BGl+n+y9k/Sg996SLN7ZKk3vNdpmhOl+n+ydk3ag956SMDpbpeE137YyQnQ/nuy9k7S2916C4M5W6XyNc9uM0Pxusvf+knS8916C/85W6XzdcZuMkBz3kr13k5YX3ksIXdqp0v0a94YyQvS/S/belbSy916C6M5W6b71fMvNCMMz5O49S5s33ksIndqp0v0a24YYIbkeo/de1tZ7L0F0Z6t0v2Z/Y4QQnW8Qe/f+tL33EkJ3tkr3a/Y3RgiR/D7Ze2/b1XsvIXRnp3Tfqv9GhBCdp3Hvnd19770E0Z2t0n2r/hsjhOjsnXu38dJ7L0F0Z6t03+r/RkUIf+C9T+TdG125r/V/o0II7U/kvW/l3buw8l7r/0ZFCB2e5L1vZ907UvJea/9GRQgd9s+9x+Tet/Lua/1f9CIELZ7kvTdt+u4tyXutfxshRDAkyXvfzLpvZOW91v+NELZ4kvS9L+Xde4L3Wv83QsgaP8l7386798LKe63/GyF0+CDvfZt37xTvvdb/jRA6Lcl738i7tybvtY6GECLsbZL3vp1174y81zoYQgi7T+Tet/Lua/Nd62AEIfRo0vf+knTv5LyXOhuCCCF02CD3Xj/vXhryXuuCFyGE9kfuvc6+93Le6+Z8EUIInSfy3jvy3mu7c15CCKFzkt57l9577ZzzEkII3Vvuvcvde2855y2EEKqH/L33S957zznnLYQQqiP33r289945572EEOqHnHv34L03nXNeQgiRDt/7W3jvbbrnXkKIpL33NfDeW3TPvYQQSe+9l+C9t+iesxJCSL33Er33luuesxJCqL33aL33luuesxJCSL/3ML33luuesxJCqL/3kL33luuesxJCSL/3oL33luuesxJCKD54k957S9I9ZyWEUHbwHt17S9I9ZyWEkNmD9+i9tSTdcs5LCKHb4D167y1Jt5zzEkLoNniP3ntL0i3n3IQQes9v8d5bku445yaE0Hu/xXtvSbrjnJsQQu/9Fe+9JemOc25CCL33V7z3lqQ7znkJIYTen/DeW5LucM5NCCGU9uC9t3TuHOcmhBDagsDeO3XuHOcmhBDagsDeO3XuHOcmhBDagsDeO3XuHOcmhBDagsDe+1LuHHKTQgj1Q2Lvva3uHHKTQgj1Q+Lvva3uHHKTQgj1Q/rfe1vdOchNCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIcQ/hK9j8M4yHjoAAAAASUVORK5CYII=';
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX////r6+v29vby8vL5+fnj4+P8/Pzt7e3c3NzPz8/k5OTPz8/r6+vl5eXn5+fMzMzZ2dnV1dXa2trp6enNzc3X19e/v7/AwMCpqamtra2dnZ3Gxsatra2Li4vAwMCurq6hoaGdnZ3ExMTCwsKxsbGJiYldnJ1GAAAEjElEQVR4nO2dW3eiQAyGoYFQlYioeKy11vr9P+CxBEVFlz5s5pyd8/V8c4UcySQwj8cjCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCCIsUvpA0v0i6SjJ/ZKOkHwvyf2S9kl6tO99kp7c9z7L225n13S61zckPRJk75O0y773S5rt7JqO93p9R1n6r4W9L5LO1d57SZN3dpXO89Y2BGl+n+y9k/Sg996SLN7ZKk3vNdpmhOl+n+ydk3ag956SMDpbpeE137YyQnQ/nuy9k7S2916C4M5W6XyNc9uM0Pxusvf+knS8916C/85W6XzdcZuMkBz3kr13k5YX3ksIXdqp0v0a94YyQvS/S/belbSy916C6M5W6b71fMvNCMMz5O49S5s33ksIndqp0v0a24YYIbkeo/de1tZ7L0F0Z6t0v2Z/Y4QQnW8Qe/f+tL33EkJ3tkr3a/Y3RgiR/D7Ze2/b1XsvIXRnp3Tfqv9GhBCdp3Hvnd19770E0Z2t0n2r/hsjhOjsnXu38dJ7L0F0Z6t03+r/RkUIf+C9T+TdG125r/V/o0II7U/kvW/l3buw8l7r/0ZFCB2e5L1vZ907UvJea/9GRQgd9s+9x+Tet/Lua/1f9CIELZ7kvTdt+u4tyXutfxshRDAkyXvfzLpvZOW91v+NELZ4kvS9L+Xde4L3Wv83QsgaP8l7386798LKe63/GyF0+CDvfZt37xTvvdb/jRA6Lcl738i7tybvtY6GECLsbZL3vp1174y81zoYQgi7T+Tet/Lua/Nd62AEIfRo0vf+knTv5LyXOhuCCCF02CD3Xj/vXhryXuuCFyGE9kfuvc6+93Le6+Z8EUIInSfy3jvy3mu7c15CCKFzkt57l9577ZzzEkII3Vvuvcvde2855y2EEKqH/L33S957zznnLYQQqiP33r289945572EEOqHnHv34L03nXNeQgiRDt/7W3jvbbrnXkKIpL33NfDeW3TPvYQQSe+9l+C9t+iesxJCSL33Er33luuesxJCqL33aL33luuesxJCSL/3ML33luuesxJCSL/3kL33luuesxJCSL/3oL33luuesxJCKD54k957S9I9ZyWEUHbwHt17S9I9ZyWEkNmD9+i9tSTdcs5LCKHb4D167y1Jt5zzEkLoNniP3ntL0i3n3IQQes9v8d5bku445yaE0Hu/xXtvSbrjnJsQQu/9Fe+9JemOc25CCL33V7z3lqQ7znkJIYTen/DeW5LucM5NCCGU9uC9t3TuHOcmhBDagsDeO3XuHOcmhBDagsDeO3XuHOcmhBDagsDeO3XuHOcmhBDagsDe+1LuHHKTQgj1Q2Lvva3uHHKTQgj1Q+Lvva3uHHKTQgj1Q/rfe1vdOchNCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIcQ/hK9j8M4yHjoAAAAASUVORK5CYII=';
 
 export function App() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -1403,6 +1403,7 @@ export function App() {
   const [showSuccess, setShowSuccess] = useState(false)
   const [showError, setShowError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const pageOnePrintRef = useRef(null)
   const pageTwoPrintRef = useRef(null)
@@ -1473,9 +1474,6 @@ export function App() {
   }
 
   const generatePDF = async () => {
-    setIsGenerating(true)
-    setShowError(false)
-    setShowSuccess(false)
     try {
       console.log('Starting PDF generation...')
       const pdf = new jsPDF({
@@ -1541,26 +1539,74 @@ export function App() {
       const pdfBlob = pdf.output('blob')
       saveAs(pdfBlob, 'Kurdistan_Technical_Institute_Form.pdf')
       console.log('PDF download triggered via file-saver.')
-
-      setShowSuccess(true)
     } catch (error) {
       console.error('PDF generation failed:', error)
-      setErrorMessage(
+      throw new Error(
         'دروستکردنی پی دی ئێف سەرکەوتوو نەبوو. تکایە دووبارە هەوڵ بدەوە.',
+      )
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    if (currentStep === 1) {
+      handleNextStep()
+      return
+    }
+
+    // This is the final submission on step 2
+    setIsGenerating(true)
+    setShowError(false)
+    setShowSuccess(false)
+
+    try {
+      // NOTE TO USER: Replace this URL with your actual PHP API endpoint.
+      // Ensure your PHP server is running and accessible from this app.
+      // Also, remember to set your database password in the PHP file.
+      const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/register-student.php'
+
+      const response = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        // Try to get more specific error from server response
+        const errorText = await response.text()
+        throw new Error(
+          `پەیوەندی سێرڤەر سەرکەوتوو نەبوو: ${response.status} ${errorText}`,
+        )
+      }
+
+      const result = await response.json()
+
+      if (!result.success) {
+        throw new Error(
+          result.error || result.message || 'سێرڤەر هەڵەیەکی گەڕاندەوە.',
+        )
+      }
+
+      // API submission was successful, now generate the PDF
+      setSuccessMessage(
+        'زانیارییەکان بە سەرکەوتوویی نێردرا! ئامادەکاری بۆ داگرتنی PDF.',
+      )
+      setShowSuccess(true)
+
+      await generatePDF()
+    } catch (error) {
+      console.error('Submission or PDF generation failed:', error)
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'هەڵەیەک ڕوویدا. تکایە دووبارە هەوڵ بدەوە.',
       )
       setShowError(true)
     } finally {
       setIsGenerating(false)
-    }
-  }
-
-  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    // Validation removed
-    if (currentStep === 1) {
-      handleNextStep()
-    } else {
-      generatePDF()
     }
   }
 
@@ -1594,7 +1640,7 @@ export function App() {
             </svg>
           </div>
           <span className="font-bold text-sm sm:text-base md:text-lg">
-            پی دی ئێف بە سەرکەوتوویی داگیرا!
+            {successMessage}
           </span>
         </div>
       )}
@@ -1831,7 +1877,7 @@ export function App() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  <span>دروستکردنی پی دی ئێف...</span>
+                  <span>ناردنی زانیاری...</span>
                 </>
               ) : currentStep === 1 ? (
                 <>
@@ -1852,7 +1898,7 @@ export function App() {
                       d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                     />
                   </svg>
-                  <span>دروستکردنی پی دی ئێف</span>
+                  <span>ناردن و داگرتنی فۆڕم</span>
                 </>
               )}
             </div>
