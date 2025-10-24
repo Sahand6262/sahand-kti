@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { jsPDF } from 'jspdf'
@@ -1469,8 +1470,8 @@ export function App() {
       const pageWidth = 210
       const pageHeight = 297
       const toPngOptions = {
-        quality: 0.99,
-        pixelRatio: 3, // Reduced from 5 to improve performance on mobile devices
+        quality: 0.95, // Reduced quality for smaller file size and better performance
+        pixelRatio: 2, // Reduced from 3 to improve performance and stability on mobile
         backgroundColor: '#ffffff',
         fontEmbedCss: FONT_EMBED_CSS,
         cacheBust: true,
@@ -1481,7 +1482,7 @@ export function App() {
       console.log('Capturing first page...')
       if (!pageOnePrintRef.current)
         throw new Error('First page reference for PDF not found')
-      await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000)) // Increased wait time for rendering
+      await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)) // Shorter wait
       const firstPageDataUrl = await toPng(
         pageOnePrintRef.current,
         toPngOptions,
@@ -1501,7 +1502,7 @@ export function App() {
       console.log('Capturing second page...')
       if (!pageTwoPrintRef.current)
         throw new Error('Second page reference for PDF not found')
-      await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000)) // Increased wait time for rendering
+      await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)) // Shorter wait
       const secondPageDataUrl = await toPng(
         pageTwoPrintRef.current,
         toPngOptions,
@@ -1518,31 +1519,15 @@ export function App() {
         'FAST',
       )
 
-      // To ensure the PDF is downloaded instead of opened, especially on iOS,
-      // we convert the blob to a more compatible data URI.
-      const pdfBlob = pdf.output('blob');
-      const reader = new FileReader();
-      
-      await new Promise<void>((resolve, reject) => {
-        reader.onload = () => {
-          try {
-            const dataUrl = reader.result as string;
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = 'Kurdistan_Technical_Institute_Form.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            console.log('PDF download triggered via data URI method.');
-            resolve();
-          } catch(e) {
-            reject(e);
-          }
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(pdfBlob);
-      });
-      
+      // Reverting to the library's built-in `save` method. The previous manual
+      // methods (blob and data URI) are unreliable on iOS. Making the image
+      // generation process lighter (lower pixelRatio) should prevent memory
+      // issues on mobile devices, allowing the standard `save` function to work
+      // correctly and force a download instead of opening a new tab.
+      pdf.save('Kurdistan_Technical_Institute_Form.pdf')
+
+      console.log('PDF download triggered via the standard pdf.save() method.')
+
       setShowSuccess(true)
     } catch (error) {
       console.error('PDF generation failed:', error)
