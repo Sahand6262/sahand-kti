@@ -1519,22 +1519,20 @@ export function App() {
         'FAST',
       )
 
-      // ** NEW DOWNLOAD LOGIC **
-      // Using a data URI is a more robust method for forcing downloads on
-      // browsers like iOS Safari, which tend to ignore the 'download' attribute
-      // on blob URLs and open them in a new tab instead. By encoding the file
-      // data directly into the href, we work around this limitation.
-      console.log('Generating Data URI for download to ensure iOS compatibility...');
-      const dataUri = pdf.output('datauristring');
-      const link = document.createElement('a');
-      link.href = dataUri;
-      link.download = 'Kurdistan_Technical_Institute_Form.pdf';
-
-      // Append, click, and remove the link to trigger the download
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      console.log('PDF download triggered via data URI.');
+      // Force download using a blob URL
+      console.log('Generating Blob URL for download...');
+      const pdfBlob = pdf.output('blob');
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = pdfUrl;
+      downloadLink.download = 'Kurdistan_Technical_Institute_Form.pdf';
+      downloadLink.style.display = 'none';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      // Revoke the object URL after a short delay to free up memory
+      setTimeout(() => URL.revokeObjectURL(pdfUrl), 1000);
+      console.log('PDF download triggered via Blob URL.');
 
       setShowSuccess(true)
     } catch (error) {
