@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { jsPDF } from 'jspdf'
@@ -1626,7 +1627,7 @@ export function App() {
         <div className="mx-auto px-[5px] py-3">
           <div className="flex items-center gap-3">
             <img
-              src="https://kti.edu.iq/photo/kti_52_0.png"
+              src="https://tse2.mm.bing.net/th/id/OIP.tmnayWjNZAZVBkSlX3DvdAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
               alt="Logo"
               className="h-12 drop-shadow-lg"
             />
@@ -1651,7 +1652,7 @@ export function App() {
                     <div className="flex justify-center items-start gap-4">
                       <div className="text-center flex-1 mx-4">
                         <img
-                          src="https://kti.edu.iq/photo/kti_52_0.png"
+                          src="https://tse2.mm.bing.net/th/id/OIP.tmnayWjNZAZVBkSlX3DvdAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
                           alt="Logo"
                           className="h-16 mx-auto mb-3 drop-shadow-lg"
                         />
@@ -1933,8 +1934,18 @@ export function App() {
             </div>
           </div>
           <p className="text-center text-sm text-gray-600 tracking-wide mt-6">
-          پەیمانگای تەکنیکی کوردستان - بەرزاییەکانی سلێمانی، هەرێمی کوردستان - عێراق
+            پەیمانگای تەکنیکی کوردستان - بەرزاییەکانی سلێمانی، هەرێمی کوردستان
+            - عێراق
           </p>
+          <div className="flex justify-center my-6">
+            <div className="w-2/3 border-t border-gray-300"></div>
+          </div>
+          <div className="text-center text-sm text-gray-600">
+            Developed by{' '}
+            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#0C8FCB] to-[#175988]">
+              SAHAND
+            </span>
+          </div>
         </div>
       </footer>
 
@@ -1973,7 +1984,7 @@ export function App() {
                   </div>
                   <div className="text-center flex-1 mx-3">
                     <img
-                      src="https://kti.edu.iq/photo/kti_52_0.png"
+                      src="https://tse2.mm.bing.net/th/id/OIP.tmnayWjNZAZVBkSlX3DvdAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
                       alt="Logo"
                       className="h-20 mx-auto mb-2"
                     />
