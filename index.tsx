@@ -1518,10 +1518,31 @@ export function App() {
         'FAST',
       )
 
-      // Use jsPDF's save method for a more reliable download across all devices, including iOS.
-      pdf.save('Kurdistan_Technical_Institute_Form.pdf')
-
-      console.log('PDF download triggered successfully.')
+      // To ensure the PDF is downloaded instead of opened, especially on iOS,
+      // we convert the blob to a more compatible data URI.
+      const pdfBlob = pdf.output('blob');
+      const reader = new FileReader();
+      
+      await new Promise<void>((resolve, reject) => {
+        reader.onload = () => {
+          try {
+            const dataUrl = reader.result as string;
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'Kurdistan_Technical_Institute_Form.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            console.log('PDF download triggered via data URI method.');
+            resolve();
+          } catch(e) {
+            reject(e);
+          }
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(pdfBlob);
+      });
+      
       setShowSuccess(true)
     } catch (error) {
       console.error('PDF generation failed:', error)
