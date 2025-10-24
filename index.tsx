@@ -1611,12 +1611,25 @@ export function App() {
         'FAST',
       )
 
-      // Use a blob to create a downloadable link, which is more reliable and consistent across all devices.
+      // NEW: Force download on all devices instead of opening in new tab
       const pdfBlob = pdf.output('blob')
       const pdfUrl = URL.createObjectURL(pdfBlob)
-      setGeneratedPdfUrl(pdfUrl) // This will show the new modal for all devices.
+      
+      // Create a temporary anchor element to trigger download
+      const downloadLink = document.createElement('a')
+      downloadLink.href = pdfUrl
+      downloadLink.download = 'Kurdistan_Technical_Institute_Form_Complete.pdf'
+      document.body.appendChild(downloadLink)
+      downloadLink.click()
+      document.body.removeChild(downloadLink)
+      
+      // Clean up the URL object
+      setTimeout(() => {
+        URL.revokeObjectURL(pdfUrl)
+      }, 1000)
 
-      console.log('PDF processing complete.')
+      console.log('PDF download triggered successfully.')
+      setShowSuccess(true)
     } catch (error) {
       console.error('PDF generation failed:', error)
       setErrorMessage(
@@ -1676,7 +1689,7 @@ export function App() {
             </svg>
           </div>
           <span className="font-bold text-sm sm:text-base md:text-lg">
-            پی دی ئێف بە سەرکەوتوویی دروست کرا!
+            پی دی ئێف بە سەرکەوتوویی داگیرا!
           </span>
         </div>
       )}
@@ -1701,94 +1714,6 @@ export function App() {
             <p className="font-bold text-sm sm:text-base md:text-lg">
               {errorMessage}
             </p>
-          </div>
-        </div>
-      )}
-      {/* New PDF Options Modal for Mobile/Tablet */}
-      {generatedPdfUrl && (
-        <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-          dir="rtl"
-        >
-          <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center animate-fade-in-up">
-            <div className="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg">
-              <svg
-                className="w-8 h-8 text-emerald-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
-              فایل ئامادەیە
-            </h3>
-            <p className="text-gray-600 mb-6">
-              فایلی PDF بە سەرکەوتوویی دروستکرا.
-            </p>
-            <div className="flex flex-col gap-3">
-              <a
-                href={generatedPdfUrl}
-                download="Kurdistan_Technical_Institute_Form_Complete.pdf"
-                onClick={() => setTimeout(() => setGeneratedPdfUrl(null), 100)}
-                className="w-full group relative bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-red-500/50 text-white px-8 py-4 rounded-xl transition-all duration-300 font-bold text-lg flex items-center justify-center gap-3 transform hover:scale-105"
-              >
-                <svg
-                  className="h-6 w-6 group-hover:animate-bounce"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                <span>داگرتن</span>
-              </a>
-              <a
-                href={generatedPdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setTimeout(() => setGeneratedPdfUrl(null), 100)}
-                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transform hover:scale-105 transition-all duration-300"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                </svg>
-                <span>بینین</span>
-              </a>
-            </div>
-            <button
-              onClick={() => setGeneratedPdfUrl(null)}
-              className="mt-6 text-gray-500 hover:text-gray-800 text-sm font-medium transition-colors"
-            >
-              داخستن
-            </button>
           </div>
         </div>
       )}
