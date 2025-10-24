@@ -1481,7 +1481,6 @@ export function App() {
       console.log('Capturing first page...')
       if (!pageOnePrintRef.current)
         throw new Error('First page reference for PDF not found')
-      // FIX: The `setTimeout` call inside the Promise is made more explicit to avoid potential type inference issues.
       await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000)) // Increased wait time for rendering
       const firstPageDataUrl = await toPng(
         pageOnePrintRef.current,
@@ -1502,7 +1501,6 @@ export function App() {
       console.log('Capturing second page...')
       if (!pageTwoPrintRef.current)
         throw new Error('Second page reference for PDF not found')
-      // FIX: The `setTimeout` call inside the Promise is made more explicit to avoid potential type inference issues.
       await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000)) // Increased wait time for rendering
       const secondPageDataUrl = await toPng(
         pageTwoPrintRef.current,
@@ -1520,8 +1518,19 @@ export function App() {
         'FAST',
       )
 
-      // Force a direct download using jsPDF's save method, which is more reliable across devices.
-      pdf.save('Kurdistan_Technical_Institute_Form_Complete.pdf')
+      // Generate blob and create a download link to force download
+      const pdfBlob = pdf.output('blob')
+      const pdfUrl = URL.createObjectURL(pdfBlob)
+
+      const downloadLink = document.createElement('a')
+      downloadLink.href = pdfUrl
+      downloadLink.download = 'Kurdistan_Technical_Institute_Form.pdf'
+      document.body.appendChild(downloadLink)
+      downloadLink.click()
+      document.body.removeChild(downloadLink)
+
+      // Clean up the object URL
+      setTimeout(() => URL.revokeObjectURL(pdfUrl), 1000)
 
       console.log('PDF download triggered successfully.')
       setShowSuccess(true)
