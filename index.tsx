@@ -1563,7 +1563,7 @@ export function App() {
       const pageHeight = 297
       const toPngOptions = {
         quality: 0.99,
-        pixelRatio: 5,
+        pixelRatio: 3, // Reduced from 5 to improve performance on mobile devices
         backgroundColor: '#ffffff',
         fontEmbedCss: FONT_EMBED_CSS,
         cacheBust: true,
@@ -1574,7 +1574,7 @@ export function App() {
       console.log('Capturing first page...')
       if (!pageOnePrintRef.current)
         throw new Error('First page reference for PDF not found')
-      await new Promise((resolve) => setTimeout(resolve, 800))
+      await new Promise((resolve) => setTimeout(resolve, 1000)) // Increased wait time for rendering
       const firstPageDataUrl = await toPng(
         pageOnePrintRef.current,
         toPngOptions,
@@ -1594,7 +1594,7 @@ export function App() {
       console.log('Capturing second page...')
       if (!pageTwoPrintRef.current)
         throw new Error('Second page reference for PDF not found')
-      await new Promise((resolve) => setTimeout(resolve, 800))
+      await new Promise((resolve) => setTimeout(resolve, 1000)) // Increased wait time for rendering
       const secondPageDataUrl = await toPng(
         pageTwoPrintRef.current,
         toPngOptions,
@@ -1611,18 +1611,11 @@ export function App() {
         'FAST',
       )
 
-      const isMobileOrTablet = window.matchMedia(
-        '(max-width: 1024px)',
-      ).matches
-      if (isMobileOrTablet) {
-        // Use a blob to create a downloadable link, which is more reliable on mobile devices.
-        const pdfBlob = pdf.output('blob')
-        const pdfUrl = URL.createObjectURL(pdfBlob)
-        setGeneratedPdfUrl(pdfUrl) // This will show the new modal
-      } else {
-        pdf.save('Kurdistan_Technical_Institute_Form_Complete.pdf')
-        setShowSuccess(true) // Keep original behavior for desktop
-      }
+      // Use a blob to create a downloadable link, which is more reliable and consistent across all devices.
+      const pdfBlob = pdf.output('blob')
+      const pdfUrl = URL.createObjectURL(pdfBlob)
+      setGeneratedPdfUrl(pdfUrl) // This will show the new modal for all devices.
+
       console.log('PDF processing complete.')
     } catch (error) {
       console.error('PDF generation failed:', error)
