@@ -906,7 +906,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 className={`flex items-center gap-3 cursor-pointer px-4 py-4 bg-white/80 backdrop-blur-sm border-2 rounded-xl transition-all duration-300 hover:border-blue-300 hover:shadow-lg hover:scale-[1.02] ${isSelected ? 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-400 shadow-lg scale-[1.02]' : 'border-gray-200'}`}
                 role="checkbox"
                 aria-checked={isSelected}
-                tabIndex="0"
+                tabIndex={0}
               >
                 <div
                   className={`w-6 h-6 border-2 rounded-md flex-shrink-0 flex items-center justify-center font-bold text-blue-600 text-sm transition-all duration-300 ${isSelected ? 'border-blue-500 bg-blue-100' : 'border-gray-300 bg-white'}`}
@@ -1426,15 +1426,6 @@ export function App() {
       ...prevState,
       [name]: type === 'checkbox' ? checked : sanitizedValue,
     }))
-
-    // Clear error for this field when user starts typing
-    if (errors[name]) {
-      setErrors((prevErrors) => {
-        const newErrors = { ...prevErrors }
-        delete newErrors[name]
-        return newErrors
-      })
-    }
   }
   const handleArrayChange = (
     arrayName: keyof FormData,
@@ -1462,79 +1453,6 @@ export function App() {
       }
       return { ...prev, departmentChoices: selections }
     })
-    // Clear error for department choices when user interacts
-    if (errors.departmentChoices) {
-      setErrors((prevErrors) => {
-        const newErrors = { ...prevErrors }
-        delete newErrors.departmentChoices
-        return newErrors
-      })
-    }
-  }
-
-  const validate = (step: number) => {
-    const newErrors: { [key: string]: string } = {}
-    const requiredErrorMsg = 'ئەم خانەیە پێویستە'
-    const page1Fields: (keyof FormData)[] = [
-      'personalName',
-      'gender',
-      'birthYear',
-      'address',
-      'cityArea',
-      'neighborhood',
-      'city',
-      'district',
-      'phone1',
-      'guardianName',
-      'guardianRelation',
-      'guardianOccupation',
-      'guardianPhone',
-      'graduationYear',
-      'educationSystem',
-      'examRound',
-      'examTestNumbers',
-      'province',
-      'education',
-      'district2',
-      'studyYear',
-    ]
-    const page2Fields: (keyof FormData)[] = [
-      'instituteName',
-      'directorName',
-      'directorPhone',
-      'educationDirectorName',
-      'decision',
-      'certificate1',
-      'certificate2',
-      'certificate3',
-      'certificate4',
-      'nationality2',
-      'nationalityNumber',
-      'registrationNumber',
-      'issueYearPlace',
-      'familyCardNumber',
-      'familyCardIssuePlace',
-      'familyCardIssueDate',
-      'familyCode',
-    ]
-
-    let fieldsToValidate: (keyof FormData)[] = []
-    if (step === 1) fieldsToValidate = page1Fields
-    if (step === 2) fieldsToValidate = page2Fields
-
-    fieldsToValidate.forEach((field) => {
-      if (!formData[field] || formData[field].toString().trim() === '') {
-        newErrors[field] = requiredErrorMsg
-      }
-    })
-
-    if (step === 2) {
-      if (formData.departmentChoices.length === 0) {
-        newErrors.departmentChoices = 'تکایە بە لایەنی کەمەوە یەک بەش هەڵبژێرە'
-      }
-    }
-
-    return newErrors
   }
 
   const handleNextStep = () => {
@@ -1574,7 +1492,8 @@ export function App() {
       console.log('Capturing first page...')
       if (!pageOnePrintRef.current)
         throw new Error('First page reference for PDF not found')
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Increased wait time for rendering
+      // FIX: The `setTimeout` call inside the Promise is made more explicit to avoid potential type inference issues.
+      await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000)) // Increased wait time for rendering
       const firstPageDataUrl = await toPng(
         pageOnePrintRef.current,
         toPngOptions,
@@ -1594,7 +1513,8 @@ export function App() {
       console.log('Capturing second page...')
       if (!pageTwoPrintRef.current)
         throw new Error('Second page reference for PDF not found')
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Increased wait time for rendering
+      // FIX: The `setTimeout` call inside the Promise is made more explicit to avoid potential type inference issues.
+      await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000)) // Increased wait time for rendering
       const secondPageDataUrl = await toPng(
         pageTwoPrintRef.current,
         toPngOptions,
@@ -1643,15 +1563,7 @@ export function App() {
 
   const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    const validationErrors = validate(currentStep)
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-      setErrorMessage('تکایە خانە پێویستەکان پڕبکەرەوە.')
-      setShowError(true)
-      return
-    }
-
-    setErrors({})
+    // Validation removed
     if (currentStep === 1) {
       handleNextStep()
     } else {
