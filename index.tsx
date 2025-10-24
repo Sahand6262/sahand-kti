@@ -1386,7 +1386,6 @@ export function App() {
   const [showError, setShowError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
-  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null)
   const pageOnePrintRef = useRef(null)
   const pageTwoPrintRef = useRef(null)
   useEffect(() => {
@@ -1398,16 +1397,6 @@ export function App() {
       return () => clearTimeout(timer)
     }
   }, [showSuccess, showError])
-  useEffect(() => {
-    // This function will be called when the component unmounts or generatedPdfUrl changes.
-    // It's a cleanup function to prevent memory leaks from blob URLs.
-    return () => {
-      // Only attempt to revoke the URL if it's a blob URL. Data URIs don't need revocation.
-      if (generatedPdfUrl && generatedPdfUrl.startsWith('blob:')) {
-        URL.revokeObjectURL(generatedPdfUrl)
-      }
-    }
-  }, [generatedPdfUrl])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
@@ -1531,22 +1520,8 @@ export function App() {
         'FAST',
       )
 
-      // NEW: Force download on all devices instead of opening in new tab
-      const pdfBlob = pdf.output('blob')
-      const pdfUrl = URL.createObjectURL(pdfBlob)
-      
-      // Create a temporary anchor element to trigger download
-      const downloadLink = document.createElement('a')
-      downloadLink.href = pdfUrl
-      downloadLink.download = 'Kurdistan_Technical_Institute_Form_Complete.pdf'
-      document.body.appendChild(downloadLink)
-      downloadLink.click()
-      document.body.removeChild(downloadLink)
-      
-      // Clean up the URL object
-      setTimeout(() => {
-        URL.revokeObjectURL(pdfUrl)
-      }, 1000)
+      // Force a direct download using jsPDF's save method, which is more reliable across devices.
+      pdf.save('Kurdistan_Technical_Institute_Form_Complete.pdf')
 
       console.log('PDF download triggered successfully.')
       setShowSuccess(true)
