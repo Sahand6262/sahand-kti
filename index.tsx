@@ -592,10 +592,22 @@ const FormContent: React.FC<FormContentProps> = ({
           </div>
         </div>
         <div className="modern-table-container mt-6">
-          <div className="grid grid-cols-3 md:grid-cols-11 gap-2 p-4 bg-gradient-to-br from-gray-50 to-gray-100">
+          <div className="grid grid-cols-3 md:grid-cols-11 gap-2 pt-4 bg-gradient-to-br from-gray-50 to-gray-100">
             {formData.subjects.map((subject, i) => {
               const isReadOnly = i === 0 || i === 9 || i === 10
               const placeholderText = i > 0 && i < 9 ? `وانە ${i}` : ''
+
+              if (i === 9 || i === 10) {
+                return (
+                  <div
+                    key={i}
+                    className="modern-table-cell flex h-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 font-bold"
+                  >
+                    {subject}
+                  </div>
+                )
+              }
+
               return (
                 <input
                   key={i}
@@ -611,7 +623,7 @@ const FormContent: React.FC<FormContentProps> = ({
               )
             })}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 p-4 bg-gradient-to-br from-red-50 to-rose-50">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-red-50 to-rose-50">
             <div className="modern-table-label bg-gradient-to-br from-red-500 to-rose-600">
               بە ژمارە
             </div>
@@ -628,7 +640,7 @@ const FormContent: React.FC<FormContentProps> = ({
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 p-4 bg-gradient-to-br from-red-50 to-rose-50">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-red-50 to-rose-50">
             <div className="modern-table-label bg-gradient-to-br from-red-500 to-rose-600">
               بە نووسین
             </div>
@@ -645,7 +657,7 @@ const FormContent: React.FC<FormContentProps> = ({
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 p-4 bg-gradient-to-br from-yellow-50 to-amber-50">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-yellow-50 to-amber-50">
             <div className="modern-table-label bg-gradient-to-br from-yellow-500 to-amber-600">
               خولی دووەم
             </div>
@@ -662,7 +674,7 @@ const FormContent: React.FC<FormContentProps> = ({
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 p-4 bg-gradient-to-br from-yellow-50 to-amber-50">
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4 bg-gradient-to-br from-yellow-50 to-amber-50">
             <div className="modern-table-label bg-gradient-to-br from-yellow-500 to-amber-600">
               بە نووسین
             </div>
@@ -2273,24 +2285,34 @@ export function App() {
                       className="table-container mt-1"
                       style={{ overflowX: 'visible' }}
                     >
-                      <div className="grid grid-cols-11 gap-0.5 p-1 bg-gray-50">
+                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-gray-50">
                         {formData.subjects.map((subject, i) => {
                           const isReadOnly = i === 0 || i === 9 || i === 10
                           const placeholderText =
                             i > 0 && i < 9 ? `وانە ${i}` : ''
+                          if (i === 9 || i === 10) {
+                            return (
+                              <div
+                                key={i}
+                                className="table-cell bg-gray-100 font-bold text-sm p-1.5 text-center flex items-center justify-center"
+                              >
+                                {subject}
+                              </div>
+                            )
+                          }
                           return (
                             <input
                               key={i}
                               type="text"
                               value={subject}
                               readOnly
-                              className={`table-cell ${isReadOnly ? 'bg-gray-100 font-bold' : ''} h-9 text-sm p-1.5`}
+                              className={`table-cell ${isReadOnly ? 'bg-gray-100 font-bold' : ''} text-sm p-1.5`}
                               placeholder={placeholderText}
                             />
                           )
                         })}
                       </div>
-                      <div className="grid grid-cols-12 gap-0.5 p-1 bg-red-50">
+                      <div className="grid grid-cols-12 gap-0.5 pt-1 bg-red-50">
                         <div className="table-label-red text-base py-2">
                           بە ژمارە
                         </div>
@@ -2305,7 +2327,7 @@ export function App() {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-12 gap-0.5 p-1 bg-red-50">
+                      <div className="grid grid-cols-12 gap-0.5 pt-1 bg-red-50">
                         <div className="table-label-red text-base py-2">
                           بە نووسین
                         </div>
@@ -2320,7 +2342,7 @@ export function App() {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-12 gap-0.5 p-1 bg-yellow-50">
+                      <div className="grid grid-cols-12 gap-0.5 pt-1 bg-yellow-50">
                         <div className="table-label-yellow text-base py-2">
                           خولی دووەم
                         </div>
@@ -2335,7 +2357,7 @@ export function App() {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-12 gap-0.5 p-1 bg-yellow-50">
+                      <div className="grid grid-cols-12 gap-0.5 pt-1 bg-yellow-50">
                         <div className="table-label-yellow text-base py-2">
                           بە نووسین
                         </div>
