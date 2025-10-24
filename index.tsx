@@ -1519,14 +1519,22 @@ export function App() {
         'FAST',
       )
 
-      // Reverting to the library's built-in `save` method. The previous manual
-      // methods (blob and data URI) are unreliable on iOS. Making the image
-      // generation process lighter (lower pixelRatio) should prevent memory
-      // issues on mobile devices, allowing the standard `save` function to work
-      // correctly and force a download instead of opening a new tab.
-      pdf.save('Kurdistan_Technical_Institute_Form.pdf')
+      // ** NEW DOWNLOAD LOGIC **
+      // Using a data URI is a more robust method for forcing downloads on
+      // browsers like iOS Safari, which tend to ignore the 'download' attribute
+      // on blob URLs and open them in a new tab instead. By encoding the file
+      // data directly into the href, we work around this limitation.
+      console.log('Generating Data URI for download to ensure iOS compatibility...');
+      const dataUri = pdf.output('datauristring');
+      const link = document.createElement('a');
+      link.href = dataUri;
+      link.download = 'Kurdistan_Technical_Institute_Form.pdf';
 
-      console.log('PDF download triggered via the standard pdf.save() method.')
+      // Append, click, and remove the link to trigger the download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log('PDF download triggered via data URI.');
 
       setShowSuccess(true)
     } catch (error) {
