@@ -1561,11 +1561,11 @@ export function App() {
 
   return (
     <div
-      className="min-h-screen bg-white lg:bg-gradient-to-br lg:from-violet-50 lg:via-fuchsia-50 lg:to-pink-50 rtl relative overflow-hidden font-bold"
+      className="min-h-screen bg-white rtl relative overflow-hidden font-bold"
       dir="rtl"
     >
       {/* Animated Background Blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden lg:block">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden">
         <div className="absolute top-20 left-20 w-64 h-64 sm:w-96 sm:h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute top-40 right-20 w-64 h-64 sm:w-96 sm:h-96 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-20 left-40 w-64 h-64 sm:w-96 sm:h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
@@ -1620,33 +1620,33 @@ export function App() {
 
       {/* Mobile/Tablet Header (UI Only) */}
       <header
-        className="lg:hidden bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-20"
-        dir="ltr"
+        className="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-20"
+        dir="rtl"
       >
-        <div className="max-w-7xl mx-auto px-[5px] py-3">
+        <div className="mx-auto px-[5px] py-3">
           <div className="flex items-center gap-3">
             <img
               src="https://tse3.mm.bing.net/th/id/OIP.QmR4OtGs_XHKX4sjiPJrxwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
               alt="Logo"
               className="h-12 drop-shadow-lg"
             />
-            <div className="text-black font-bold text-left">
+            <div className="text-black font-bold text-right">
               <p className="tracking-wide text-sm sm:text-base">
-                KURDISTAN TECHNICAL INSTITUTE
+                پەیمانگای تەکنیکی کوردستان
               </p>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto relative z-10 flex flex-col items-center px-[2px] py-4 md:py-8">
+      <main className="relative z-10 flex flex-col items-center px-[5px] py-4 md:py-8">
         {/* A4 Page Container - Responsive for viewing, fixed for PDF */}
-        <div className="w-full max-w-5xl mx-auto">
+        <div className="w-full mx-auto">
           {currentStep === 1 ? (
-            <div className="animate-fade-in-up lg:bg-white/90 lg:backdrop-blur-xl lg:shadow-2xl lg:rounded-2xl lg:overflow-hidden lg:border lg:border-white/20">
-              <div className="p-6 sm:p-8 flex flex-col min-h-[500px] sm:min-h-[600px] lg:min-h-[297mm]">
+            <div className="animate-fade-in-up">
+              <div className="p-6 sm:p-8 flex flex-col min-h-[500px] sm:min-h-[600px]">
                 {/* Header (Desktop UI and PDF) */}
-                <div className="hidden lg:block shrink-0 mb-6">
+                <div className="hidden shrink-0 mb-6">
                   <div className="modern-header-border">
                     <div className="flex justify-center items-start gap-4">
                       <div className="text-center flex-1 mx-4">
@@ -1674,7 +1674,7 @@ export function App() {
                   />
                 </div>
                 {/* Footer (Desktop UI and PDF) */}
-                <div className="hidden lg:block shrink-0 mt-6 pt-6 modern-footer-border">
+                <div className="hidden shrink-0 mt-6 pt-6 modern-footer-border">
                   <div className="flex flex-col items-center gap-4 text-sm">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 w-full max-w-4xl">
                       <div className="modern-contact-card">
@@ -1771,8 +1771,8 @@ export function App() {
               </div>
             </div>
           ) : (
-            <div className="animate-fade-in-up lg:bg-white/90 lg:backdrop-blur-xl lg:shadow-2xl lg:rounded-2xl lg:overflow-hidden lg:border lg:border-white/20">
-              <div className="p-6 sm:p-8 flex flex-col min-h-[500px] sm:min-h-[600px] lg:min-h-[297mm]">
+            <div className="animate-fade-in-up">
+              <div className="p-6 sm:p-8 flex flex-col min-h-[500px] sm:min-h-[600px]">
                 <div className="flex-grow">
                   <SecondFormContent
                     formData={formData}
@@ -1856,9 +1856,9 @@ export function App() {
       </main>
 
       {/* Mobile/Tablet Footer (UI Only) */}
-      <footer className="lg:hidden bg-white/80 backdrop-blur-md mt-8 py-8 px-[5px] border-t-4 border-red-500">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 gap-4">
+      <footer className="bg-white/80 backdrop-blur-md mt-8 py-8 px-[5px] border-t-4 border-red-500">
+        <div className="mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="modern-contact-card flex-row-reverse justify-center">
               <svg
                 className="w-6 h-6 text-red-600 flex-shrink-0"
@@ -1933,8 +1933,7 @@ export function App() {
             </div>
           </div>
           <p className="text-center text-sm text-gray-600 tracking-wide mt-6">
-            Kurdistan Technical Institute - Sulaymaniyah Heights, Kurdistan
-            Region - Iraq
+          پەیمانگای تەکنیکی کوردستان - بەرزاییەکانی سلێمانی، هەرێمی کوردستان - عێراق
           </p>
         </div>
       </footer>
