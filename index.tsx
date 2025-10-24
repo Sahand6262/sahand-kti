@@ -1,8 +1,8 @@
-
 import React, { useEffect, useState, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
+import saveAs from 'file-saver'
 
 // FIX: Define a type for the form data to provide strong typing for props and fix property access errors.
 type FormData = {
@@ -1519,20 +1519,11 @@ export function App() {
         'FAST',
       )
 
-      // Force download using a blob URL
-      console.log('Generating Blob URL for download...');
-      const pdfBlob = pdf.output('blob');
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      const downloadLink = document.createElement('a');
-      downloadLink.href = pdfUrl;
-      downloadLink.download = 'Kurdistan_Technical_Institute_Form.pdf';
-      downloadLink.style.display = 'none';
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-      // Revoke the object URL after a short delay to free up memory
-      setTimeout(() => URL.revokeObjectURL(pdfUrl), 1000);
-      console.log('PDF download triggered via Blob URL.');
+      // Use file-saver to handle the download across all browsers
+      console.log('Generating Blob for file-saver...')
+      const pdfBlob = pdf.output('blob')
+      saveAs(pdfBlob, 'Kurdistan_Technical_Institute_Form.pdf')
+      console.log('PDF download triggered via file-saver.')
 
       setShowSuccess(true)
     } catch (error) {
