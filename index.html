@@ -31,6 +31,15 @@
         66% { transform: translate(-20px, 20px) scale(0.9); }
         100% { transform: translate(0px, 0px) scale(1); }
       }
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+      }
+      @keyframes pulse-slow {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 0.3; }
+      }
       .animate-fade-in {
         animation: fadeIn 0.5s ease-in-out;
       }
@@ -42,6 +51,16 @@
       }
       .animate-blob {
         animation: blob 7s infinite;
+      }
+      .animate-float { animation: float 10s ease-in-out infinite; }
+      .animate-float-slow { animation: float 15s ease-in-out infinite; }
+      .animate-float-slower { animation: float 20s ease-in-out infinite; }
+      .animate-float-slowest { animation: float 25s ease-in-out infinite; }
+      .animate-pulse-slow {
+        animation: pulse-slow 3s ease-in-out infinite;
+      }
+      .animate-pulse-slower {
+        animation: pulse-slow 5s ease-in-out infinite;
       }
       .animation-delay-2000 {
         animation-delay: 2s;
@@ -382,7 +401,8 @@
     "jspdf": "https://esm.sh/jspdf@^2.5.1",
     "html-to-image": "https://esm.sh/html-to-image@^1.11.11",
     "file-saver": "https://esm.sh/file-saver@^2.0.5",
-    "tailwindcss/": "https://aistudiocdn.com/tailwindcss@^4.1.15/"
+    "tailwindcss/": "https://aistudiocdn.com/tailwindcss@^4.1.15/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.400.0"
   }
 }
 </script>

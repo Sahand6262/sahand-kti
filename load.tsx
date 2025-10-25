@@ -1,45 +1,165 @@
 import React from 'react'
-
-const LOGO_DATA_URL =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX////mAADmAABTqlNJolf64ODmAwP86ur86+v11tbmBQXoFRXoERHnJSXqPz/ywcH99PTmDAzufoD99/fuamv229vnHR3rU1PznZ3wubnka2vtbm7pLzDwb3D44+Pyl5fqSEnsWVrtZmbqRUXuZWXlS+3aAAACyElEQVR4nO2d63KiMBCGQwghgIKi4sEFr/b//3IVL2tSSkmx2ezMOfcBWZvBJF1mEhUDAAAAAAAAAAAAAAAAAAAAAAAAAPjftD/S8mhH2zFtNts/aXk0J4h2jH+k5eHc2fT/uC5nK/1F5c+yPjL2x39S2V+o+0tZp7wP0z4jO6uH+y/bH2p3o0/M9l/afkofvM4+xP8P+C/s/5S90W9S/jL2F7P+UvaXsl/afmlrQJj2x7P+wvaXsi8s/V/W0/q5gD8x4d9iO39c/w+yP9HyV/QZ4z/S8mj+s+qP6Gf2F+M/0vJo/r8/Yd8/2d/of/z3/o/oX8b+Qv/30r6E/j9l/0L/G/v/yP6E/t/b/1L/W9t/qf8d+y/0P6//M/v/Qv9j/X9p/2P9n9v/X/o/sP8f+j+w/+/s/wv939n/V/rf1v+f+t/W/5/6P7D/r/Q/sP+f9B9q+jYnKx1e1nO3b934Xm14P7Xh/dSG91Mb3k9teD+14f3Uhnf7c2F/9P2t9S+N//fX/pX2n7L/Qv+T9T/S8mj+8P6N9R/o/0/Jo/nJ+8/YX8J+Sfkc+z/Q/1vJo/nJ+6ft32h/Z/0nJo/nJ+4ftL9X/jL+R8mj+Yn7N+2/sP+b/v8/Jo/mJ+7/0vJo/pT/Y/r/0vJo/pT/w/p/afl/X38i/3/9J/0f9f+s/wP9f+u/SP8f+p+2/wP9n7L/Af2ftv8D/T9p/w/6P2T/I/o/bP8f+j9s/5/of9D+P9H/Yfu/RP+z9h+x/1n7T9j/rP0f2/+s/S/S/2/736L/H+5/W99PzS+fBwAAAAAAAAAAAAAAAAAAAAAAAADgP/kDx8/JdO41c7oAAAAASUVORK5CYII='
-
+import { Sparkles, GraduationCap, BookOpen } from 'lucide-react'
+const LOGO_DATA_URL = 'https://kti.edu.iq/photo/kti_52_0.png'
 interface SelectionPageProps {
   onSelect: (type: 'zansi' | 'wezhay') => void
 }
-
 export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
   return (
     <div
-      className="min-h-screen bg-white rtl flex flex-col items-center justify-center p-4 font-bold"
+      className="min-h-screen bg-gradient-to-br from-white to-blue-50/30 overflow-hidden relative flex flex-col"
       dir="rtl"
     >
-      <div className="text-center space-y-8 max-w-2xl mx-auto">
-        <img
-          src={LOGO_DATA_URL}
-          alt="Logo"
-          className="h-24 mx-auto mb-6 drop-shadow-lg"
-        />
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 tracking-wide">
-          فۆڕمی تۆمارکردنی پەیمانگای تەکنیکی کوردستان
-        </h1>
-        <p className="text-lg text-gray-600">
-          تکایە جۆری خوێندنەکەت هەڵبژێرە بۆ بەردەوامبوون.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-          <button
-            onClick={() => onSelect('zansi')}
-            className="w-full sm:w-64 bg-gradient-to-r from-[#0C8FCB] to-[#175988] hover:from-[#175988] hover:to-[#0C8FCB] text-white px-8 py-4 rounded-xl font-bold text-lg transform hover:scale-105 transition-all duration-300 shadow-lg"
-          >
-            زانستی
-          </button>
-          <button
-            onClick={() => onSelect('wezhay')}
-            className="w-full sm:w-64 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-white px-8 py-4 rounded-xl font-bold text-lg transform hover:scale-105 transition-all duration-300 shadow-lg"
-          >
-            وێژەیی
-          </button>
-        </div>
+      {/* Background Effects - Similar to Hero Section */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Glow orbs */}
+        <div className="absolute w-[800px] h-[800px] rounded-full bg-gradient-to-br from-blue-500/10 via-blue-400/5 to-transparent blur-[150px] top-0 -right-64 animate-pulse-slow"></div>
+        <div className="absolute w-[700px] h-[700px] rounded-full bg-gradient-to-br from-blue-400/10 via-blue-300/5 to-transparent blur-[130px] bottom-20 -left-32 animate-pulse-slower"></div>
+        {/* Accent glows */}
+        <div className="absolute w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-blue-500/15 to-blue-300/5 blur-[100px] top-1/3 right-1/4 animate-float-slow"></div>
+        <div className="absolute w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-blue-400/10 to-blue-300/5 blur-[80px] bottom-1/3 left-1/3 animate-float-slower"></div>
+        {/* Floating geometric shapes */}
+        <div className="absolute top-1/4 right-1/6 w-16 h-16 border-2 border-blue-500/20 rounded-lg rotate-12 animate-float-slow"></div>
+        <div className="absolute top-1/3 left-1/5 w-20 h-20 border-2 border-blue-400/20 rounded-full animate-float-slower"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-14 h-14 border-2 border-blue-300/20 rotate-45 animate-float"></div>
+        <div className="absolute top-2/3 left-1/4 w-18 h-18 border-2 border-blue-400/20 rounded-lg rotate-12 animate-float-slowest"></div>
+        {/* Hexagons */}
+        <svg
+          className="absolute top-1/2 right-1/5 w-24 h-24 text-blue-500/10 animate-float-slow"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12,1L21.5,6.5V17.5L12,23L2.5,17.5V6.5L12,1z"></path>
+        </svg>
+        <svg
+          className="absolute bottom-1/3 left-1/6 w-20 h-20 text-blue-400/10 animate-float-slower"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12,1L21.5,6.5V17.5L12,23L2.5,17.5V6.5L12,1z"></path>
+        </svg>
+        {/* Floating particles */}
+        {Array.from({
+          length: 30,
+        }).map((_, i) => {
+          const size = 2 + Math.random() * 6
+          const top = Math.random() * 100
+          const left = Math.random() * 100
+          const animationDuration = 15 + Math.random() * 30
+          const opacity = 0.1 + Math.random() * 0.3
+          return (
+            <div
+              key={i}
+              className="absolute rounded-full bg-blue-500"
+              style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                top: `${top}%`,
+                left: `${left}%`,
+                opacity: opacity,
+                animation: `float ${animationDuration}s ease-in-out infinite`,
+              }}
+            />
+          )
+        })}
       </div>
+
+      <header className="relative z-20 w-full p-4 sm:p-6 md:p-8">
+        <div className="flex justify-start">
+          <img
+            src={LOGO_DATA_URL}
+            alt="Logo"
+            className="h-16 md:h-20 relative z-10 drop-shadow-2xl transform hover:scale-105 transition-transform duration-500"
+          />
+        </div>
+      </header>
+
+      {/* Main Content Wrapper */}
+      <main className="flex-grow flex items-center justify-center p-4">
+        <div className="relative z-10 text-center space-y-6 md:space-y-8 max-w-4xl mx-auto animate-fade-in">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-600 px-6 py-3 rounded-full text-sm sm:text-base font-bold shadow-lg animate-pulse">
+            <Sparkles size={18} className="text-blue-500" />
+            <span className="font-bold">پەیمانگای تەکنیکی کوردستان</span>
+          </div>
+          {/* Title */}
+          <div className="space-y-3">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              <span className="block mb-1.5">فۆڕمی تۆمارکردن</span>
+              <span className="relative inline-block">
+                <span className="relative z-10 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+                  پەیمانگای تەکنیکی
+                </span>
+                <span className="absolute -bottom-0.5 left-0 w-full h-3 bg-blue-100 -z-10 opacity-70 transform skew-x-3"></span>
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-xl mx-auto leading-relaxed">
+              تکایە جۆری خوێندنەکەت هەڵبژێرە بۆ بەردەوامبوون
+            </p>
+          </div>
+          {/* Selection Cards */}
+          <div className="grid grid-cols-2 gap-4 pt-6 max-w-lg mx-auto">
+            {/* Zansi Card */}
+            <button
+              onClick={() => onSelect('zansi')}
+              className="group relative bg-white rounded-2xl p-5 shadow-2xl border-2 border-transparent hover:border-blue-500 transition-all duration-500 transform hover:-translate-y-1.5 hover:scale-105 overflow-hidden"
+            >
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              {/* Icon container */}
+              <div className="relative mb-3">
+                <div className="absolute -inset-1.5 bg-gradient-to-br from-blue-500/20 to-blue-300/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative w-14 h-14 mx-auto bg-gradient-to-br from-[#0C8FCB] to-[#175988] rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:shadow-2xl group-hover:shadow-blue-500/20 transition-all duration-500">
+                  <GraduationCap size={28} />
+                </div>
+              </div>
+              {/* Content */}
+              <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                زانستی
+              </h3>
+              <p className="text-xs text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+                بەشە زانستییەکان
+              </p>
+              {/* Bottom accent */}
+              <div className="absolute bottom-0 right-0 w-0 h-1.5 bg-gradient-to-r from-[#0C8FCB] to-[#175988] group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
+            </button>
+            {/* Wezhay Card */}
+            <button
+              onClick={() => onSelect('wezhay')}
+              className="group relative bg-white rounded-2xl p-5 shadow-2xl border-2 border-transparent hover:border-gray-500 transition-all duration-500 transform hover:-translate-y-1.5 hover:scale-105 overflow-hidden"
+            >
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              {/* Icon container */}
+              <div className="relative mb-3">
+                <div className="absolute -inset-1.5 bg-gradient-to-br from-gray-500/20 to-gray-300/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative w-14 h-14 mx-auto bg-gradient-to-br from-gray-600 to-gray-700 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:shadow-2xl group-hover:shadow-gray-500/20 transition-all duration-500">
+                  <BookOpen size={28} />
+                </div>
+              </div>
+              {/* Content */}
+              <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-gray-700 transition-colors duration-300">
+                وێژەیی
+              </h3>
+              <p className="text-xs text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+                بەشە وێژەییەکان
+              </p>
+              {/* Bottom accent */}
+              <div className="absolute bottom-0 right-0 w-0 h-1.5 bg-gradient-to-r from-gray-600 to-gray-700 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="relative z-10 py-6 text-center px-4">
+        <div className="text-center text-sm text-gray-600">
+          Developed by{' '}
+          <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#0C8FCB] to-[#175988]">
+            SAHAND
+          </span>
+        </div>
+      </footer>
     </div>
   )
 }
