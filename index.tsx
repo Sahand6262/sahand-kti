@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
 import saveAs from 'file-saver'
-import { GoogleGenAI } from '@google/genai'
 
 // ==================================================================
 // START: CODE FOR /hello ADMIN PAGE
@@ -302,9 +301,6 @@ const Footer = () => {
 const StudentList: React.FC<StudentListProps> = ({ students, userHi }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [insights, setInsights] = useState<string | null>(null)
-  const [isGeneratingInsights, setIsGeneratingInsights] = useState(false)
-  const [insightsError, setInsightsError] = useState<string | null>(null)
 
   const itemsPerPage = 10
   const filteredStudents = students.filter((student) =>
@@ -327,44 +323,6 @@ const StudentList: React.FC<StudentListProps> = ({ students, userHi }) => {
     setCurrentPage(1)
   }, [searchTerm])
 
-  const handleGenerateInsights = async () => {
-    setIsGeneratingInsights(true)
-    setInsightsError(null)
-    setInsights(null)
-
-    try {
-      // FIX: The API key must be obtained from process.env.API_KEY.
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY })
-      const studentNames = students.map((s) => s.name).join(', ')
-      const prompt = `You are a data analyst. Analyze the following list of student names from Kurdistan and provide 3-4 interesting and brief insights. For example, what is the most common name, what is the average name length, or any other interesting patterns. Keep your response concise. Format the response strictly as a Markdown bulleted list. Do not include a header or any introductory text.
-      Here is the list of names: ${studentNames}`
-
-      const response = await ai.models.generateContent({
-        // FIX: Use 'gemini-2.5-flash' for basic text tasks.
-        model: 'gemini-2.5-flash',
-        contents: prompt,
-      })
-
-      const text = response.text
-
-      const htmlInsights = text
-        .trim()
-        .split('\n')
-        .map((line) => line.replace(/^\s*[\*\-]\s/, '').trim())
-        .map(
-          (item) =>
-            `<li class="flex items-start mb-2"><span class="mr-3 text-black text-xl mt-1">&#8226;</span><span class="text-gray-700 flex-1">${item}</span></li>`,
-        )
-        .join('')
-      setInsights(`<ul class="text-left">${htmlInsights}</ul>`)
-    } catch (error) {
-      console.error('Error generating insights:', error)
-      setInsightsError('Could not generate insights. Please try again.')
-    } finally {
-      setIsGeneratingInsights(false)
-    }
-  }
-
   return (
     <div
       className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white flex flex-col"
@@ -385,7 +343,7 @@ const StudentList: React.FC<StudentListProps> = ({ students, userHi }) => {
         </div>
       </header>
       <main className="container mx-auto p-6 max-w-7xl relative flex-grow">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
             <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
@@ -433,65 +391,6 @@ const StudentList: React.FC<StudentListProps> = ({ students, userHi }) => {
               <p className="text-5xl font-bold text-black">
                 {currentPage} / {totalPages || 1}
               </p>
-            </div>
-          </div>
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
-            <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden flex flex-col justify-center min-h-[196px]">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
-              <div className="relative">
-                {isGeneratingInsights ? (
-                  <div className="flex flex-col items-center justify-center text-center">
-                    <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                    <p className="mt-4 text-gray-700 font-semibold text-sm">
-                      Generating...
-                    </p>
-                  </div>
-                ) : insightsError ? (
-                  <div className="text-center">
-                    <p className="text-red-600 text-sm font-medium mb-4">
-                      {insightsError}
-                    </p>
-                    <button
-                      onClick={handleGenerateInsights}
-                      className="bg-black text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-gray-800 transition-colors"
-                    >
-                      Try Again
-                    </button>
-                  </div>
-                ) : insights ? (
-                  <div dir="ltr">
-                    <h3 className="font-bold text-black mb-3 text-lg text-center">
-                      AI Insights
-                    </h3>
-                    <div
-                      className="text-sm"
-                      dangerouslySetInnerHTML={{ __html: insights }}
-                    />
-                  </div>
-                ) : (
-                  <>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
-                        <SparklesIcon />
-                      </div>
-                    </div>
-                    <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
-                      AI Insights
-                    </p>
-                    <p className="text-base font-bold text-black mb-4">
-                      Analyze Student List
-                    </p>
-                    <button
-                      onClick={handleGenerateInsights}
-                      disabled={isGeneratingInsights}
-                      className="w-full bg-black text-white px-4 py-3 rounded-xl font-semibold text-base hover:bg-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0"
-                    >
-                      Generate
-                    </button>
-                  </>
-                )}
-              </div>
             </div>
           </div>
         </div>
