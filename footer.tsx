@@ -6,7 +6,9 @@ import {
   Twitter,
   Facebook,
   Linkedin,
-  Instagram,
+  Youtube,
+  Globe,
+  Code,
 } from 'lucide-react'
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -39,7 +41,7 @@ export const Footer: React.FC = () => {
       {/* Main footer content */}
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="pt-16 pb-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
             {/* Logo and description */}
             <div>
               <div className="font-bold text-2xl flex items-center text-white relative group mb-6">
@@ -62,24 +64,30 @@ export const Footer: React.FC = () => {
                 {[
                   {
                     icon: <Twitter size={20} />,
-                    label: 'Twitter',
+                    label: 'X',
+                    href: 'https://x.com/ktiinstitute',
                   },
                   {
                     icon: <Facebook size={20} />,
                     label: 'Facebook',
+                    href: 'https://www.facebook.com/ktiinstitute/',
                   },
                   {
                     icon: <Linkedin size={20} />,
                     label: 'LinkedIn',
+                    href: 'https://www.linkedin.com/in/kurdistan-technical-institute-b74240155',
                   },
                   {
-                    icon: <Instagram size={20} />,
-                    label: 'Instagram',
+                    icon: <Youtube size={20} />,
+                    label: 'YouTube',
+                    href: 'https://www.youtube.com/channel/UCQt_tYDwS_poB4Crjt_Dljg/videos',
                   },
                 ].map((social, i) => (
                   <a
                     key={i}
-                    href="#"
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110"
                     aria-label={social.label}
                   >
@@ -88,43 +96,6 @@ export const Footer: React.FC = () => {
                 ))}
               </div>
             </div>
-            {/* Quick links */}
-            <div>
-              <h3 className="text-lg font-bold mb-6 relative inline-block">
-                بەستەرە خێراکان
-                <span className="absolute -bottom-2 right-0 w-12 h-1 bg-blue-500 rounded-full"></span>
-              </h3>
-              <ul className="space-y-4 text-gray-400">
-                {[
-                  {
-                    label: 'دەربارەی پەیمانگا',
-                    href: '#',
-                  },
-                  {
-                    label: 'بەشەکان',
-                    href: '#',
-                  },
-                  {
-                    label: 'تۆمارکردن',
-                    href: '#',
-                  },
-                  {
-                    label: 'پەیوەندی',
-                    href: '#',
-                  },
-                ].map((link, i) => (
-                  <li key={i}>
-                    <a
-                      href={link.href}
-                      className="hover:text-blue-400 transition-colors duration-300 flex items-center group"
-                    >
-                      <span className="w-0 h-0.5 bg-blue-500 ml-0 group-hover:w-3 group-hover:ml-2 transition-all duration-300"></span>
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
             {/* Contact info */}
             <div>
               <h3 className="text-lg font-bold mb-6 relative inline-block">
@@ -132,66 +103,79 @@ export const Footer: React.FC = () => {
                 <span className="absolute -bottom-2 right-0 w-12 h-1 bg-blue-500 rounded-full"></span>
               </h3>
               <ul className="space-y-4 text-gray-400">
-                <li className="flex items-start group">
-                  <div className="mt-1 ml-3 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                <li className="flex group">
+                  <div className="mt-1 ml-3 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 flex-shrink-0">
                     <MapPin size={16} />
                   </div>
                   <span className="group-hover:text-white transition-colors duration-300">
-                    سلێمانی، هەرێمی کوردستانی عێراق
+                    پەیمانگای تەکنیکی کوردستان - بەرزاییەکانی سلێمانی، هەرێمی
+                    کوردستان - عێراق
                   </span>
                 </li>
                 <li className="flex items-center group">
                   <div className="ml-3 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
                     <PhoneCall size={16} />
                   </div>
-                  <span className="group-hover:text-white transition-colors duration-300">
-                    +964 750 123 4567
+                  <span
+                    className="group-hover:text-white transition-colors duration-300"
+                    dir="ltr"
+                  >
+                    0772 911 2121
+                  </span>
+                </li>
+                <li className="flex items-center group">
+                  <div className="ml-3 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                    <PhoneCall size={16} />
+                  </div>
+                  <span
+                    className="group-hover:text-white transition-colors duration-300"
+                    dir="ltr"
+                  >
+                    0751 911 2121
                   </span>
                 </li>
                 <li className="flex items-center group">
                   <div className="ml-3 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
                     <Mail size={16} />
                   </div>
-                  <span className="group-hover:text-white transition-colors duration-300">
-                    info@kti.edu.iq
-                  </span>
+                  <a
+                    href="mailto:tomar@kti.edu.iq"
+                    className="group-hover:text-white transition-colors duration-300"
+                  >
+                    tomar@kti.edu.iq
+                  </a>
+                </li>
+                <li className="flex items-center group">
+                  <div className="ml-3 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                    <Globe size={16} />
+                  </div>
+                  <a
+                    href="https://www.kti.edu.iq"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group-hover:text-white transition-colors duration-300"
+                  >
+                    www.kti.edu.iq
+                  </a>
                 </li>
               </ul>
             </div>
             {/* Created by section */}
             <div>
               <h3 className="text-lg font-bold mb-6 relative inline-block">
-                دروستکراوە لەلایەن
+                دروستراوە لە لایەن
                 <span className="absolute -bottom-2 right-0 w-12 h-1 bg-blue-500 rounded-full"></span>
               </h3>
-              <div className="bg-gray-800 rounded-lg p-6">
-                <div className="text-center">
-                  <div className="inline-block relative group mb-4">
-                    <div className="absolute -inset-2 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 blur-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <span className="relative font-black text-transparent bg-clip-text bg-gradient-to-r from-[#0C8FCB] via-[#0EA5E9] to-[#175988] text-3xl">
-                      ساهەند
-                    </span>
+              <ul className="space-y-4 text-gray-400">
+                <li className="flex items-center group">
+                  <div className="ml-3 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                    <Code size={16} />
                   </div>
-                  <p className="text-gray-400 text-sm">
-                    پەرەپێدەری سیستەمی تۆمارکردن
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-4 mt-6">
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
-                >
-                  سیاسەتی تایبەتمەندی
-                </a>
-                <span className="text-gray-600">•</span>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
-                >
-                  مەرجەکانی خزمەتگوزاری
-                </a>
-              </div>
+                  <span className="group-hover:text-white transition-colors duration-300 font-medium">
+                    سەهەند ووریا
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
