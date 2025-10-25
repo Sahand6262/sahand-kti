@@ -4,7 +4,34 @@
 @tailwind utilities;
 /* DO NOT DELETE THESE TAILWIND IMPORTS, OTHERWISE THE STYLING WILL NOT RENDER AT ALL */
 
-/* Modern Animations */
+/* Font Definitions */
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
+}
+
+/* Global Styles */
+html {
+  scroll-behavior: smooth;
+}
+::selection {
+  background-color: #000000;
+  color: #ffffff;
+}
+::-moz-selection {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Merged Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -23,11 +50,56 @@
   66% { transform: translate(-20px, 20px) scale(0.9); }
   100% { transform: translate(0px, 0px) scale(1); }
 }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fade-in 0.5s ease-out;
 }
 .animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out;
+  animation: fade-in-up 0.6s ease-out backwards;
+}
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
 }
 .animate-slide-in {
   animation: slideIn 0.5s ease-out;
@@ -41,12 +113,27 @@
 .animation-delay-4000 {
   animation-delay: 4s;
 }
-/* RTL Support */
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #1e293b, #0f172a);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #000000;
+}
+
+/* Original Form App Styles */
 .rtl {
   direction: rtl;
   text-align: right;
 }
-/* Modern Section Headers - Connected design */
 .section-header-modern {
   @apply bg-gradient-to-r from-red-600 to-red-700 shadow-lg rounded-t-lg;
 }
@@ -56,11 +143,9 @@
 .section-header-gray {
   @apply bg-gradient-to-r from-red-600 to-red-700 shadow-lg rounded-t-lg;
 }
-/* Modern Card Styling - Connected to headers */
 .modern-card {
   @apply bg-white border border-gray-200 shadow-sm rounded-b-lg;
 }
-/* Form Elements - Improved responsive sizing */
 .form-group {
   @apply space-y-1.5 sm:space-y-2;
 }
@@ -75,30 +160,25 @@
 .form-input:hover {
   @apply border-gray-400;
 }
-/* Date inputs */
 input[type="date"] {
   direction: rtl;
   color: #000000;
 }
-/* Radio Buttons - Better mobile sizing */
 .radio-label {
   @apply flex items-center gap-1.5 sm:gap-2 cursor-pointer;
 }
 .radio-input {
   @apply w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-600 border-gray-300 focus:ring-red-500 cursor-pointer flex-shrink-0;
 }
-/* Badge Styling - Responsive */
 .badge-red {
   @apply bg-gradient-to-r from-red-500 to-red-600 text-white text-center rounded-lg font-bold shadow-md py-1.5 sm:py-2 text-xs sm:text-sm;
 }
-/* Info Boxes - Responsive padding */
 .info-box-blue {
   @apply bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-200;
 }
 .info-box-warning {
   @apply bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg border border-amber-300;
 }
-/* Table Styling - Improved responsive */
 .table-container {
   @apply overflow-x-auto border border-gray-200 shadow-md rounded-b-lg;
 }
@@ -120,21 +200,6 @@ input[type="date"] {
 .table-cell-yellow {
   @apply border border-yellow-200 text-center font-bold text-yellow-700 rounded bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all min-w-[2rem];
 }
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  @apply bg-gray-100 rounded-lg;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-gradient-to-b from-[#0C8FCB] to-[#175988] rounded-lg;
-}
-::-webkit-scrollbar-thumb:hover {
-  @apply from-[#175988] to-[#0C8FCB];
-}
-/* Button Hover Effects */
 button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -142,13 +207,11 @@ button:hover:not(:disabled) {
 button:active:not(:disabled) {
   transform: translateY(0);
 }
-/* Smooth Transitions */
 * {
   transition-property: color, background-color, border-color, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
 }
-/* Print Styles */
 @media print {
   body {
     margin: 0;
@@ -159,7 +222,6 @@ button:active:not(:disabled) {
     display: none !important;
   }
 }
-/* Placeholder Styling */
 input::placeholder,
 textarea::placeholder {
   @apply text-gray-400 opacity-60;
@@ -168,7 +230,6 @@ input:focus::placeholder,
 textarea:focus::placeholder {
   @apply opacity-40;
 }
-/* Responsive Typography - Enhanced */
 @media (max-width: 640px) {
   .form-label {
     @apply text-xs;
@@ -201,23 +262,18 @@ textarea:focus::placeholder {
     @apply p-4;
   }
 }
-/* Modern Section Headers */
 .modern-section-header {
   @apply bg-gradient-to-r from-[#0C8FCB] to-[#175988] shadow-lg rounded-t-xl p-4 text-white text-center mb-0 transform transition-all duration-300 hover:shadow-2xl hover:scale-[1.02];
 }
-/* Modern Card Enhanced */
 .modern-card-enhanced {
   @apply bg-white/80 backdrop-blur-sm border border-gray-100 shadow-lg rounded-b-xl p-6 transform transition-all duration-300 hover:shadow-xl border-t-0;
 }
-/* Modern Form Group */
 .form-group-modern {
   @apply space-y-2 transform transition-all duration-300;
 }
-/* Modern Label */
 .modern-label {
   @apply block text-sm font-bold text-gray-700 mb-2 tracking-wide;
 }
-/* Modern Input */
 .modern-input {
   @apply w-full px-4 py-3 bg-white backdrop-blur-sm border-2 border-gray-200 rounded-xl text-sm font-medium text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-gray-300 hover:shadow-md;
   direction: rtl;
@@ -226,7 +282,6 @@ textarea:focus::placeholder {
 .modern-input:focus {
   @apply transform scale-[1.02] shadow-lg;
 }
-/* Modern Radio */
 .modern-radio-label {
   @apply flex items-center gap-3 cursor-pointer px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl transition-all duration-300 hover:border-blue-300 hover:shadow-md hover:scale-[1.02];
 }
@@ -236,19 +291,15 @@ textarea:focus::placeholder {
 .modern-radio {
   @apply w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer transition-all duration-300;
 }
-/* Modern Badge */
 .modern-badge {
   @apply bg-gradient-to-r from-[#0C8FCB] to-[#175988] text-white text-center rounded-xl font-bold shadow-lg py-3 text-sm transform transition-all duration-300 hover:shadow-xl hover:scale-[1.05];
 }
-/* Modern Info Box */
 .modern-info-box {
   @apply bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 rounded-xl border-2 border-blue-200 p-6 shadow-md transform transition-all duration-300 hover:shadow-lg;
 }
-/* Modern Warning Box */
 .modern-warning-box {
   @apply bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl border-2 border-blue-200 p-6 shadow-md transform transition-all duration-300 hover:shadow-lg;
 }
-/* Modern Table */
 .modern-table-header {
   @apply bg-gradient-to-r from-[#0C8FCB] to-[#175988] text-white font-bold text-center rounded-t-xl p-4 shadow-lg;
 }
@@ -264,33 +315,68 @@ textarea:focus::placeholder {
 .modern-table-cell-colored {
   @apply border-2 text-center font-bold rounded-lg bg-white focus:outline-none focus:ring-2 transition-all duration-300 hover:shadow-md hover:scale-105 p-3 text-sm;
 }
-/* Modern Signature Box */
 .modern-signature-box {
   @apply border-2 border-dashed border-gray-300 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 h-24 transition-all duration-300 hover:border-gray-400 hover:shadow-md;
 }
 .modern-signature-line {
   @apply border-t-2 border-gray-400 mt-6 transition-all duration-300;
 }
-/* Modern Header Border */
 .modern-header-border {
   @apply border-b-4 border-red-500 pb-4 mb-4 shadow-sm;
 }
-/* Modern Footer Border */
 .modern-footer-border {
   @apply border-t-4 border-red-500 shadow-sm;
 }
-/* Modern Photo Placeholder */
 .modern-photo-placeholder {
   @apply border-2 border-red-500 rounded-xl p-4 w-24 h-28 flex flex-col items-center justify-center flex-shrink-0 bg-gradient-to-br from-red-50 to-rose-50 shadow-md;
 }
-/* Modern Contact Card */
 .modern-contact-card {
   @apply flex items-center gap-3 bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 p-3 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg hover:scale-[1.05];
 }
-/* Smooth Group Animations */
 .group:hover .modern-section-header {
   @apply shadow-2xl;
 }
 .group:hover .modern-card-enhanced {
   @apply shadow-2xl;
+}
+.wezhay-pdf-theme .section-header-modern,
+.wezhay-pdf-theme .section-header-blue,
+.wezhay-pdf-theme .section-header-gray {
+  @apply bg-gradient-to-r from-purple-600 to-purple-700;
+}
+.wezhay-pdf-theme .border-red-500 {
+  @apply border-purple-500;
+}
+.wezhay-pdf-theme .border-red-200 {
+  @apply border-purple-200;
+}
+.wezhay-pdf-theme .text-red-600 {
+  @apply text-purple-600;
+}
+.wezhay-pdf-theme .text-red-700 {
+  @apply text-purple-700;
+}
+.wezhay-pdf-theme .border-red-600 {
+  @apply border-purple-600;
+}
+.wezhay-pdf-theme .bg-red-100 {
+  @apply bg-purple-100;
+}
+.wezhay-pdf-theme .badge-red {
+  @apply bg-gradient-to-r from-purple-500 to-purple-600;
+}
+.wezhay-pdf-theme .table-label-red {
+  @apply bg-gradient-to-r from-purple-500 to-purple-600;
+}
+.wezhay-pdf-theme .table-cell-red {
+  @apply border-purple-200 text-purple-700 focus:ring-purple-400;
+}
+.wezhay-pdf-theme .modern-header-border {
+  @apply border-b-4 border-purple-500;
+}
+.wezhay-pdf-theme .modern-footer-border {
+  @apply border-t-4 border-purple-500;
+}
+.wezhay-pdf-theme .modern-photo-placeholder {
+  @apply border-2 border-purple-500 bg-gradient-to-br from-purple-50 to-fuchsia-50;
 }

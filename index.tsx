@@ -1,11 +1,12 @@
-
 import React, { useEffect, useState, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
 import saveAs from 'file-saver'
+import { GoogleGenAI } from '@google/genai'
 
-// FIX: Define a type for the form data to provide strong typing for props and fix property access errors.
+// --- START OF FORM PAGE CODE ---
+
 type FormData = {
   personalName: string
   birthPlace: string
@@ -76,22 +77,20 @@ type FormData = {
   certificate4: string
 }
 
-// FIX: Define props for FormContent component to fix TypeScript errors.
 interface FormContentProps {
   formData: FormData
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleArrayChange: (arrayName: string, index: number, value: string) => void
-  // FIX: Changed errors prop from optional to required to match its usage and prevent type errors.
   errors: { [key: string]: string }
+  educationType: 'zansi' | 'wezhay'
 }
 
-// Form content component moved outside to prevent re-creation on each render
 const FormContent: React.FC<FormContentProps> = ({
   formData,
   handleChange,
   handleArrayChange,
-  // FIX: Removed default value '{}' for errors, which was causing incorrect type inference.
   errors,
+  educationType,
 }) => (
   <form className="space-y-6">
     {/* Personal Info */}
@@ -386,7 +385,9 @@ const FormContent: React.FC<FormContentProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="form-group-modern">
             <label className="modern-label">دەرچووی دوانزەی ئامادەیی</label>
-            <div className="modern-badge">زانستی</div>
+            <div className="modern-badge">
+              {educationType === 'zansi' ? 'زانستی' : 'وێژەیی'}
+            </div>
           </div>
           <div className="form-group-modern">
             <label className="modern-label">ساڵی دەرچوون</label>
@@ -593,10 +594,10 @@ const FormContent: React.FC<FormContentProps> = ({
           </div>
         </div>
         <div className="modern-table-container mt-6">
-          <div className="grid grid-cols-3 md:grid-cols-11 gap-2 pt-4">
+          <div className="grid grid-cols-3 md:grid-cols-10 gap-2 pt-4">
             {formData.subjects.map((subject, i) => {
-              const isHeaderCell = i === 0 || i === 9 || i === 10
-              const placeholderText = i > 0 && i < 9 ? `وانە ${i}` : ''
+              const isHeaderCell = i === 0 || i === 8 || i === 9
+              const placeholderText = i > 0 && i < 8 ? `وانە ${i}` : ''
 
               if (isHeaderCell) {
                 return (
@@ -624,7 +625,7 @@ const FormContent: React.FC<FormContentProps> = ({
               )
             })}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4">
+          <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
             <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
               بە ژمارە
             </div>
@@ -641,7 +642,7 @@ const FormContent: React.FC<FormContentProps> = ({
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4">
+          <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
             <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
               بە نووسین
             </div>
@@ -658,7 +659,7 @@ const FormContent: React.FC<FormContentProps> = ({
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4">
+          <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
             <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
               خولی دووەم
             </div>
@@ -675,7 +676,7 @@ const FormContent: React.FC<FormContentProps> = ({
               />
             ))}
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-12 gap-2 pt-4">
+          <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
             <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
               بە نووسین
             </div>
@@ -698,23 +699,21 @@ const FormContent: React.FC<FormContentProps> = ({
   </form>
 )
 
-// FIX: Define props for SecondFormContent component to fix TypeScript errors.
 interface SecondFormContentProps {
   formData: FormData
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleArrayChange: (arrayName: string, index: number, value: string) => void
   handleDepartmentToggle: (departmentName: string) => void
-  // FIX: Changed errors prop from optional to required to match its usage and prevent type errors.
   errors: { [key: string]: string }
+  departments: string[]
 }
 
 const SecondFormContent: React.FC<SecondFormContentProps> = ({
   formData,
   handleChange,
-  handleArrayChange,
   handleDepartmentToggle,
-  // FIX: Removed default value '{}' for errors, which was causing incorrect type inference.
   errors,
+  departments,
 }) => (
   <form className="space-y-6">
     {/* Top Two Sections */}
@@ -897,20 +896,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
       </div>
       <div className="modern-card-enhanced">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {[
-            'دەرمانسازی',
-            'پەرستاری',
-            'شیکردنەوەی نەخۆشییەکان',
-            'جوانکاری پزیشکی (پەرستاری)',
-            'سڕکردن',
-            'یاریدەدەری پزیشکی ددان',
-            'کارگێڕی کار',
-            'ژمێریاری',
-            'دیجیتاڵ میدیا و مارکێتینگ',
-            'تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن',
-            'تەکنەلۆژیای زانیاری',
-            'ئەندازیاری دیکۆر',
-          ].map((dept, i) => {
+          {departments.map((dept, i) => {
             const selectionIndex = formData.departmentChoices.indexOf(dept)
             const isSelected = selectionIndex !== -1
             return (
@@ -1293,8 +1279,6 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
     </div>
   </form>
 )
-// This string contains the @font-face rules needed by the PDF generator.
-// By embedding this directly, we ensure the PDF looks exactly like the screen.
 const FONT_EMBED_CSS = `
 @font-face {
   font-family: 'Noto Naskh Arabic';
@@ -1309,11 +1293,36 @@ const FONT_EMBED_CSS = `
   src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
 }
 `
-// FIX: Embed the logo as a Base64 data URI to prevent CORS-related PDF generation failures.
 const LOGO_DATA_URL =
-  'https://kti.edu.iq/photo/kti_52_0.png'
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX////mAADmAABTqlNJolf64ODmAwP86ur86+v11tbmBQXoFRXoERHnJSXqPz/ywcH99PTmDAzufoD99/fuamv229vnHR3rU1PznZ3wubnka2vtbm7pLzDwb3D44+Pyl5fqSEnsWVrtZmbqRUXuZWXlS+3aAAACyElEQVR4nO2d63KiMBCGQwghgIKi4sEFr/b//3IVL2tSSkmx2ezMOfcBWZvBJF1mEhUDAAAAAAAAAAAAAAAAAAAAAAAAAPjftD/S8mhH2zFtNts/aXk0J4h2jH+k5eHc2fT/uC5nK/1F5c+yPjL2x39S2V+o+0tZp7wP0z4jO6uH+y/bH2p3o0/M9l/afkofvM4+xP8P+C/s/5S90W9S/jL2F7P+UvaXsl/afmlrQJj2x7P+wvaXsi8s/V/W0/q5gD8x4d9iO39c/w+yP9HyV/QZ4z/S8mj+s+qP6Gf2F+M/0vJo/r8/Yd8/2d/of/z3/o/oX8b+Qv/30r6E/j9l/0L/G/v/yP6E/t/b/1L/W9t/qf8d+y/0P6//M/v/Qv9j/X9p/2P9n9v/X/o/sP8f+j+w/+/s/wv939n/V/rf1v+f+t/W/5/6P7D/r/Q/sP+f9B9q+jYnKx1e1nO3b934Xm14P7Xh/dSG91Mb3k9teD+14f3Uhnf7c2F/9P2t9S+N//fX/pX2n7L/Qv+T9T/S8mj+8P6N9R/o/0/Jo/nJ+8/YX8J+Sfkc+z/Q/1vJo/nJ+6ft32h/Z/0nJo/mJ+4ftL9X/jL+R8mj+Yn7N+2/sP+b/v8/Jo/mJ+7/0vJo/pT/Y/r/0vJo/pT/w/p/afl/X38i/3/9J/0f9f+s/wP9f+u/SP8f+p+2/wP9n7L/Af2ftv8D/T9p/w/6P2T/I/o/bP8f+j9s/5/of9D+P9H/Yfu/RP+z9h+x/1n7T9j/rP0f2/+s/S/S/2/736L/H+5/W99PzS+fBwAAAAAAAAAAAAAAAAAAAAAAAADgP/kDx8/JdO41c7oAAAAASUVORK5CYII='
 
-export function App() {
+const zansiDepartments = [
+  'دەرمانسازی',
+  'پەرستاری',
+  'شیکردنەوەی نەخۆشییەکان',
+  'جوانکاری پزیشکی (پەرستاری)',
+  'سڕکردن',
+  'یاریدەدەری پزیشکی ددان',
+  'کارگێڕی کار',
+  'ژمێریاری',
+  'دیجیتاڵ میدیا و مارکێتینگ',
+  'تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن',
+  'تەکنەلۆژیای زانیاری',
+  'ئەندازیاری دیکۆر',
+]
+const wezhayDepartments = ['کارگێڕی کار', 'دیجیتاڵ میدیا و مارکێتینگ']
+
+function MainForm({
+  formType,
+  onBack,
+}: {
+  formType: 'zansi' | 'wezhay'
+  onBack: () => void
+}) {
+  const isZansi = formType === 'zansi'
+  const departments = isZansi ? zansiDepartments : wezhayDepartments
+  const pdfThemeClass = isZansi ? '' : 'wezhay-pdf-theme'
+
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
     personalName: '',
@@ -1347,15 +1356,13 @@ export function App() {
       '',
       '',
       '',
-      '',
       'کۆنمرەی پۆلی ١٢',
       'ڕێژەی دەرچوون',
     ],
-    firstGradesNumeric: Array(11).fill(''),
-    firstGradesWritten: Array(11).fill(''),
-    secondGradesNumeric: Array(11).fill(''),
-    secondGradesWritten: Array(11).fill(''),
-    // Second form fields
+    firstGradesNumeric: Array(10).fill(''),
+    firstGradesWritten: Array(10).fill(''),
+    secondGradesNumeric: Array(10).fill(''),
+    secondGradesWritten: Array(10).fill(''),
     fatherName: '',
     motherName: '',
     nationality: '',
@@ -1378,7 +1385,6 @@ export function App() {
     guardianPhone: '',
     declaration: false,
     signatureDate: '',
-    // Additional fields for second form
     instituteName: '',
     directorName: '',
     directorPhone: '',
@@ -1393,7 +1399,6 @@ export function App() {
     familyCardIssueDate: '',
     familyCode: '',
     departmentChoices: [],
-    // FIX: Add missing certificate fields to the initial state
     certificate1: '',
     certificate2: '',
     certificate3: '',
@@ -1421,12 +1426,10 @@ export function App() {
     const { name, value, type, checked } = e.target
     let sanitizedValue: string | boolean = value
 
-    // Sanitize text-like inputs to prevent XSS by escaping HTML tags
     if (type === 'text' || type === 'email' || type === 'date') {
       sanitizedValue = value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
     }
     if (name === 'examTestNumbers') {
-      // This specific field has its own numeric-only sanitization
       sanitizedValue = value.replace(/\D/g, '').slice(0, 13)
     }
 
@@ -1442,7 +1445,6 @@ export function App() {
   ) => {
     setFormData((prevState) => {
       const newArray = [...(prevState[arrayName] as string[])]
-      // Sanitize array inputs as well
       newArray[index] = value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       return {
         ...prevState,
@@ -1485,19 +1487,18 @@ export function App() {
       const pageWidth = 210
       const pageHeight = 297
       const toPngOptions = {
-        quality: 0.95, // Reduced quality for smaller file size and better performance
-        pixelRatio: 2, // Reduced from 3 to improve performance and stability on mobile
+        quality: 0.95,
+        pixelRatio: 2,
         backgroundColor: '#ffffff',
         fontEmbedCss: FONT_EMBED_CSS,
         cacheBust: true,
         style: { transform: 'scale(1)', transformOrigin: 'top left' },
       }
 
-      // Capture first page
       console.log('Capturing first page...')
       if (!pageOnePrintRef.current)
         throw new Error('First page reference for PDF not found')
-      await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)) // Shorter wait
+      await new Promise<void>((resolve) => setTimeout(() => resolve(), 500))
       const firstPageDataUrl = await toPng(
         pageOnePrintRef.current,
         toPngOptions,
@@ -1513,11 +1514,10 @@ export function App() {
         'FAST',
       )
 
-      // Capture second page
       console.log('Capturing second page...')
       if (!pageTwoPrintRef.current)
         throw new Error('Second page reference for PDF not found')
-      await new Promise<void>((resolve) => setTimeout(() => resolve(), 500)) // Shorter wait
+      await new Promise<void>((resolve) => setTimeout(() => resolve(), 500))
       const secondPageDataUrl = await toPng(
         pageTwoPrintRef.current,
         toPngOptions,
@@ -1534,7 +1534,6 @@ export function App() {
         'FAST',
       )
 
-      // Use file-saver to handle the download across all browsers
       console.log('Generating Blob for file-saver...')
       const pdfBlob = pdf.output('blob')
       saveAs(pdfBlob, 'Kurdistan_Technical_Institute_Form.pdf')
@@ -1555,27 +1554,23 @@ export function App() {
       return
     }
 
-    // This is the final submission on step 2
     setIsGenerating(true)
     setShowError(false)
     setShowSuccess(false)
 
     try {
-      // NOTE TO USER: Replace this URL with your actual PHP API endpoint.
-      // Ensure your PHP server is running and accessible from this app.
-      // Also, remember to set your database password in the PHP file.
       const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/register-student.php'
 
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-API-KEY': 'MY_PUBLIC_FORM_KEY_123',
         },
         body: JSON.stringify(formData),
       })
 
       if (!response.ok) {
-        // Try to get more specific error from server response
         const errorText = await response.text()
         throw new Error(
           `پەیوەندی سێرڤەر سەرکەوتوو نەبوو: ${response.status} ${errorText}`,
@@ -1590,7 +1585,6 @@ export function App() {
         )
       }
 
-      // API submission was successful, now generate the PDF
       setSuccessMessage(
         'زانیارییەکان بە سەرکەوتوویی نێردرا! ئامادەکاری بۆ داگرتنی PDF.',
       )
@@ -1615,13 +1609,11 @@ export function App() {
       className="min-h-screen bg-white rtl relative overflow-hidden font-bold"
       dir="rtl"
     >
-      {/* Animated Background Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none hidden">
         <div className="absolute top-20 left-20 w-64 h-64 sm:w-96 sm:h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute top-40 right-20 w-64 h-64 sm:w-96 sm:h-96 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-20 left-40 w-64 h-64 sm:w-96 sm:h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
-      {/* Success/Error Notifications */}
       {showSuccess && (
         <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
           <div className="bg-emerald-100 rounded-full p-2 ml-2 sm:ml-4">
@@ -1669,34 +1661,52 @@ export function App() {
         </div>
       )}
 
-      {/* Mobile/Tablet Header (UI Only) */}
       <header
         className="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-20"
         dir="rtl"
       >
-        <div className="mx-auto px-[5px] py-3">
-          <div className="flex items-center gap-3">
-            <img
-              src={LOGO_DATA_URL}
-              alt="Logo"
-              className="h-12 drop-shadow-lg"
-            />
-            <div className="text-black font-bold text-right">
-              <p className="tracking-wide text-sm sm:text-base">
-                پەیمانگای تەکنیکی کوردستان
-              </p>
+        <div className="mx-auto px-2 sm:px-4 py-3">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <img
+                src={LOGO_DATA_URL}
+                alt="Logo"
+                className="h-12 drop-shadow-lg"
+              />
+              <div className="text-black font-bold text-right">
+                <p className="tracking-wide text-sm sm:text-base">
+                  پەیمانگای تەکنیکی کوردستان
+                </p>
+              </div>
             </div>
+            <button
+              onClick={onBack}
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg transition-all duration-300 transform hover:scale-105"
+              aria-label="گەڕانەوە بۆ هەڵبژاردن"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span className="hidden sm:inline">گەڕانەوە</span>
+            </button>
           </div>
         </div>
       </header>
 
       <main className="relative z-10 flex flex-col items-center px-[5px] py-4 md:py-8">
-        {/* A4 Page Container - Responsive for viewing, fixed for PDF */}
         <div className="w-full mx-auto">
           {currentStep === 1 ? (
             <div className="animate-fade-in-up">
               <div className="p-6 sm:p-8 flex flex-col min-h-[500px] sm:min-h-[600px]">
-                {/* Header (Desktop UI and PDF) */}
                 <div className="hidden shrink-0 mb-6">
                   <div className="modern-header-border">
                     <div className="flex justify-center items-start gap-4">
@@ -1715,16 +1725,15 @@ export function App() {
                     </div>
                   </div>
                 </div>
-                {/* Form Content */}
                 <div className="flex-grow">
                   <FormContent
                     formData={formData}
                     handleChange={handleChange}
                     handleArrayChange={handleArrayChange}
                     errors={errors}
+                    educationType={formType}
                   />
                 </div>
-                {/* Footer (Desktop UI and PDF) */}
                 <div className="hidden shrink-0 mt-6 pt-6 modern-footer-border">
                   <div className="flex flex-col items-center gap-4 text-sm">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 w-full max-w-4xl">
@@ -1831,13 +1840,13 @@ export function App() {
                     handleArrayChange={handleArrayChange}
                     handleDepartmentToggle={handleDepartmentToggle}
                     errors={errors}
+                    departments={departments}
                   />
                 </div>
               </div>
             </div>
           )}
         </div>
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 my-4 sm:my-6 md:my-8 px-4">
           {currentStep === 2 && (
             <button
@@ -1906,7 +1915,6 @@ export function App() {
         </div>
       </main>
 
-      {/* Mobile/Tablet Footer (UI Only) */}
       <footer className="bg-white/80 backdrop-blur-md mt-8 py-8 px-[5px] border-t-4 border-[#0C8FCB]">
         <div className="mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1999,7 +2007,6 @@ export function App() {
         </div>
       </footer>
 
-      {/* Hidden container for PDF generation - ALWAYS DESKTOP STYLE */}
       <div
         style={{
           position: 'absolute',
@@ -2010,10 +2017,9 @@ export function App() {
           pointerEvents: 'none',
         }}
       >
-        {/* Page 1 for PDF - DESKTOP ONLY */}
         <div
           ref={pageOnePrintRef}
-          className="bg-white flex flex-col font-bold"
+          className={`bg-white flex flex-col font-bold ${pdfThemeClass}`}
           style={{
             width: '210mm',
             height: 'auto',
@@ -2023,7 +2029,6 @@ export function App() {
           }}
         >
           <div className="flex flex-col flex-grow">
-            {/* Header */}
             <div className="shrink-0 mb-4">
               <div className="border-b-2 border-red-500 pb-3 mb-2">
                 <div className="flex justify-between items-start">
@@ -2050,10 +2055,8 @@ export function App() {
                 </div>
               </div>
             </div>
-            {/* Form Content */}
             <div className="flex-grow min-h-0">
               <div className="space-y-2">
-                {/* Personal Info */}
                 <div>
                   <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
@@ -2266,7 +2269,6 @@ export function App() {
                     </div>
                   </div>
                 </div>
-                {/* Education Info */}
                 <div>
                   <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
@@ -2279,7 +2281,9 @@ export function App() {
                         <label className="form-label text-base">
                           دەرچووی دوانزەی ئامادەیی
                         </label>
-                        <div className="badge-red py-3 text-base">زانستی</div>
+                        <div className="badge-red py-3 text-base">
+                          {isZansi ? 'زانستی' : 'وێژەیی'}
+                        </div>
                       </div>
                       <div className="form-group">
                         <label className="form-label text-base">
@@ -2363,7 +2367,6 @@ export function App() {
                     </div>
                   </div>
                 </div>
-                {/* Grades Info */}
                 <div>
                   <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
@@ -2428,12 +2431,12 @@ export function App() {
                       className="table-container mt-1"
                       style={{ overflowX: 'visible' }}
                     >
-                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-gray-50">
+                      <div className="grid grid-cols-10 gap-0.5 pt-1 bg-gray-50">
                         {formData.subjects.map((subject, i) => {
-                          const isReadOnly = i === 0 || i === 9 || i === 10
+                          const isReadOnly = i === 0 || i === 8 || i === 9
                           const placeholderText =
-                            i > 0 && i < 9 ? `وانە ${i}` : ''
-                          if (i === 9 || i === 10) {
+                            i > 0 && i < 8 ? `وانە ${i}` : ''
+                          if (i === 8 || i === 9) {
                             return (
                               <div
                                 key={i}
@@ -2455,7 +2458,7 @@ export function App() {
                           )
                         })}
                       </div>
-                      <div className="grid grid-cols-12 gap-0.5 pt-1 bg-red-50">
+                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-red-50">
                         <div className="table-label-red text-base py-2">
                           بە ژمارە
                         </div>
@@ -2470,7 +2473,7 @@ export function App() {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-12 gap-0.5 pt-1 bg-red-50">
+                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-red-50">
                         <div className="table-label-red text-base py-2">
                           بە نووسین
                         </div>
@@ -2485,7 +2488,7 @@ export function App() {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-12 gap-0.5 pt-1 bg-yellow-50">
+                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-yellow-50">
                         <div className="table-label-yellow text-base py-2">
                           خولی دووەم
                         </div>
@@ -2500,7 +2503,7 @@ export function App() {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-12 gap-0.5 pt-1 bg-yellow-50">
+                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-yellow-50">
                         <div className="table-label-yellow text-base py-2">
                           بە نووسین
                         </div>
@@ -2520,7 +2523,6 @@ export function App() {
                 </div>
               </div>
             </div>
-            {/* Footer */}
             <div className="shrink-0 mt-auto pt-4 border-t-2 border-red-500">
               <div className="grid grid-cols-4 gap-3 text-base mb-3">
                 <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
@@ -2603,10 +2605,9 @@ export function App() {
             </div>
           </div>
         </div>
-        {/* Page 2 for PDF - DESKTOP ONLY */}
         <div
           ref={pageTwoPrintRef}
-          className="bg-white flex flex-col font-bold"
+          className={`bg-white flex flex-col font-bold ${pdfThemeClass}`}
           style={{
             width: '210mm',
             height: 'auto',
@@ -2617,9 +2618,7 @@ export function App() {
         >
           <div className="flex flex-col flex-grow">
             <div className="flex-grow min-h-0 space-y-3">
-              {/* Top Two Sections */}
               <div className="grid grid-cols-2 gap-2">
-                {/* Right Section */}
                 <div>
                   <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
@@ -2674,7 +2673,6 @@ export function App() {
                     </div>
                   </div>
                 </div>
-                {/* Left Section */}
                 <div>
                   <div className="section-header-modern text-white text-center py-3 text-lg">
                     <span className="font-bold tracking-wider">
@@ -2720,7 +2718,6 @@ export function App() {
                   </div>
                 </div>
               </div>
-              {/* Department Selection */}
               <div>
                 <div className="section-header-blue text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">
@@ -2729,20 +2726,7 @@ export function App() {
                 </div>
                 <div className="modern-card p-4">
                   <div className="grid grid-cols-3 gap-x-4 gap-y-2">
-                    {[
-                      'دەرمانسازی',
-                      'پەرستاری',
-                      'شیکردنەوەی نەخۆشییەکان',
-                      'جوانکاری پزیشکی (پەرستاری)',
-                      'سڕکردن',
-                      'یاریدەدەری پزیشکی ددان',
-                      'کارگێڕی کار',
-                      'ژمێریاری',
-                      'دیجیتاڵ میدیا و مارکێتینگ',
-                      'تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن',
-                      'تەکنەلۆژیای زانیاری',
-                      'ئەندازیاری دیکۆر',
-                    ].map((dept, i) => {
+                    {departments.map((dept, i) => {
                       const selectionIndex =
                         formData.departmentChoices.indexOf(dept)
                       const isSelected = selectionIndex !== -1
@@ -2767,7 +2751,6 @@ export function App() {
                   </div>
                 </div>
               </div>
-              {/* Medical Declaration */}
               <div>
                 <div className="section-header-modern text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">
@@ -2786,7 +2769,6 @@ export function App() {
                   </p>
                 </div>
               </div>
-              {/* Certificate Section */}
               <div>
                 <div className="section-header-blue text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">
@@ -2850,7 +2832,6 @@ export function App() {
                   </div>
                 </div>
               </div>
-              {/* Nationality Section */}
               <div>
                 <div className="section-header-gray text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">ڕەگەزنامە</span>
@@ -2921,7 +2902,6 @@ export function App() {
                   </div>
                 </div>
               </div>
-              {/* Family Card Section */}
               <div>
                 <div className="section-header-gray text-white text-center py-3 text-lg">
                   <span className="font-bold tracking-wider">
@@ -2984,7 +2964,6 @@ export function App() {
                   </div>
                 </div>
               </div>
-              {/* Bottom Signature Section */}
               <div className="grid grid-cols-2 gap-2 mt-auto pt-4">
                 <div className="modern-card p-4">
                   <label className="block text-gray-700 font-bold text-center text-lg mb-2">
@@ -3006,6 +2985,731 @@ export function App() {
     </div>
   )
 }
+
+function FormPage() {
+  const [formType, setFormType] = useState<'zansi' | 'wezhay' | null>(null)
+
+  const selectForm = (type: 'zansi' | 'wezhay') => {
+    setFormType(type)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleBackToSelection = () => {
+    setFormType(null)
+  }
+
+  if (!formType) {
+    return (
+      <div
+        className="min-h-screen bg-white rtl flex flex-col items-center justify-center p-4 font-bold"
+        dir="rtl"
+      >
+        <div className="text-center space-y-8 max-w-2xl mx-auto">
+          <img
+            src={LOGO_DATA_URL}
+            alt="Logo"
+            className="h-24 mx-auto mb-6 drop-shadow-lg"
+          />
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 tracking-wide">
+            فۆڕمی تۆمارکردنی پەیمانگای تەکنیکی کوردستان
+          </h1>
+          <p className="text-lg text-gray-600">
+            تکایە جۆری خوێندنەکەت هەڵبژێرە بۆ بەردەوامبوون.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <button
+              onClick={() => selectForm('zansi')}
+              className="w-full sm:w-64 bg-gradient-to-r from-[#0C8FCB] to-[#175988] hover:from-[#175988] hover:to-[#0C8FCB] text-white px-8 py-4 rounded-xl font-bold text-lg transform hover:scale-105 transition-all duration-300 shadow-lg"
+            >
+              زانستی
+            </button>
+            <button
+              onClick={() => selectForm('wezhay')}
+              className="w-full sm:w-64 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-white px-8 py-4 rounded-xl font-bold text-lg transform hover:scale-105 transition-all duration-300 shadow-lg"
+            >
+              وێژەیی
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return <MainForm formType={formType} onBack={handleBackToSelection} />
+}
+
+// --- START OF HELLO PAGE CODE ---
+
+type Student = {
+  id: number
+  name: string
+}
+type AuthModalProps = {
+  onAuthenticate: (id: string) => void
+  isLoading: boolean
+  error: string | null
+}
+type StudentListProps = {
+  students: Student[]
+  userHi: string
+}
+
+const UserIcon = () => (
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+    />
+  </svg>
+)
+const SearchIcon = () => (
+  <svg
+    className="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+    />
+  </svg>
+)
+const ChevronLeftIcon = () => (
+  <svg
+    className="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      d="M15 19l-7-7 7-7"
+    />
+  </svg>
+)
+const ChevronRightIcon = () => (
+  <svg
+    className="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      d="M9 5l7 7-7 7"
+    />
+  </svg>
+)
+const SparklesIcon = () => (
+  <svg
+    className="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+    />
+  </svg>
+)
+const UsersIcon = () => (
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+    />
+  </svg>
+)
+const FilterIcon = () => (
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293.707L3.293 7.293A1 1 0 013 6.586V4z"
+    />
+  </svg>
+)
+const DocumentIcon = () => (
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+    />
+  </svg>
+)
+
+const AuthModal: React.FC<AuthModalProps> = ({
+  onAuthenticate,
+  isLoading,
+  error,
+}) => {
+  const [userHi, setUserHi] = useState('')
+
+  const attemptLogin = () => {
+    if (userHi.trim() && !isLoading) {
+      onAuthenticate(userHi)
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    attemptLogin()
+  }
+
+  return (
+    <div className="fixed inset-0 bg-gradient-to-br from-white via-gray-50 to-white flex items-center justify-center p-4 z-50">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,0,0,0.03),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,0,0,0.03),transparent_50%)]" />
+      <div className="w-full max-w-md relative animate-fade-in" dir="rtl">
+        <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-10">
+          <div className="text-center mb-10">
+            <div className="relative inline-block mb-6">
+              <div className="absolute inset-0 bg-black rounded-2xl blur-xl opacity-20 animate-pulse-slow" />
+              <div className="relative w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white shadow-lg transform hover:scale-105 transition-transform">
+                <UserIcon />
+              </div>
+            </div>
+            <h2 className="text-3xl font-bold text-black mb-3 tracking-tight">
+              تکایە ناسنامەکەت بنووسە
+            </h2>
+            <p className="text-gray-600 text-base">بۆ بینینی لیستی فێرخوازان</p>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="relative group">
+              <input
+                id="user_hi"
+                type="text"
+                value={userHi}
+                onChange={(e) => setUserHi(e.target.value)}
+                className="w-full px-5 py-4 text-center bg-gray-50 border-2 border-gray-200 rounded-xl text-lg text-black placeholder-gray-400 focus:outline-none focus:border-black focus:bg-white transition-all duration-300 group-hover:border-gray-300"
+                placeholder="ناسنامە"
+                autoFocus
+                required
+              />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-black to-gray-800 opacity-0 group-focus-within:opacity-5 transition-opacity pointer-events-none" />
+            </div>
+            {error && (
+              <div className="bg-red-50 border-2 border-red-100 rounded-xl p-4 animate-shake text-center">
+                <p className="text-red-600 text-sm font-medium mb-3">
+                  {error}
+                </p>
+                <button
+                  type="button"
+                  onClick={attemptLogin}
+                  disabled={isLoading || !userHi.trim()}
+                  className="bg-red-100 text-red-700 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-red-200 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? 'دووبارە...' : 'دووبارە هەوڵبدەوە'}
+                </button>
+              </div>
+            )}
+            <button
+              type="submit"
+              disabled={isLoading || !userHi.trim()}
+              className="w-full bg-black text-white px-5 py-4 rounded-xl font-semibold text-lg hover:bg-gray-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0"
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  دڵنیابوونەوە...
+                </span>
+              ) : (
+                'چوونەژوورەوە'
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const Pagination: React.FC<{
+  currentPage: number
+  totalPages: number
+  onPageChange: (page: number) => void
+}> = ({ currentPage, totalPages, onPageChange }) => {
+  const getPageNumbers = () => {
+    const pages = []
+    const showPages = 5
+    let startPage = Math.max(1, currentPage - Math.floor(showPages / 2))
+    let endPage = Math.min(totalPages, startPage + showPages - 1)
+    if (endPage - startPage < showPages - 1) {
+      startPage = Math.max(1, endPage - showPages + 1)
+    }
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i)
+    }
+    return pages
+  }
+  return (
+    <div className="flex items-center justify-center gap-3 mt-16" dir="ltr">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className="p-3 bg-white border-2 border-gray-200 text-gray-700 hover:border-black hover:text-black transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:text-gray-700 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
+      >
+        <ChevronLeftIcon />
+      </button>
+      {getPageNumbers().map((page) => (
+        <button
+          key={page}
+          onClick={() => onPageChange(page)}
+          className={`min-w-[3rem] px-4 py-3 font-semibold transition-all duration-300 rounded-xl text-base shadow-sm hover:shadow-md transform hover:-translate-y-0.5 ${currentPage === page ? 'bg-black text-white scale-105' : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-black hover:text-black'}`}
+        >
+          {page}
+        </button>
+      ))}
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="p-3 bg-white border-2 border-gray-200 text-gray-700 hover:border-black hover:text-black transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:text-gray-700 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
+      >
+        <ChevronRightIcon />
+      </button>
+    </div>
+  )
+}
+
+const Footer = () => {
+  return (
+    <footer className="relative mt-20 border-t-2 border-gray-100 bg-white/80 backdrop-blur-xl">
+      <div className="container mx-auto px-6 py-8">
+        <div className="flex flex-col items-center justify-center gap-3">
+          <div className="flex items-center gap-2 text-gray-600" dir="ltr">
+            <span className="text-base">Developed by</span>
+            <span className="text-base font-bold text-black">SAHAND</span>
+          </div>
+          <p className="text-sm text-gray-500">© 2025 All rights reserved</p>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+const StudentList: React.FC<StudentListProps> = ({ students, userHi }) => {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [insights, setInsights] = useState<string | null>(null)
+  const [isGeneratingInsights, setIsGeneratingInsights] = useState(false)
+  const [insightsError, setInsightsError] = useState<string | null>(null)
+
+  const itemsPerPage = 10
+  const filteredStudents = students.filter((student) =>
+    student.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
+  const totalPages = Math.ceil(filteredStudents.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentStudents = filteredStudents.slice(startIndex, endIndex)
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+  
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchTerm])
+
+  const handleGenerateInsights = async () => {
+    setIsGeneratingInsights(true)
+    setInsightsError(null)
+    setInsights(null)
+
+    try {
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY })
+      const studentNames = students.map((s) => s.name).join(', ')
+      const prompt = `You are a data analyst. Analyze the following list of student names from Kurdistan and provide 3-4 interesting and brief insights. For example, what is the most common name, what is the average name length, or any other interesting patterns. Keep your response concise. Format the response strictly as a Markdown bulleted list. Do not include a header or any introductory text.
+      Here is the list of names: ${studentNames}`
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+      })
+
+      const text = response.text
+
+      const htmlInsights = text
+        .trim()
+        .split('\n')
+        .map((line) => line.replace(/^\s*[\*\-]\s/, '').trim())
+        .map(
+          (item) =>
+            `<li class="flex items-start mb-2"><span class="mr-3 text-black text-xl mt-1">&#8226;</span><span class="text-gray-700 flex-1">${item}</span></li>`,
+        )
+        .join('')
+      setInsights(`<ul class="text-left">${htmlInsights}</ul>`)
+    } catch (error) {
+      console.error('Error generating insights:', error)
+      setInsightsError('Could not generate insights. Please try again.')
+    } finally {
+      setIsGeneratingInsights(false)
+    }
+  }
+
+  return (
+    <div
+      className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white flex flex-col"
+      dir="rtl"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,0,0,0.03),transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,0,0,0.03),transparent_50%)] pointer-events-none" />
+      <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-xl border-b-2 border-gray-100 shadow-sm">
+        <div className="container mx-auto px-6 py-5 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center text-white">
+              <SparklesIcon />
+            </div>
+            <h1 className="text-2xl font-bold text-black tracking-tight">
+              لیستی فێرخوازان
+            </h1>
+          </div>
+        </div>
+      </header>
+      <main className="container mx-auto p-6 max-w-7xl relative flex-grow">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
+            <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
+              <div className="relative flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
+                  <UsersIcon />
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
+                کۆی گشتی
+              </p>
+              <p className="text-5xl font-bold text-black">{students.length}</p>
+            </div>
+          </div>
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
+            <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
+              <div className="relative flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
+                  <FilterIcon />
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
+                ئەنجامی گەڕان
+              </p>
+              <p className="text-5xl font-bold text-black">
+                {filteredStudents.length}
+              </p>
+            </div>
+          </div>
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
+            <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
+              <div className="relative flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
+                  <DocumentIcon />
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
+                پەڕە
+              </p>
+              <p className="text-5xl font-bold text-black">
+                {currentPage} / {totalPages || 1}
+              </p>
+            </div>
+          </div>
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
+            <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden flex flex-col justify-center min-h-[196px]">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
+              <div className="relative">
+                {isGeneratingInsights ? (
+                  <div className="flex flex-col items-center justify-center text-center">
+                    <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                    <p className="mt-4 text-gray-700 font-semibold text-sm">
+                      Generating...
+                    </p>
+                  </div>
+                ) : insightsError ? (
+                  <div className="text-center">
+                    <p className="text-red-600 text-sm font-medium mb-4">
+                      {insightsError}
+                    </p>
+                    <button
+                      onClick={handleGenerateInsights}
+                      className="bg-black text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-gray-800 transition-colors"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                ) : insights ? (
+                  <div dir="ltr">
+                    <h3 className="font-bold text-black mb-3 text-lg text-center">
+                      AI Insights
+                    </h3>
+                    <div
+                      className="text-sm"
+                      dangerouslySetInnerHTML={{ __html: insights }}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
+                        <SparklesIcon />
+                      </div>
+                    </div>
+                    <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
+                      AI Insights
+                    </p>
+                    <p className="text-base font-bold text-black mb-4">
+                      Analyze Student List
+                    </p>
+                    <button
+                      onClick={handleGenerateInsights}
+                      disabled={isGeneratingInsights}
+                      className="w-full bg-black text-white px-4 py-3 rounded-xl font-semibold text-base hover:bg-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0"
+                    >
+                      Generate
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mb-10">
+          <div className="relative group">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-14 pr-6 py-5 bg-white border-2 border-gray-200 rounded-2xl text-lg text-black placeholder-gray-400 focus:outline-none focus:border-black transition-all duration-300 shadow-lg focus:shadow-xl group-hover:border-gray-300"
+              placeholder="گەڕان..."
+            />
+            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-black transition-colors">
+              <SearchIcon />
+            </div>
+          </div>
+        </div>
+        {currentStudents.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              {currentStudents.map((student, index) => (
+                <div
+                  key={student.id}
+                  className="relative group animate-fade-in-up"
+                  style={{
+                    animationDelay: `${index * 50}ms`,
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity" />
+                  <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 rounded-2xl p-6 hover:border-black transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-black/5 rounded-full -mr-12 -mt-12 group-hover:bg-black transition-colors duration-300" />
+                    <div className="relative flex flex-col items-center text-center h-full">
+                      <div className="relative mb-5">
+                        <div className="absolute inset-0 bg-black rounded-2xl blur-md opacity-0 group-hover:opacity-20 transition-opacity" />
+                        <div className="relative w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center group-hover:from-black group-hover:to-gray-900 group-hover:text-white transition-all duration-300 shadow-md">
+                          <UserIcon />
+                        </div>
+                      </div>
+                      <div className="flex-grow flex flex-col justify-center">
+                        <h3 className="text-lg font-bold text-black break-all mb-3 group-hover:scale-105 transition-transform">
+                          {student.name}
+                        </h3>
+                        <div className="flex items-center gap-2 text-gray-500 text-sm justify-center">
+                          <span className="font-mono" dir="ltr">
+                            {student.id}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            )}
+          </>
+        ) : (
+          <div className="text-center py-24 animate-fade-in">
+            <div className="relative inline-block mb-8">
+              <div className="absolute inset-0 bg-black rounded-2xl blur-2xl opacity-10" />
+              <div className="relative w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl mx-auto flex items-center justify-center text-gray-400 shadow-lg">
+                <SearchIcon />
+              </div>
+            </div>
+            <p className="text-2xl text-black font-bold mb-2">
+              هیچ فێرخوازێک نەدۆزرایەوە
+            </p>
+            <p className="text-gray-600 text-base">
+              تکایە گەڕانی دیکە هەوڵ بدە
+            </p>
+          </div>
+        )}
+      </main>
+      <Footer />
+    </div>
+  )
+}
+
+function HelloPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [userHi, setUserHi] = useState<string>('')
+  const [students, setStudents] = useState<Student[]>([])
+  const [token, setToken] = useState<string | null>(null)
+
+  const API_ENDPOINT = `https://xn--salonvejgrd-58a.dk/public_html/api/single_api.php`
+
+  const handleAuthenticate = async (enteredId: string) => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const loginResponse = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_hi: enteredId }),
+      })
+      
+      if (!loginResponse.ok) {
+        let errorMessage = 'ناسنامەکە هەڵەیە یان ڕێگەپێنەدراوە'
+        try {
+          const errorResult = await loginResponse.json()
+          errorMessage = errorResult.message || errorResult.error || errorMessage
+        } catch (e) {
+          // Response was not JSON, use default error message
+        }
+        throw new Error(errorMessage)
+      }
+      
+      const loginResult = await loginResponse.json()
+      if (!loginResult.success || !loginResult.token) {
+        const errorMessage = loginResult.message || loginResult.error || 'نەتوانرا تۆکن وەربگیرێت'
+        throw new Error(errorMessage)
+      }
+      
+      const receivedToken = loginResult.token
+      setToken(receivedToken)
+
+      const studentsResponse = await fetch(API_ENDPOINT, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (!studentsResponse.ok) {
+        let errorMessage = 'هەڵەیەک لە وەرگرتنی داتای فێرخوازان ڕوویدا'
+        try {
+          const errorResult = await studentsResponse.json()
+          errorMessage = errorResult.message || errorResult.error || errorMessage
+        } catch (e) {
+          // Response was not JSON, use default error message
+        }
+        throw new Error(errorMessage)
+      }
+      
+      const studentsResult = await studentsResponse.json()
+      if (studentsResult.success) {
+        setStudents(studentsResult.students || [])
+        setUserHi(enteredId)
+        setIsAuthenticated(true)
+      } else {
+        throw new Error(studentsResult.message || 'نەتوانرا داتای فێرخوازان وەربگیرێت')
+      }
+    } catch (err) {
+      if (err instanceof TypeError && err.message === 'Failed to fetch') {
+        setError('پەیوەندی کردن بە سێرڤەرەوە سەرکەوتوو نەبوو. تکایە لە هێڵی ئینتەرنێتەکەت دڵنیابەرەوە.')
+      } else if (err instanceof Error) {
+        if (err.message.includes('Missing or invalid Authorization header')) {
+          setError(
+            'ڕێگەپێدان سەرکەوتوو نەبوو. کێشەکە زۆربەی کات لە فایلی .htaccess دایە. تکایە دڵنیابە کە ئەم دێڕانەی تێدایە بۆ ناردنی زانیارییەکانی ڕێگەپێدان: RewriteEngine On و RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]'
+          )
+        } else {
+          setError(err.message)
+        }
+      } else {
+        setError('هەڵەیەکی نەزانراو ڕوویدا. تکایە دووبارە هەوڵ بدەوە.')
+      }
+      console.error('Authentication error:', err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return (
+    <div className="w-full min-h-screen">
+      {!isAuthenticated ? (
+        <AuthModal
+          onAuthenticate={handleAuthenticate}
+          isLoading={isLoading}
+          error={error}
+        />
+      ) : (
+        <StudentList students={students} userHi={userHi} />
+      )}
+    </div>
+  )
+}
+
+// --- ROUTER & RENDER ---
+export function App() {
+  if (window.location.pathname.startsWith('/hello')) {
+    return <HelloPage />
+  }
+  return <FormPage />
+}
+
 const container = document.getElementById('root')
 if (container) {
   const root = createRoot(container)
