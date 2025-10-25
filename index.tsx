@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
 import saveAs from 'file-saver'
+import { SelectionPage } from './load'
 
 // ==================================================================
 // START: CODE FOR /hello ADMIN PAGE
@@ -180,7 +181,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
             <h2 className="text-3xl font-bold text-black mb-3 tracking-tight">
               تکایە ناسنامەکەت بنووسە
             </h2>
-            <p className="text-gray-600 text-base">بۆ بینینی لیستی فێرخوازان</p>
+            <p className="text-gray-600 text-base">بەخێربێت</p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="relative group">
@@ -3636,40 +3637,7 @@ function FormApp() {
   }
 
   if (!formType) {
-    return (
-      <div
-        className="min-h-screen bg-white rtl flex flex-col items-center justify-center p-4 font-bold"
-        dir="rtl"
-      >
-        <div className="text-center space-y-8 max-w-2xl mx-auto">
-          <img
-            src={LOGO_DATA_URL}
-            alt="Logo"
-            className="h-24 mx-auto mb-6 drop-shadow-lg"
-          />
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 tracking-wide">
-            فۆڕمی تۆمارکردنی پەیمانگای تەکنیکی کوردستان
-          </h1>
-          <p className="text-lg text-gray-600">
-            تکایە جۆری خوێندنەکەت هەڵبژێرە بۆ بەردەوامبوون.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <button
-              onClick={() => selectForm('zansi')}
-              className="w-full sm:w-64 bg-gradient-to-r from-[#0C8FCB] to-[#175988] hover:from-[#175988] hover:to-[#0C8FCB] text-white px-8 py-4 rounded-xl font-bold text-lg transform hover:scale-105 transition-all duration-300 shadow-lg"
-            >
-              زانستی
-            </button>
-            <button
-              onClick={() => selectForm('wezhay')}
-              className="w-full sm:w-64 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-white px-8 py-4 rounded-xl font-bold text-lg transform hover:scale-105 transition-all duration-300 shadow-lg"
-            >
-              وێژەیی
-            </button>
-          </div>
-        </div>
-      </div>
-    )
+    return <SelectionPage onSelect={selectForm} />
   }
 
   return <MainForm formType={formType} onBack={handleBackToSelection} />
