@@ -4,6 +4,7 @@ import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
 import saveAs from 'file-saver'
 import { SelectionPage } from './load'
+import { Footer } from './footer'
 
 // ==================================================================
 // START: CODE FOR /hello ADMIN PAGE
@@ -278,23 +279,6 @@ const Pagination: React.FC<{
         <ChevronRightIcon />
       </button>
     </div>
-  )
-}
-
-// --- FOOTER COMPONENT ---
-const Footer = () => {
-  return (
-    <footer className="relative mt-20 border-t-2 border-gray-100 bg-white/80 backdrop-blur-xl">
-      <div className="container mx-auto px-6 py-8">
-        <div className="flex flex-col items-center justify-center gap-3">
-          <div className="flex items-center gap-2 text-gray-600" dir="ltr">
-            <span className="text-base">Developed by</span>
-            <span className="text-base font-bold text-black">SAHAND</span>
-          </div>
-          <p className="text-sm text-gray-500">© 2025 All rights reserved</p>
-        </div>
-      </div>
-    </footer>
   )
 }
 
@@ -2534,98 +2518,7 @@ function MainForm({
         </div>
       </main>
 
-      {/* Mobile/Tablet Footer (UI Only) */}
-      <footer className="bg-white/80 backdrop-blur-md mt-8 py-8 px-[5px] border-t-4 border-[#0C8FCB]">
-        <div className="mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="modern-contact-card flex-row-reverse justify-center">
-              <svg
-                className="w-6 h-6 text-blue-600 flex-shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              <span className="font-medium text-black text-center" dir="ltr">
-                07729112121
-              </span>
-            </div>
-            <div className="modern-contact-card flex-row-reverse justify-center">
-              <svg
-                className="w-6 h-6 text-blue-600 flex-shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              <span className="font-medium text-black text-center" dir="ltr">
-                07519112121
-              </span>
-            </div>
-            <div className="modern-contact-card flex-row-reverse justify-center">
-              <svg
-                className="w-6 h-6 text-blue-600 flex-shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                />
-              </svg>
-              <span className="font-medium text-black text-center" dir="ltr">
-                www.kti.edu.iq
-              </span>
-            </div>
-            <div className="modern-contact-card flex-row-reverse justify-center">
-              <svg
-                className="w-6 h-6 text-blue-600 flex-shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
-              <span className="font-medium text-black text-center" dir="ltr">
-                tomar@kti.edu.iq
-              </span>
-            </div>
-          </div>
-          <p className="text-center text-sm text-gray-600 tracking-wide mt-6">
-            پەیمانگای تەکنیکی کوردستان - بەرزاییەکانی سلێمانی، هەرێمی کوردستان
-            - عێراق
-          </p>
-          <div className="flex justify-center my-6">
-            <div className="w-2/3 border-t border-gray-300"></div>
-          </div>
-          <div className="text-center text-sm text-gray-600">
-            Developed by{' '}
-            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#0C8FCB] to-[#175988]">
-              SAHAND
-            </span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Hidden container for PDF generation - ALWAYS DESKTOP STYLE */}
       <div
