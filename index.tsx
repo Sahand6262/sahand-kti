@@ -653,7 +653,7 @@ interface FormContentProps {
   handleArrayChange: (arrayName: string, index: number, value: string) => void
   // FIX: Changed errors prop from optional to required to match its usage and prevent type errors.
   errors: { [key: string]: string }
-  educationType: 'zansi' | 'wezhay'
+  educationType: 'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani'
 }
 
 // Form content component moved outside to prevent re-creation on each render
@@ -664,614 +664,636 @@ const FormContent: React.FC<FormContentProps> = ({
   // FIX: Removed default value '{}' for errors, which was causing incorrect type inference.
   errors,
   educationType,
-}) => (
-  <form className="space-y-6">
-    {/* Personal Info */}
-    <div className="group">
-      <div className="modern-section-header">
-        <div className="flex items-center justify-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-            <svg
-              className="w-5 h-5 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-          </div>
-          <span className="font-bold tracking-wider text-lg">
-            زانیاری کەسی
-          </span>
-        </div>
-      </div>
-      <div className="modern-card-enhanced">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="form-group-modern">
-            <label className="modern-label">ناوی چواری فێرخواز</label>
-            <input
-              type="text"
-              name="personalName"
-              value={formData.personalName}
-              onChange={handleChange}
-              className={`modern-input ${errors.personalName ? 'border-blue-500' : ''}`}
-              placeholder="ناوی چواری"
-            />
-            {errors.personalName && (
-              <p className="text-blue-700 text-xs mt-1">{errors.personalName}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">ڕەگەز</label>
-            <div className="flex gap-4 mt-2">
-              <label className="modern-radio-label">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  checked={formData.gender === 'male'}
-                  onChange={handleChange}
-                  className="modern-radio"
-                />
-                <span>نێر</span>
-              </label>
-              <label className="modern-radio-label">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  checked={formData.gender === 'female'}
-                  onChange={handleChange}
-                  className="modern-radio"
-                />
-                <span>مێ</span>
-              </label>
-            </div>
-            {errors.gender && (
-              <p className="text-blue-700 text-xs mt-1">{errors.gender}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">ساڵی لەدایکبوون</label>
-            <input
-              type="date"
-              name="birthYear"
-              value={formData.birthYear}
-              onChange={handleChange}
-              className={`modern-input text-right ${errors.birthYear ? 'border-blue-500' : ''}`}
-            />
-            {errors.birthYear && (
-              <p className="text-blue-700 text-xs mt-1">{errors.birthYear}</p>
-            )}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-6">
-          <div className="form-group-modern">
-            <label className="modern-label">پارێزگا</label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className={`modern-input ${errors.address ? 'border-blue-500' : ''}`}
-              placeholder="پارێزگا"
-            />
-            {errors.address && (
-              <p className="text-blue-700 text-xs mt-1">{errors.address}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">شار/ناوچە</label>
-            <input
-              type="text"
-              name="cityArea"
-              value={formData.cityArea}
-              onChange={handleChange}
-              className={`modern-input ${errors.cityArea ? 'border-blue-500' : ''}`}
-              placeholder="شار/ناوچە"
-            />
-            {errors.cityArea && (
-              <p className="text-blue-700 text-xs mt-1">{errors.cityArea}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">گەڕەک</label>
-            <input
-              type="text"
-              name="neighborhood"
-              value={formData.neighborhood}
-              onChange={handleChange}
-              className={`modern-input ${errors.neighborhood ? 'border-blue-500' : ''}`}
-              placeholder="گەڕەک"
-            />
-            {errors.neighborhood && (
-              <p className="text-blue-700 text-xs mt-1">
-                {errors.neighborhood}
-              </p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">کۆڵان</label>
-            <input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              className={`modern-input ${errors.city ? 'border-blue-500' : ''}`}
-              placeholder="کۆڵان"
-            />
-            {errors.city && (
-              <p className="text-blue-700 text-xs mt-1">{errors.city}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">خانوو</label>
-            <input
-              type="text"
-              name="district"
-              value={formData.district}
-              onChange={handleChange}
-              className={`modern-input ${errors.district ? 'border-blue-500' : ''}`}
-              placeholder="خانوو"
-            />
-            {errors.district && (
-              <p className="text-blue-700 text-xs mt-1">{errors.district}</p>
-            )}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          <div className="form-group-modern">
-            <label className="modern-label">ژ. مۆبایل (١)</label>
-            <input
-              type="text"
-              name="phone1"
-              value={formData.phone1}
-              onChange={handleChange}
-              className={`modern-input ${errors.phone1 ? 'border-blue-500' : ''}`}
-              placeholder="07XX XXX XXXX"
-            />
-            {errors.phone1 && (
-              <p className="text-blue-700 text-xs mt-1">{errors.phone1}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">ژ. مۆبایل (٢) (ئارەزوومەندانە)</label>
-            <input
-              type="text"
-              name="phone2"
-              value={formData.phone2}
-              onChange={handleChange}
-              className="modern-input"
-              placeholder="07XX XXX XXXX"
-            />
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">ئیمەیڵ (ئارەزوومەندانە)</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="modern-input"
-              placeholder="example@email.com"
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-          <div className="form-group-modern">
-            <label className="modern-label">ناوی بەخێوکەر</label>
-            <input
-              type="text"
-              name="guardianName"
-              value={formData.guardianName || ''}
-              onChange={handleChange}
-              className={`modern-input ${errors.guardianName ? 'border-blue-500' : ''}`}
-              placeholder="ناوی بەخێوکەر"
-            />
-            {errors.guardianName && (
-              <p className="text-blue-700 text-xs mt-1">
-                {errors.guardianName}
-              </p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">پلەی خزمایەتی</label>
-            <input
-              type="text"
-              name="guardianRelation"
-              value={formData.guardianRelation || ''}
-              onChange={handleChange}
-              className={`modern-input ${errors.guardianRelation ? 'border-blue-500' : ''}`}
-              placeholder="پلەی خزمایەتی"
-            />
-            {errors.guardianRelation && (
-              <p className="text-blue-700 text-xs mt-1">
-                {errors.guardianRelation}
-              </p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">پیشە</label>
-            <input
-              type="text"
-              name="guardianOccupation"
-              value={formData.guardianOccupation || ''}
-              onChange={handleChange}
-              className={`modern-input ${errors.guardianOccupation ? 'border-blue-500' : ''}`}
-              placeholder="پیشە"
-            />
-            {errors.guardianOccupation && (
-              <p className="text-blue-700 text-xs mt-1">
-                {errors.guardianOccupation}
-              </p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">ژ.مۆبایل</label>
-            <input
-              type="text"
-              name="guardianPhone"
-              value={formData.guardianPhone || ''}
-              onChange={handleChange}
-              className={`modern-input ${errors.guardianPhone ? 'border-blue-500' : ''}`}
-              placeholder="07XX XXX XXXX"
-            />
-            {errors.guardianPhone && (
-              <p className="text-blue-700 text-xs mt-1">
-                {errors.guardianPhone}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-    {/* Education Info */}
-    <div className="group">
-      <div className="modern-section-header">
-        <div className="flex items-center justify-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-            <svg
-              className="w-5 h-5 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-              />
-            </svg>
-          </div>
-          <span className="font-bold tracking-wider text-lg">
-            ئاستی خوێندن
-          </span>
-        </div>
-      </div>
-      <div className="modern-card-enhanced">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="form-group-modern">
-            <label className="modern-label">دەرچووی دوانزەی ئامادەیی</label>
-            <div className="modern-badge">
-              {educationType === 'zansi' ? 'زانستی' : 'وێژەیی'}
-            </div>
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">ساڵی دەرچوون</label>
-            <input
-              type="date"
-              name="graduationYear"
-              value={formData.graduationYear}
-              onChange={handleChange}
-              className={`modern-input text-right ${errors.graduationYear ? 'border-blue-500' : ''}`}
-            />
-            {errors.graduationYear && (
-              <p className="text-blue-700 text-xs mt-1">
-                {errors.graduationYear}
-              </p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">جۆری سیستەم</label>
-            <div className="flex gap-4 mt-2">
-              <label className="modern-radio-label">
-                <input
-                  type="radio"
-                  name="educationSystem"
-                  value="regular"
-                  checked={formData.educationSystem === 'regular'}
-                  onChange={handleChange}
-                  className="modern-radio"
-                />
-                <span>ئاسایی</span>
-              </label>
-              <label className="modern-radio-label">
-                <input
-                  type="radio"
-                  name="educationSystem"
-                  value="swedish"
-                  checked={formData.educationSystem === 'swedish'}
-                  onChange={handleChange}
-                  className="modern-radio"
-                />
-                <span>سویدی</span>
-              </label>
-            </div>
-            {errors.educationSystem && (
-              <p className="text-blue-700 text-xs mt-1">
-                {errors.educationSystem}
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="form-group-modern">
-            <label className="modern-label">خولی</label>
-            <div className="flex gap-4 mt-2">
-              <label className="modern-radio-label">
-                <input
-                  type="radio"
-                  name="examRound"
-                  value="first"
-                  checked={formData.examRound === 'first'}
-                  onChange={handleChange}
-                  className="modern-radio"
-                />
-                <span>یەکەم</span>
-              </label>
-              <label className="modern-radio-label">
-                <input
-                  type="radio"
-                  name="examRound"
-                  value="second"
-                  checked={formData.examRound === 'second'}
-                  onChange={handleChange}
-                  className="modern-radio"
-                />
-                <span>دووەم</span>
-              </label>
-            </div>
-            {errors.examRound && (
-              <p className="text-blue-700 text-xs mt-1">{errors.examRound}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">ژمارەی تاقیکردنەوە</label>
-            <input
-              type="text"
-              name="examTestNumbers"
-              value={formData.examTestNumbers}
-              onChange={handleChange}
-              className={`modern-input ${errors.examTestNumbers ? 'border-blue-500' : ''}`}
-              placeholder="٠١٢٣٤٥٦٧٨٩٠١٢"
-              maxLength={13}
-              inputMode="numeric"
-              autoComplete="off"
-            />
-            {errors.examTestNumbers && (
-              <p className="text-blue-700 text-xs mt-1">
-                {errors.examTestNumbers}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-    {/* Grades Info */}
-    <div className="group">
-      <div className="modern-section-header">
-        <div className="flex items-center justify-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-            <svg
-              className="w-5 h-5 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-          </div>
-          <span className="font-bold tracking-wider text-lg">
-            زانیاری سەبارەت بە نمرەی فێرخواز
-          </span>
-        </div>
-      </div>
-      <div className="modern-card-enhanced">
-        <div className="bg-white rounded-xl border-2 border-blue-200 p-6 shadow-md mb-6">
-          <div className="flex items-start gap-3">
-            <svg
-              className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <p className="text-gray-700 text-sm leading-relaxed">
-              بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم بەشەدا
-              هەبێت، ئێمە لێی بەرپرس نین.
-            </p>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="form-group-modern">
-            <label className="modern-label">پارێزگا</label>
-            <input
-              type="text"
-              name="province"
-              value={formData.province}
-              onChange={handleChange}
-              className={`modern-input ${errors.province ? 'border-blue-500' : ''}`}
-              placeholder="پارێزگا"
-            />
-            {errors.province && (
-              <p className="text-blue-700 text-xs mt-1">{errors.province}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">پەروەردە</label>
-            <input
-              type="text"
-              name="education"
-              value={formData.education}
-              onChange={handleChange}
-              className={`modern-input ${errors.education ? 'border-blue-500' : ''}`}
-              placeholder="پەروەردە"
-            />
-            {errors.education && (
-              <p className="text-blue-700 text-xs mt-1">{errors.education}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">گەڕەک</label>
-            <input
-              type="text"
-              name="district2"
-              value={formData.district2}
-              onChange={handleChange}
-              className={`modern-input ${errors.district2 ? 'border-blue-500' : ''}`}
-              placeholder="گەڕەک"
-            />
-            {errors.district2 && (
-              <p className="text-blue-700 text-xs mt-1">{errors.district2}</p>
-            )}
-          </div>
-          <div className="form-group-modern">
-            <label className="modern-label">ساڵی خوێندن</label>
-            <input
-              type="date"
-              name="studyYear"
-              value={formData.studyYear}
-              onChange={handleChange}
-              className={`modern-input text-right ${errors.studyYear ? 'border-blue-500' : ''}`}
-            />
-            {errors.studyYear && (
-              <p className="text-blue-700 text-xs mt-1">{errors.studyYear}</p>
-            )}
-          </div>
-        </div>
-        <div className="modern-table-container mt-6">
-          <div className="grid grid-cols-3 md:grid-cols-10 gap-2 pt-4">
-            {formData.subjects.map((subject, i) => {
-              const isHeaderCell = i === 0 || i === 8 || i === 9
-              const placeholderText = i > 0 && i < 8 ? `وانە ${i}` : ''
+}) => {
+  const getEducationTypeText = () => {
+    switch (educationType) {
+      case 'zansi':
+        return 'زانستی'
+      case 'wezhay':
+        return 'وێژەیی'
+      case 'peshassazi':
+        return 'پیشەسازی'
+      case 'bazrgani':
+        return 'بازرگانی'
+      default:
+        return ''
+    }
+  }
 
-              if (isHeaderCell) {
+  return (
+    <form className="space-y-6">
+      {/* Personal Info */}
+      <div className="group">
+        <div className="modern-section-header">
+          <div className="flex items-center justify-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <svg
+                className="w-5 h-5 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </div>
+            <span className="font-bold tracking-wider text-lg">
+              زانیاری کەسی
+            </span>
+          </div>
+        </div>
+        <div className="modern-card-enhanced">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="form-group-modern">
+              <label className="modern-label">ناوی چواری فێرخواز</label>
+              <input
+                type="text"
+                name="personalName"
+                value={formData.personalName}
+                onChange={handleChange}
+                className={`modern-input ${errors.personalName ? 'border-blue-500' : ''}`}
+                placeholder="ناوی چواری"
+              />
+              {errors.personalName && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.personalName}
+                </p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">ڕەگەز</label>
+              <div className="flex gap-4 mt-2">
+                <label className="modern-radio-label">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={formData.gender === 'male'}
+                    onChange={handleChange}
+                    className="modern-radio"
+                  />
+                  <span>نێر</span>
+                </label>
+                <label className="modern-radio-label">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={formData.gender === 'female'}
+                    onChange={handleChange}
+                    className="modern-radio"
+                  />
+                  <span>مێ</span>
+                </label>
+              </div>
+              {errors.gender && (
+                <p className="text-blue-700 text-xs mt-1">{errors.gender}</p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">ساڵی لەدایکبوون</label>
+              <input
+                type="date"
+                name="birthYear"
+                value={formData.birthYear}
+                onChange={handleChange}
+                className={`modern-input text-right ${errors.birthYear ? 'border-blue-500' : ''}`}
+              />
+              {errors.birthYear && (
+                <p className="text-blue-700 text-xs mt-1">{errors.birthYear}</p>
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-6">
+            <div className="form-group-modern">
+              <label className="modern-label">پارێزگا</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className={`modern-input ${errors.address ? 'border-blue-500' : ''}`}
+                placeholder="پارێزگا"
+              />
+              {errors.address && (
+                <p className="text-blue-700 text-xs mt-1">{errors.address}</p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">شار/ناوچە</label>
+              <input
+                type="text"
+                name="cityArea"
+                value={formData.cityArea}
+                onChange={handleChange}
+                className={`modern-input ${errors.cityArea ? 'border-blue-500' : ''}`}
+                placeholder="شار/ناوچە"
+              />
+              {errors.cityArea && (
+                <p className="text-blue-700 text-xs mt-1">{errors.cityArea}</p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">گەڕەک</label>
+              <input
+                type="text"
+                name="neighborhood"
+                value={formData.neighborhood}
+                onChange={handleChange}
+                className={`modern-input ${errors.neighborhood ? 'border-blue-500' : ''}`}
+                placeholder="گەڕەک"
+              />
+              {errors.neighborhood && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.neighborhood}
+                </p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">کۆڵان</label>
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                className={`modern-input ${errors.city ? 'border-blue-500' : ''}`}
+                placeholder="کۆڵان"
+              />
+              {errors.city && (
+                <p className="text-blue-700 text-xs mt-1">{errors.city}</p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">خانوو</label>
+              <input
+                type="text"
+                name="district"
+                value={formData.district}
+                onChange={handleChange}
+                className={`modern-input ${errors.district ? 'border-blue-500' : ''}`}
+                placeholder="خانوو"
+              />
+              {errors.district && (
+                <p className="text-blue-700 text-xs mt-1">{errors.district}</p>
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div className="form-group-modern">
+              <label className="modern-label">ژ. مۆبایل (١)</label>
+              <input
+                type="text"
+                name="phone1"
+                value={formData.phone1}
+                onChange={handleChange}
+                className={`modern-input ${errors.phone1 ? 'border-blue-500' : ''}`}
+                placeholder="07XX XXX XXXX"
+              />
+              {errors.phone1 && (
+                <p className="text-blue-700 text-xs mt-1">{errors.phone1}</p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">
+                ژ. مۆبایل (٢) (ئارەزوومەندانە)
+              </label>
+              <input
+                type="text"
+                name="phone2"
+                value={formData.phone2}
+                onChange={handleChange}
+                className="modern-input"
+                placeholder="07XX XXX XXXX"
+              />
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">ئیمەیڵ (ئارەزوومەندانە)</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="modern-input"
+                placeholder="example@email.com"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+            <div className="form-group-modern">
+              <label className="modern-label">ناوی بەخێوکەر</label>
+              <input
+                type="text"
+                name="guardianName"
+                value={formData.guardianName || ''}
+                onChange={handleChange}
+                className={`modern-input ${errors.guardianName ? 'border-blue-500' : ''}`}
+                placeholder="ناوی بەخێوکەر"
+              />
+              {errors.guardianName && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.guardianName}
+                </p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">پلەی خزمایەتی</label>
+              <input
+                type="text"
+                name="guardianRelation"
+                value={formData.guardianRelation || ''}
+                onChange={handleChange}
+                className={`modern-input ${errors.guardianRelation ? 'border-blue-500' : ''}`}
+                placeholder="پلەی خزمایەتی"
+              />
+              {errors.guardianRelation && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.guardianRelation}
+                </p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">پیشە</label>
+              <input
+                type="text"
+                name="guardianOccupation"
+                value={formData.guardianOccupation || ''}
+                onChange={handleChange}
+                className={`modern-input ${errors.guardianOccupation ? 'border-blue-500' : ''}`}
+                placeholder="پیشە"
+              />
+              {errors.guardianOccupation && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.guardianOccupation}
+                </p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">ژ.مۆبایل</label>
+              <input
+                type="text"
+                name="guardianPhone"
+                value={formData.guardianPhone || ''}
+                onChange={handleChange}
+                className={`modern-input ${errors.guardianPhone ? 'border-blue-500' : ''}`}
+                placeholder="07XX XXX XXXX"
+              />
+              {errors.guardianPhone && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.guardianPhone}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Education Info */}
+      <div className="group">
+        <div className="modern-section-header">
+          <div className="flex items-center justify-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <svg
+                className="w-5 h-5 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
+              </svg>
+            </div>
+            <span className="font-bold tracking-wider text-lg">
+              ئاستی خوێندن
+            </span>
+          </div>
+        </div>
+        <div className="modern-card-enhanced">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="form-group-modern">
+              <label className="modern-label">دەرچووی دوانزەی ئامادەیی</label>
+              <div className="modern-badge">{getEducationTypeText()}</div>
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">ساڵی دەرچوون</label>
+              <input
+                type="date"
+                name="graduationYear"
+                value={formData.graduationYear}
+                onChange={handleChange}
+                className={`modern-input text-right ${errors.graduationYear ? 'border-blue-500' : ''}`}
+              />
+              {errors.graduationYear && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.graduationYear}
+                </p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">جۆری سیستەم</label>
+              <div className="flex gap-4 mt-2">
+                <label className="modern-radio-label">
+                  <input
+                    type="radio"
+                    name="educationSystem"
+                    value="regular"
+                    checked={formData.educationSystem === 'regular'}
+                    onChange={handleChange}
+                    className="modern-radio"
+                  />
+                  <span>ئاسایی</span>
+                </label>
+                <label className="modern-radio-label">
+                  <input
+                    type="radio"
+                    name="educationSystem"
+                    value="swedish"
+                    checked={formData.educationSystem === 'swedish'}
+                    onChange={handleChange}
+                    className="modern-radio"
+                  />
+                  <span>سویدی</span>
+                </label>
+              </div>
+              {errors.educationSystem && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.educationSystem}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div className="form-group-modern">
+              <label className="modern-label">خولی</label>
+              <div className="flex gap-4 mt-2">
+                <label className="modern-radio-label">
+                  <input
+                    type="radio"
+                    name="examRound"
+                    value="first"
+                    checked={formData.examRound === 'first'}
+                    onChange={handleChange}
+                    className="modern-radio"
+                  />
+                  <span>یەکەم</span>
+                </label>
+                <label className="modern-radio-label">
+                  <input
+                    type="radio"
+                    name="examRound"
+                    value="second"
+                    checked={formData.examRound === 'second'}
+                    onChange={handleChange}
+                    className="modern-radio"
+                  />
+                  <span>دووەم</span>
+                </label>
+              </div>
+              {errors.examRound && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.examRound}
+                </p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">ژمارەی تاقیکردنەوە</label>
+              <input
+                type="text"
+                name="examTestNumbers"
+                value={formData.examTestNumbers}
+                onChange={handleChange}
+                className={`modern-input ${errors.examTestNumbers ? 'border-blue-500' : ''}`}
+                placeholder="٠١٢٣٤٥٦٧٨٩٠١٢"
+                maxLength={13}
+                inputMode="numeric"
+                autoComplete="off"
+              />
+              {errors.examTestNumbers && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.examTestNumbers}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Grades Info */}
+      <div className="group">
+        <div className="modern-section-header">
+          <div className="flex items-center justify-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <svg
+                className="w-5 h-5 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+            <span className="font-bold tracking-wider text-lg">
+              زانیاری سەبارەت بە نمرەی فێرخواز
+            </span>
+          </div>
+        </div>
+        <div className="modern-card-enhanced">
+          <div className="bg-white rounded-xl border-2 border-blue-200 p-6 shadow-md mb-6">
+            <div className="flex items-start gap-3">
+              <svg
+                className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم بەشەدا
+                هەبێت، ئێمە لێی بەرپرس نین.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="form-group-modern">
+              <label className="modern-label">پارێزگا</label>
+              <input
+                type="text"
+                name="province"
+                value={formData.province}
+                onChange={handleChange}
+                className={`modern-input ${errors.province ? 'border-blue-500' : ''}`}
+                placeholder="پارێزگا"
+              />
+              {errors.province && (
+                <p className="text-blue-700 text-xs mt-1">{errors.province}</p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">پەروەردە</label>
+              <input
+                type="text"
+                name="education"
+                value={formData.education}
+                onChange={handleChange}
+                className={`modern-input ${errors.education ? 'border-blue-500' : ''}`}
+                placeholder="پەروەردە"
+              />
+              {errors.education && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.education}
+                </p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">گەڕەک</label>
+              <input
+                type="text"
+                name="district2"
+                value={formData.district2}
+                onChange={handleChange}
+                className={`modern-input ${errors.district2 ? 'border-blue-500' : ''}`}
+                placeholder="گەڕەک"
+              />
+              {errors.district2 && (
+                <p className="text-blue-700 text-xs mt-1">{errors.district2}</p>
+              )}
+            </div>
+            <div className="form-group-modern">
+              <label className="modern-label">ساڵی خوێندن</label>
+              <input
+                type="date"
+                name="studyYear"
+                value={formData.studyYear}
+                onChange={handleChange}
+                className={`modern-input text-right ${errors.studyYear ? 'border-blue-500' : ''}`}
+              />
+              {errors.studyYear && (
+                <p className="text-blue-700 text-xs mt-1">{errors.studyYear}</p>
+              )}
+            </div>
+          </div>
+          <div className="modern-table-container mt-6">
+            <div className="grid grid-cols-3 md:grid-cols-10 gap-2 pt-4">
+              {formData.subjects.map((subject, i) => {
+                const isHeaderCell = i === 0 || i === 8 || i === 9
+                const placeholderText = i > 0 && i < 8 ? `وانە ${i}` : ''
+
+                if (isHeaderCell) {
+                  return (
+                    <div
+                      key={i}
+                      className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] flex h-full items-center justify-center text-white"
+                    >
+                      {subject}
+                    </div>
+                  )
+                }
+
                 return (
-                  <div
+                  <input
                     key={i}
-                    className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] flex h-full items-center justify-center text-white"
-                  >
-                    {subject}
-                  </div>
+                    type="text"
+                    value={subject}
+                    onChange={(e) =>
+                      handleArrayChange('subjects', i, e.target.value)
+                    }
+                    readOnly={false}
+                    className="modern-table-cell"
+                    placeholder={placeholderText}
+                  />
                 )
-              }
-
-              return (
+              })}
+            </div>
+            <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
+              <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
+                بە ژمارە
+              </div>
+              {formData.firstGradesNumeric.map((grade, i) => (
                 <input
                   key={i}
                   type="text"
-                  value={subject}
+                  value={grade}
                   onChange={(e) =>
-                    handleArrayChange('subjects', i, e.target.value)
+                    handleArrayChange('firstGradesNumeric', i, e.target.value)
                   }
-                  readOnly={false}
                   className="modern-table-cell"
-                  placeholder={placeholderText}
+                  placeholder="نمرە"
                 />
-              )
-            })}
-          </div>
-          <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
-            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
-              بە ژمارە
+              ))}
             </div>
-            {formData.firstGradesNumeric.map((grade, i) => (
-              <input
-                key={i}
-                type="text"
-                value={grade}
-                onChange={(e) =>
-                  handleArrayChange('firstGradesNumeric', i, e.target.value)
-                }
-                className="modern-table-cell"
-                placeholder="نمرە"
-              />
-            ))}
-          </div>
-          <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
-            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
-              بە نووسین
+            <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
+              <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
+                بە نووسین
+              </div>
+              {formData.firstGradesWritten.map((grade, i) => (
+                <input
+                  key={i}
+                  type="text"
+                  value={grade}
+                  onChange={(e) =>
+                    handleArrayChange('firstGradesWritten', i, e.target.value)
+                  }
+                  className="modern-table-cell"
+                  placeholder="نمرە"
+                />
+              ))}
             </div>
-            {formData.firstGradesWritten.map((grade, i) => (
-              <input
-                key={i}
-                type="text"
-                value={grade}
-                onChange={(e) =>
-                  handleArrayChange('firstGradesWritten', i, e.target.value)
-                }
-                className="modern-table-cell"
-                placeholder="نمرە"
-              />
-            ))}
-          </div>
-          <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
-            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
-              خولی دووەم
+            <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
+              <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
+                خولی دووەم
+              </div>
+              {formData.secondGradesNumeric.map((grade, i) => (
+                <input
+                  key={i}
+                  type="text"
+                  value={grade}
+                  onChange={(e) =>
+                    handleArrayChange('secondGradesNumeric', i, e.target.value)
+                  }
+                  className="modern-table-cell"
+                  placeholder="نمرە"
+                />
+              ))}
             </div>
-            {formData.secondGradesNumeric.map((grade, i) => (
-              <input
-                key={i}
-                type="text"
-                value={grade}
-                onChange={(e) =>
-                  handleArrayChange('secondGradesNumeric', i, e.target.value)
-                }
-                className="modern-table-cell"
-                placeholder="نمرە"
-              />
-            ))}
-          </div>
-          <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
-            <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
-              بە نووسین
+            <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
+              <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
+                بە نووسین
+              </div>
+              {formData.secondGradesWritten.map((grade, i) => (
+                <input
+                  key={i}
+                  type="text"
+                  value={grade}
+                  onChange={(e) =>
+                    handleArrayChange('secondGradesWritten', i, e.target.value)
+                  }
+                  className="modern-table-cell"
+                  placeholder="نمرە"
+                />
+              ))}
             </div>
-            {formData.secondGradesWritten.map((grade, i) => (
-              <input
-                key={i}
-                type="text"
-                value={grade}
-                onChange={(e) =>
-                  handleArrayChange('secondGradesWritten', i, e.target.value)
-                }
-                className="modern-table-cell"
-                placeholder="نمرە"
-              />
-            ))}
           </div>
         </div>
       </div>
-    </div>
-  </form>
-)
-
+    </form>
+  )
+}
 // FIX: Define props for SecondFormContent component to fix TypeScript errors.
 interface SecondFormContentProps {
   formData: FormData
@@ -1891,16 +1913,47 @@ const zansiDepartments = [
 ]
 const wezhayDepartments = ['کارگێڕی کار', 'دیجیتاڵ میدیا و مارکێتینگ']
 
+const peshassaziDepartments = [
+  'تەکنەلۆجیای زانیاری',
+  'تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن',
+  'ئەندازیاری دیکۆر',
+]
+
+const bazrganiDepartments = [
+  'کارگێڕی کار',
+  'ژمێریاری',
+  'دیجیتاڵ میدیا و مارکێتینگ',
+]
+
 function MainForm({
   formType,
   onBack,
 }: {
-  formType: 'zansi' | 'wezhay'
+  formType: 'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani'
   onBack: () => void
 }) {
-  const isZansi = formType === 'zansi'
-  const departments = isZansi ? zansiDepartments : wezhayDepartments
-  const pdfThemeClass = isZansi ? '' : 'wezhay-pdf-theme'
+  let departments: string[]
+  let pdfThemeClass: string
+
+  switch (formType) {
+    case 'wezhay':
+      departments = wezhayDepartments
+      pdfThemeClass = 'wezhay-pdf-theme'
+      break
+    case 'peshassazi':
+      departments = peshassaziDepartments
+      pdfThemeClass = 'peshassazi-pdf-theme'
+      break
+    case 'bazrgani':
+      departments = bazrganiDepartments
+      pdfThemeClass = 'bazrgani-pdf-theme'
+      break
+    case 'zansi':
+    default:
+      departments = zansiDepartments
+      pdfThemeClass = '' // Default red theme
+      break
+  }
 
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
@@ -2829,7 +2882,13 @@ function MainForm({
                           دەرچووی دوانزەی ئامادەیی
                         </label>
                         <div className="badge-red py-3 text-base">
-                          {isZansi ? 'زانستی' : 'وێژەیی'}
+                          {formType === 'zansi'
+                            ? 'زانستی'
+                            : formType === 'wezhay'
+                              ? 'وێژەیی'
+                              : formType === 'peshassazi'
+                                ? 'پیشەسازی'
+                                : 'بازرگانی'}
                         </div>
                       </div>
                       <div className="form-group">
@@ -3431,7 +3490,7 @@ function MainForm({
 // --- MAIN APP ROUTER ---
 function App() {
   const [currentPage, setCurrentPage] = useState<'selection' | 'form' | 'admin'>('selection')
-  const [formType, setFormType] = useState<'zansi' | 'wezhay'>('zansi')
+  const [formType, setFormType] = useState<'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani'>('zansi')
 
   useEffect(() => {
     // Basic routing based on URL path
@@ -3443,7 +3502,7 @@ function App() {
     }
   }, [])
   
-  const handleSelect = (type: 'zansi' | 'wezhay') => {
+  const handleSelect = (type: 'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani') => {
     setFormType(type)
     setCurrentPage('form')
     window.scrollTo({ top: 0, behavior: 'smooth' })

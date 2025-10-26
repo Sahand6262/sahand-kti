@@ -1,9 +1,15 @@
 import React from 'react'
-import { Sparkles, GraduationCap, BookOpen } from 'lucide-react'
+import {
+  Sparkles,
+  GraduationCap,
+  BookOpen,
+  HardHat,
+  Briefcase,
+} from 'lucide-react'
 import { Footer } from './footer'
 const LOGO_DATA_URL = 'https://kti.edu.iq/photo/kti_52_0.png'
 interface SelectionPageProps {
-  onSelect: (type: 'zansi' | 'wezhay') => void
+  onSelect: (type: 'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani') => void
 }
 export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
   return (
@@ -93,7 +99,7 @@ export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
             </p>
           </div>
           {/* Selection Cards */}
-          <div className="grid grid-cols-2 gap-4 pt-6 max-w-lg mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-6 max-w-5xl mx-auto">
             {/* Zansi Card */}
             <button
               onClick={() => onSelect('zansi')}
@@ -141,6 +147,46 @@ export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
               </p>
               {/* Bottom accent */}
               <div className="absolute bottom-0 right-0 w-0 h-1.5 bg-gradient-to-r from-gray-600 to-gray-700 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
+            </button>
+            {/* Peshassazi Card */}
+            <button
+              onClick={() => onSelect('peshassazi')}
+              className="group relative bg-white rounded-2xl p-5 shadow-2xl border-2 border-transparent hover:border-green-500 transition-all duration-500 transform hover:-translate-y-1.5 hover:scale-105 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative mb-3">
+                <div className="absolute -inset-1.5 bg-gradient-to-br from-green-500/20 to-green-300/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative w-14 h-14 mx-auto bg-gradient-to-br from-green-600 to-green-700 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:shadow-2xl group-hover:shadow-green-500/20 transition-all duration-500">
+                  <HardHat size={28} />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-green-600 transition-colors duration-300">
+                پیشەسازی
+              </h3>
+              <p className="text-xs text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+                بەشە پیشەسازییەکان
+              </p>
+              <div className="absolute bottom-0 right-0 w-0 h-1.5 bg-gradient-to-r from-green-600 to-green-700 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
+            </button>
+            {/* Bazrgani Card */}
+            <button
+              onClick={() => onSelect('bazrgani')}
+              className="group relative bg-white rounded-2xl p-5 shadow-2xl border-2 border-transparent hover:border-orange-500 transition-all duration-500 transform hover:-translate-y-1.5 hover:scale-105 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative mb-3">
+                <div className="absolute -inset-1.5 bg-gradient-to-br from-orange-500/20 to-orange-300/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative w-14 h-14 mx-auto bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:shadow-2xl group-hover:shadow-orange-500/20 transition-all duration-500">
+                  <Briefcase size={28} />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-orange-600 transition-colors duration-300">
+                بازرگانی
+              </h3>
+              <p className="text-xs text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+                بەشە بازرگانییەکان
+              </p>
+              <div className="absolute bottom-0 right-0 w-0 h-1.5 bg-gradient-to-r from-orange-500 to-orange-600 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
             </button>
           </div>
         </div>
