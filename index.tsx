@@ -644,6 +644,7 @@ type FormData = {
   certificate2: string
   certificate3: string
   certificate4: string
+  peshassaziDepartment: string
 }
 
 // FIX: Define props for FormContent component to fix TypeScript errors.
@@ -1188,6 +1189,31 @@ const FormContent: React.FC<FormContentProps> = ({
               )}
             </div>
           </div>
+          {educationType === 'peshassazi' && (
+            <div className="mt-6">
+              <div className="flex items-center gap-4 rounded-xl border-2 border-gray-200 p-4 bg-gray-50/50">
+                <label className="modern-label mb-0 flex-shrink-0 text-base">
+                  ئامادەی پیشەسازی
+                </label>
+                <div className="flex-grow flex items-center gap-2">
+                  <label className="modern-label mb-0">بەشی</label>
+                  <input
+                    type="text"
+                    name="peshassaziDepartment"
+                    value={formData.peshassaziDepartment || ''}
+                    onChange={handleChange}
+                    className={`modern-input ${errors.peshassaziDepartment ? 'border-blue-500' : ''}`}
+                    placeholder="بەشی پیشەسازی"
+                  />
+                </div>
+              </div>
+              {errors.peshassaziDepartment && (
+                <p className="text-blue-700 text-xs mt-1">
+                  {errors.peshassaziDepartment}
+                </p>
+              )}
+            </div>
+          )}
           <div className="modern-table-container mt-6">
             <div className="grid grid-cols-3 md:grid-cols-10 gap-2 pt-4">
               {formData.subjects.map((subject, i) => {
@@ -2039,6 +2065,7 @@ function MainForm({
     certificate2: '',
     certificate3: '',
     certificate4: '',
+    peshassaziDepartment: '',
   })
   const [logoDataUrl, setLogoDataUrl] = useState<string>(LOGO_DATA_URL)
   const [isGenerating, setIsGenerating] = useState(false)
@@ -3036,6 +3063,25 @@ function MainForm({
                         />
                       </div>
                     </div>
+                    {formType === 'peshassazi' && (
+                      <div className="pt-2">
+                        <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-1">
+                          <label className="form-label text-base flex-shrink-0 mb-0 px-2">
+                            ئامادەی پیشەسازی
+                          </label>
+                          <div className="w-px h-6 bg-gray-300"></div>
+                          <label className="form-label text-base flex-shrink-0 mb-0 px-1">
+                            بەشی
+                          </label>
+                          <input
+                            type="text"
+                            value={formData.peshassaziDepartment || ''}
+                            readOnly
+                            className="form-input h-8 text-base flex-grow"
+                          />
+                        </div>
+                      </div>
+                    )}
                     <div className="table-container p-2 space-y-1">
                       <div className="grid grid-cols-10 gap-1">
                         {formData.subjects.map((subject, i) => (
