@@ -1860,21 +1860,20 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
 // By embedding this directly, we ensure the PDF looks exactly like the screen.
 const FONT_EMBED_CSS = `
 @font-face {
-  font-family: 'Noto Naskh Arabic';
+  font-family: 'Almarai';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/almarai/v17/tsstApxBaigK_hM2pHsD-HM.woff2) format('woff2');
 }
 @font-face {
-  font-family: 'Noto Naskh Arabic';
+  font-family: 'Almarai';
   font-style: normal;
   font-weight: 700;
-  src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/almarai/v17/tssvApxBaigK_hM2pWjM50c-d1I.woff2) format('woff2');
 }
 `
-// FIX: Embed the logo as a Base64 data URI to prevent CORS-related PDF generation failures.
-const LOGO_DATA_URL =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX////mAADmAABTqlNJolf64ODmAwP86ur86+v11tbmBQXoFRXoERHnJSXqPz/ywcH99PTmDAzufoD99/fuamv229vnHR3rU1PznZ3wubnka2vtbm7pLzDwb3D44+Pyl5fqSEnsWVrtZmbqRUXuZWXlS+3aAAACyElEQVR4nO2d63KiMBCGQwghgIKi4sEFr/b//3IVL2tSSkmx2ezMOfcBWZvBJF1mEhUDAAAAAAAAAAAAAAAAAAAAAAAAAPjftD/S8mhH2zFtNts/aXk0J4h2jH+k5eHc2fT/uC5nK/1F5c+yPjL2x39S2V+o+0tZp7wP0z4jO6uH+y/bH2p3o0/M9l/afkofvM4+xP8P+C/s/5S90W9S/jL2F7P+UvaXsl/afmlrQJj2x7P+wvaXsi8s/V/W0/q5gD8x4d9iO39c/w+yP9HyV/QZ4z/S8mj+s+qP6Gf2F+M/0vJo/r8/Yd8/2d/of/z3/o/oX8b+Qv/30r6E/j9l/0L/G/v/yP6E/t/b/1L/W9t/qf8d+y/0P6//M/v/Qv9j/X9p/2P9n9v/X/o/sP8f+j+w/+/s/wv939n/V/rf1v+f+t/W/5/6P7D/r/Q/sP+f9B9q+jYnKx1e1nO3b934Xm14P7Xh/dSG91Mb3k9teD+14f3Uhnf7c2F/9P2t9S+N//fX/pX2n7L/Qv+T9T/S8mj+8P6N9R/o/0/Jo/nJ+8/YX8J+Sfkc+z/Q/1vJo/nJ+6ft32h/Z/0nJo/nJ+4ftL9X/jL+R8mj+Yn7N+2/sP+b/v8/Jo/mJ+7/0vJo/pT/Y/r/0vJo/pT/w/p/afl/X38i/3/9J/0f9f+s/wP9f+u/SP8f+p+2/wP9n7L/Af2ftv8D/T9p/w/6P2T/I/o/bP8f+j9s/5/of9D+P9H/Yfu/RP+z9h+x/1n7T9j/rP0f2/+s/S/S/2/736L/H+5/W99PzS+fBwAAAAAAAAAAAAAAAAAAAAAAAADgP/kDx8/JdO41c7oAAAAASUVORK5CYII='
+// The logo URL.
+const LOGO_DATA_URL = 'https://kti.edu.iq/photo/kti_52_0.png'
 
 const zansiDepartments = [
   'دەرمانسازی',
@@ -1987,6 +1986,7 @@ function MainForm({
     certificate3: '',
     certificate4: '',
   })
+  const [logoDataUrl, setLogoDataUrl] = useState<string>(LOGO_DATA_URL)
   const [isGenerating, setIsGenerating] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showError, setShowError] = useState(false)
@@ -1995,6 +1995,39 @@ function MainForm({
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const pageOnePrintRef = useRef(null)
   const pageTwoPrintRef = useRef(null)
+
+  useEffect(() => {
+    // This effect fetches the logo and converts it to a base64 data URI.
+    // This is crucial to prevent cross-origin (CORS) errors when `html-to-image`
+    // tries to render the logo during PDF generation.
+    const fetchAndConvertLogo = async () => {
+      try {
+        const response = await fetch(LOGO_DATA_URL)
+        if (!response.ok) {
+          throw new Error('Failed to fetch logo image.')
+        }
+        const blob = await response.blob()
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          setLogoDataUrl(reader.result as string)
+        }
+        reader.onerror = () => {
+          console.error(
+            'Failed to convert logo to base64. PDF may not include it.',
+          )
+        }
+        reader.readAsDataURL(blob)
+      } catch (error) {
+        console.error('Error fetching logo for PDF:', error)
+        // Fallback to the original URL if fetching fails.
+        // The UI will still show the logo, but PDF generation might fail.
+        setLogoDataUrl(LOGO_DATA_URL)
+      }
+    }
+
+    fetchAndConvertLogo()
+  }, []) // Run only once when the component mounts.
+
   useEffect(() => {
     if (showSuccess || showError) {
       const timer = setTimeout(() => {
@@ -2267,7 +2300,7 @@ function MainForm({
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <img
-                src={LOGO_DATA_URL}
+                src={logoDataUrl}
                 alt="Logo"
                 className="h-12 drop-shadow-lg"
               />
@@ -2312,7 +2345,7 @@ function MainForm({
                     <div className="flex justify-center items-start gap-4">
                       <div className="text-center flex-1 mx-4">
                         <img
-                          src={LOGO_DATA_URL}
+                          src={logoDataUrl}
                           alt="Logo"
                           className="h-16 mx-auto mb-3 drop-shadow-lg"
                         />
@@ -2543,7 +2576,7 @@ function MainForm({
             padding: '3mm',
           }}
         >
-          <div className="flex flex-col flex-grow">
+          <div className="flex flex-col flex-grow pt-4">
             {/* Header */}
             <div className="shrink-0 mb-4">
               <div className="border-b-2 border-red-500 pb-3 mb-2">
@@ -2553,12 +2586,7 @@ function MainForm({
                       وێنەی فێرخواز
                     </p>
                   </div>
-                  <div className="text-center flex-1 mx-3">
-                    <img
-                      src={LOGO_DATA_URL}
-                      alt="Logo"
-                      className="h-20 mx-auto mb-2"
-                    />
+                  <div className="text-center flex-1 mx-3 pt-10">
                     <div className="text-black font-bold text-lg">
                       <p>KURDISTAN TECHNICAL INSTITUTE</p>
                     </div>
@@ -2894,8 +2922,8 @@ function MainForm({
                     </span>
                   </div>
                   <div className="modern-card p-4 space-y-3">
-                    <div className="bg-white border border-red-200 rounded-lg p-3">
-                      <p className="text-gray-800 text-base leading-normal">
+                    <div className="bg-red-50 border border-red-200 p-2 rounded-lg text-red-700 text-center text-sm">
+                      <p>
                         بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم
                         بەشەدا هەبێت، ئێمە لێی بەرپرس نین.
                       </p>
@@ -2947,39 +2975,20 @@ function MainForm({
                         />
                       </div>
                     </div>
-                    <div
-                      className="table-container mt-1"
-                      style={{ overflowX: 'visible' }}
-                    >
-                      <div className="grid grid-cols-10 gap-0.5 pt-1 bg-gray-50">
-                        {formData.subjects.map((subject, i) => {
-                          const isReadOnly = i === 0 || i === 8 || i === 9
-                          const placeholderText =
-                            i > 0 && i < 8 ? `وانە ${i}` : ''
-                          if (i === 8 || i === 9) {
-                            return (
-                              <div
-                                key={i}
-                                className="table-cell bg-gray-100 font-bold text-sm p-1.5 text-center flex items-center justify-center"
-                              >
-                                {subject}
-                              </div>
-                            )
-                          }
-                          return (
-                            <input
-                              key={i}
-                              type="text"
-                              value={subject}
-                              readOnly
-                              className={`table-cell ${isReadOnly ? 'bg-gray-100 font-bold' : ''} text-sm p-1.5`}
-                              placeholder={placeholderText}
-                            />
-                          )
-                        })}
+                    <div className="table-container p-2 space-y-1">
+                      <div className="grid grid-cols-10 gap-1">
+                        {formData.subjects.map((subject, i) => (
+                          <input
+                            key={i}
+                            type="text"
+                            value={subject}
+                            readOnly
+                            className="table-cell h-8 text-sm"
+                          />
+                        ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-red-50">
-                        <div className="table-label-red text-base py-2">
+                      <div className="grid grid-cols-11 gap-1">
+                        <div className="table-label-red flex items-center justify-center text-sm">
                           بە ژمارە
                         </div>
                         {formData.firstGradesNumeric.map((grade, i) => (
@@ -2988,13 +2997,12 @@ function MainForm({
                             type="text"
                             value={grade}
                             readOnly
-                            className="table-cell-red h-9 text-sm p-1.5"
-                            placeholder="نمرە"
+                            className="table-cell h-8 text-sm"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-red-50">
-                        <div className="table-label-red text-base py-2">
+                      <div className="grid grid-cols-11 gap-1">
+                        <div className="table-label-red flex items-center justify-center text-sm">
                           بە نووسین
                         </div>
                         {formData.firstGradesWritten.map((grade, i) => (
@@ -3003,13 +3011,12 @@ function MainForm({
                             type="text"
                             value={grade}
                             readOnly
-                            className="table-cell-red h-9 text-sm p-1.5"
-                            placeholder="نمرە"
+                            className="table-cell h-8 text-sm"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-yellow-50">
-                        <div className="table-label-yellow text-base py-2">
+                      <div className="grid grid-cols-11 gap-1">
+                        <div className="table-label-red flex items-center justify-center text-sm">
                           خولی دووەم
                         </div>
                         {formData.secondGradesNumeric.map((grade, i) => (
@@ -3018,13 +3025,12 @@ function MainForm({
                             type="text"
                             value={grade}
                             readOnly
-                            className="table-cell-yellow h-9 text-sm p-1.5"
-                            placeholder="نمرە"
+                            className="table-cell h-8 text-sm"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0.5 pt-1 bg-yellow-50">
-                        <div className="table-label-yellow text-base py-2">
+                      <div className="grid grid-cols-11 gap-1">
+                        <div className="table-label-red flex items-center justify-center text-sm">
                           بە نووسین
                         </div>
                         {formData.secondGradesWritten.map((grade, i) => (
@@ -3033,8 +3039,7 @@ function MainForm({
                             type="text"
                             value={grade}
                             readOnly
-                            className="table-cell-yellow h-9 text-sm p-1.5"
-                            placeholder="نمرە"
+                            className="table-cell h-8 text-sm"
                           />
                         ))}
                       </div>
@@ -3044,85 +3049,31 @@ function MainForm({
               </div>
             </div>
             {/* Footer */}
-            <div className="shrink-0 mt-auto pt-4 border-t-2 border-red-500">
-              <div className="grid grid-cols-4 gap-3 text-base mb-3">
-                <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
-                  <span className="font-medium text-black" dir="ltr">
-                    07729112121
-                  </span>
-                  <svg
-                    className="w-4 h-4 text-red-600 flex-shrink-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
+            <div className="shrink-0 mt-4 pt-3 border-t-2 border-red-500">
+              <div className="flex flex-col items-center gap-2 text-xs">
+                <div className="grid grid-cols-4 gap-x-4 gap-y-2 w-full max-w-4xl">
+                  <div className="flex items-center justify-center gap-1.5 border border-red-200 p-1.5 rounded-md">
+                    <span className="font-medium text-black">07729112121</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1.5 border border-red-200 p-1.5 rounded-md">
+                    <span className="font-medium text-black">07519112121</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1.5 border border-red-200 p-1.5 rounded-md">
+                    <span className="font-medium text-black">
+                      www.kti.edu.iq
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1.5 border border-red-200 p-1.5 rounded-md">
+                    <span className="font-medium text-black">
+                      tomar@kti.edu.iq
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
-                  <span className="font-medium text-black" dir="ltr">
-                    07519112121
-                  </span>
-                  <svg
-                    className="w-4 h-4 text-red-600 flex-shrink-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                </div>
-                <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
-                  <span className="font-medium text-black" dir="ltr">
-                    www.kti.edu.iq
-                  </span>
-                  <svg
-                    className="w-4 h-4 text-red-600 flex-shrink-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                    />
-                  </svg>
-                </div>
-                <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
-                  <span className="font-medium text-black" dir="ltr">
-                    tomar@kti.edu.iq
-                  </span>
-                  <svg
-                    className="w-4 h-4 text-red-600 flex-shrink-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
+                <p className="text-center text-gray-600 tracking-wide">
+                  Kurdistan Technical Institute - Sulaymaniyah Heights, Kurdistan
+                  Region - Iraq
+                </p>
               </div>
-              <p className="text-center text-base text-gray-600">
-                Kurdistan Technical Institute - Sulaymaniyah Heights, Kurdistan
-                Region - Iraq
-              </p>
             </div>
           </div>
         </div>
@@ -3138,20 +3089,20 @@ function MainForm({
             padding: '3mm',
           }}
         >
-          <div className="flex flex-col flex-grow">
-            <div className="flex-grow min-h-0 space-y-3">
-              {/* Top Two Sections */}
-              <div className="grid grid-cols-2 gap-2">
-                {/* Right Section */}
-                <div>
-                  <div className="section-header-modern text-white text-center py-3 text-lg">
-                    <span className="font-bold tracking-wider">
-                      خانەی تایبەت بە بەڕێوەبەری خوێندنگە
-                    </span>
-                  </div>
-                  <div className="modern-card p-4 space-y-3">
+          <div className="flex flex-col flex-grow space-y-2">
+            {/* Top Two Sections */}
+            <div className="grid grid-cols-2 gap-2">
+              {/* Right Section */}
+              <div>
+                <div className="section-header-modern text-white text-center py-2 text-base">
+                  <span className="font-bold tracking-wider">
+                    خانەی تایبەت بە بەڕێوەبەری خوێندنگە
+                  </span>
+                </div>
+                <div className="modern-card p-3 space-y-2">
+                  <div className="space-y-2">
                     <div className="form-group">
-                      <label className="form-label text-base">
+                      <label className="form-label text-sm">
                         ناوی خوێندنگە
                       </label>
                       <input
@@ -3159,12 +3110,12 @@ function MainForm({
                         name="instituteName"
                         value={formData.instituteName || ''}
                         readOnly
-                        className="form-input h-9 text-base"
+                        className="form-input h-8 text-sm"
                         placeholder="ناوی خوێندنگە"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-base">
+                      <label className="form-label text-sm">
                         ناوی بەڕێوەبەر
                       </label>
                       <input
@@ -3172,46 +3123,46 @@ function MainForm({
                         name="directorName"
                         value={formData.directorName || ''}
                         readOnly
-                        className="form-input h-9 text-base"
+                        className="form-input h-8 text-sm"
                         placeholder="ناوی بەڕێوەبەر"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-base">
-                        ژ. تەلەفۆن
-                      </label>
+                      <label className="form-label text-sm">ژ. تەلەفۆن</label>
                       <input
                         type="text"
                         name="directorPhone"
                         value={formData.directorPhone || ''}
                         readOnly
-                        className="form-input h-9 text-base"
+                        className="form-input h-8 text-sm"
                         placeholder="07XX XXX XXXX"
                       />
                     </div>
-                    <div className="form-group">
-                      <label className="form-label text-center text-base">
-                        واژۆ و ڕێکەوت و مۆر
-                      </label>
-                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-24"></div>
-                    </div>
+                  </div>
+                  <div className="form-group pt-4">
+                    <label className="form-label text-sm text-center">
+                      واژۆ و ڕێکەوت و مۆر
+                    </label>
+                    <div className="border border-dashed border-gray-400 h-20 rounded-md"></div>
                   </div>
                 </div>
-                {/* Left Section */}
-                <div>
-                  <div className="section-header-modern text-white text-center py-3 text-lg">
-                    <span className="font-bold tracking-wider">
-                      پەسەندکردن و پشتڕاستکردنەوەی نمرەکان
-                    </span>
-                  </div>
-                  <div className="modern-card p-4 space-y-3">
+              </div>
+              {/* Left Section */}
+              <div>
+                <div className="section-header-modern text-white text-center py-2 text-base">
+                  <span className="font-bold tracking-wider">
+                    پەسەندکردن و پشتڕاستکردنەوەی نمرەکان
+                  </span>
+                </div>
+                <div className="modern-card p-3 space-y-2">
+                  <div className="space-y-2">
                     <div className="text-center">
-                      <p className="form-label text-base font-bold">
+                      <p className="form-label font-bold text-sm">
                         لە بەڕێوەبەرێتی پەروەردەی ڕۆژئاوا / ڕۆژهەڵات
                       </p>
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-base">
+                      <label className="form-label text-sm">
                         ناوی بەڕێوەبەرێتی
                       </label>
                       <input
@@ -3219,295 +3170,251 @@ function MainForm({
                         name="educationDirectorName"
                         value={formData.educationDirectorName || ''}
                         readOnly
-                        className="form-input h-9 text-base"
+                        className="form-input h-8 text-sm"
                         placeholder="ناوی بەڕێوەبەرێتی"
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label text-base">قەزا</label>
+                      <label className="form-label text-sm">قەزا</label>
                       <input
                         type="text"
                         name="decision"
                         value={formData.decision || ''}
                         readOnly
-                        className="form-input h-9 text-base"
+                        className="form-input h-8 text-sm"
                         placeholder="قەزا..."
                       />
                     </div>
-                    <div className="form-group">
-                      <label className="form-label text-center text-base">
-                        واژۆ و مۆر
-                      </label>
-                      <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-24"></div>
-                    </div>
+                  </div>
+                  <div className="form-group pt-4">
+                    <label className="form-label text-sm text-center">
+                      واژۆ و مۆر
+                    </label>
+                    <div className="border border-dashed border-gray-400 h-20 rounded-md"></div>
                   </div>
                 </div>
               </div>
-              {/* Department Selection */}
-              <div>
-                <div className="section-header-blue text-white text-center py-3 text-lg">
-                  <span className="font-bold tracking-wider">
-                    بەشەکانی پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
-                  </span>
-                </div>
-                <div className="modern-card p-4">
-                  <div className="grid grid-cols-3 gap-x-4 gap-y-2">
-                    {departments.map((dept, i) => {
-                      const selectionIndex =
-                        formData.departmentChoices.indexOf(dept)
-                      const isSelected = selectionIndex !== -1
-                      return (
+            </div>
+            {/* Department Selection */}
+            <div>
+              <div className="section-header-modern text-white text-center py-2 text-base">
+                <span className="font-bold tracking-wider">
+                  بەشەکانی پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
+                </span>
+              </div>
+              <div className="modern-card p-3">
+                <div className="grid grid-cols-3 gap-1.5">
+                  {departments.map((dept, i) => {
+                    const selectionIndex =
+                      formData.departmentChoices.indexOf(dept)
+                    const isSelected = selectionIndex !== -1
+                    return (
+                      <div
+                        key={i}
+                        className={`flex items-center gap-1.5 border p-1.5 rounded-md text-sm ${isSelected ? 'bg-red-100 border-red-300' : 'border-gray-300'}`}
+                      >
                         <div
-                          key={i}
-                          className={`flex items-center gap-1.5 p-2 rounded-md ${isSelected ? 'bg-red-100' : ''}`}
+                          className={`w-4 h-4 border rounded flex-shrink-0 flex items-center justify-center font-bold text-red-600 ${isSelected ? 'border-red-500 bg-white' : 'border-gray-400'}`}
                         >
-                          <div
-                            className={`w-5 h-5 rounded-md border border-red-600 flex items-center justify-center flex-shrink-0 ${isSelected ? 'bg-white' : ''}`}
-                          >
-                            {isSelected && (
-                              <span className="font-bold text-red-700 text-xs">
-                                {selectionIndex + 1}
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-base font-medium">{dept}</span>
+                          {isSelected && <span>{selectionIndex + 1}</span>}
                         </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              </div>
-              {/* Medical Declaration */}
-              <div>
-                <div className="section-header-modern text-white text-center py-3 text-lg">
-                  <span className="font-bold tracking-wider">
-                    ئەو بەشەی دەتەوێت تێیدا بخوێنیت
-                  </span>
-                </div>
-                <div className="modern-card p-4">
-                  <p className="text-base leading-normal text-gray-800">
-                    بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی
-                    (١٤/١٠/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی
-                    (٧)، دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی
-                    هەڵبژاردنی یەکەم پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی
-                    دیکە لە ئەگەری هەبوونی کورسی بەتاڵ لەو بەشانە و بە پێی
-                    داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی
-                    خوێندنی باڵا، وەردەگیرێت.
-                  </p>
-                </div>
-              </div>
-              {/* Certificate Section */}
-              <div>
-                <div className="section-header-blue text-white text-center py-3 text-lg">
-                  <span className="font-bold tracking-wider">
-                    ناسنامەی باری شارستانی
-                  </span>
-                </div>
-                <div className="modern-card p-4 space-y-3">
-                  <div className="grid grid-cols-4 gap-2">
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        ژمارەی ناسنامە
-                      </label>
-                      <input
-                        type="text"
-                        name="certificate1"
-                        value={formData.certificate1 || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="..."
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        ژمارەی تۆمار
-                      </label>
-                      <input
-                        type="text"
-                        name="certificate2"
-                        value={formData.certificate2 || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="..."
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        ژمارەی لاپەڕە
-                      </label>
-                      <input
-                        type="text"
-                        name="certificate3"
-                        value={formData.certificate3 || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="..."
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        شوێنی دەرچوون
-                      </label>
-                      <input
-                        type="text"
-                        name="certificate4"
-                        value={formData.certificate4 || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="..."
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* Nationality Section */}
-              <div>
-                <div className="section-header-gray text-white text-center py-3 text-lg">
-                  <span className="font-bold tracking-wider">ڕەگەزنامە</span>
-                </div>
-                <div className="modern-card p-4 space-y-3">
-                  <div className="flex gap-4">
-                    <div
-                      className={`flex items-center gap-1.5 p-1 rounded-md ${formData.nationality2 === 'iraqi' ? 'bg-red-100' : ''}`}
-                    >
-                      <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
-                        {formData.nationality2 === 'iraqi' && (
-                          <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
-                        )}
+                        <span className="font-medium">{dept}</span>
                       </div>
-                      <span className="text-base">عێراقی</span>
-                    </div>
-                    <div
-                      className={`flex items-center gap-1.5 p-1 rounded-md ${formData.nationality2 === 'other' ? 'bg-red-100' : ''}`}
-                    >
-                      <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
-                        {formData.nationality2 === 'other' && (
-                          <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
-                        )}
-                      </div>
-                      <span className="text-base">هی تر</span>
-                    </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+            {/* Medical Declaration */}
+            <div>
+              <div className="section-header-modern text-white text-center py-2 text-base">
+                <span className="font-bold tracking-wider">
+                  ئەو بەشەی دەتەوێت تێیدا بخوێنیت
+                </span>
+              </div>
+              <div className="modern-card p-3 text-sm text-gray-700 text-justify">
+                بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی
+                (١٤/١٠/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی (٧)،
+                دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی هەڵبژاردنی یەکەم
+                پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی دیکە لە ئەگەری هەبوونی
+                کورسی بەتاڵ لەو بەشانە و بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز
+                و مەرجەکانی وەزارەتی خوێندنی باڵا، وەردەگیرێت.
+              </div>
+            </div>
+            {/* Certificate Section */}
+            <div>
+              <div className="section-header-modern text-white text-center py-2 text-base">
+                <span className="font-bold tracking-wider">
+                  ناسنامەی باری شارستانی
+                </span>
+              </div>
+              <div className="modern-card p-3">
+                <div className="grid grid-cols-4 gap-2">
+                  <div className="form-group">
+                    <label className="form-label text-sm">ژمارەی ناسنامە</label>
+                    <input
+                      type="text"
+                      value={formData.certificate1 || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
                   </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        ژمارەی ڕەگەزنامە
-                      </label>
-                      <input
-                        type="text"
-                        name="nationalityNumber"
-                        value={formData.nationalityNumber || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="ژمارەی ڕەگەزنامە"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        ژمارەی تۆمار
-                      </label>
-                      <input
-                        type="text"
-                        name="registrationNumber"
-                        value={formData.registrationNumber || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="ژمارەی تۆمار"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        ساڵ و شوێنی دەرچوون
-                      </label>
-                      <input
-                        type="text"
-                        name="issueYearPlace"
-                        value={formData.issueYearPlace || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="ساڵ و شوێن..."
-                      />
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label text-sm">ژمارەی تۆمار</label>
+                    <input
+                      type="text"
+                      value={formData.certificate2 || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label text-sm">ژمارەی لاپەڕە</label>
+                    <input
+                      type="text"
+                      value={formData.certificate3 || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label text-sm">شوێنی دەرچوون</label>
+                    <input
+                      type="text"
+                      value={formData.certificate4 || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
                   </div>
                 </div>
               </div>
-              {/* Family Card Section */}
-              <div>
-                <div className="section-header-gray text-white text-center py-3 text-lg">
-                  <span className="font-bold tracking-wider">
-                    کارتی نیشتیمانی
-                  </span>
+            </div>
+            {/* Nationality Section */}
+            <div>
+              <div className="section-header-modern text-white text-center py-2 text-base">
+                <span className="font-bold tracking-wider">ڕەگەزنامە</span>
+              </div>
+              <div className="modern-card p-3 space-y-2">
+                <div className="flex gap-4">
+                  <div
+                    className={`flex items-center gap-1.5 p-1 rounded-md ${formData.nationality2 === 'iraqi' ? 'bg-red-100' : ''}`}
+                  >
+                    <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                      {formData.nationality2 === 'iraqi' && (
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                      )}
+                    </div>
+                    <span className="text-sm">عێراقی</span>
+                  </div>
+                  <div
+                    className={`flex items-center gap-1.5 p-1 rounded-md ${formData.nationality2 === 'other' ? 'bg-red-100' : ''}`}
+                  >
+                    <div className="w-3 h-3 rounded-full border border-red-600 flex items-center justify-center">
+                      {formData.nationality2 === 'other' && (
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                      )}
+                    </div>
+                    <span className="text-sm">هی تر</span>
+                  </div>
                 </div>
-                <div className="modern-card p-4 space-y-3">
-                  <div className="grid grid-cols-4 gap-2">
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        ژمارەی کارت
-                      </label>
-                      <input
-                        type="text"
-                        name="familyCardNumber"
-                        value={formData.familyCardNumber || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="ژمارەی کارت"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        شوێنی دەرچوون
-                      </label>
-                      <input
-                        type="text"
-                        name="familyCardIssuePlace"
-                        value={formData.familyCardIssuePlace || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="شوێنی دەرچوون"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        ڕێکەوتی دەرچوون
-                      </label>
-                      <input
-                        type="date"
-                        name="familyCardIssueDate"
-                        value={formData.familyCardIssueDate || ''}
-                        readOnly
-                        className="form-input h-9 text-base text-right"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label text-base">
-                        کۆدی خێزانی
-                      </label>
-                      <input
-                        type="text"
-                        name="familyCode"
-                        value={formData.familyCode || ''}
-                        readOnly
-                        className="form-input h-9 text-base"
-                        placeholder="کۆدی خێزانی"
-                      />
-                    </div>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="form-group">
+                    <label className="form-label text-sm">
+                      ژمارەی ڕەگەزنامە
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.nationalityNumber || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label text-sm">ژمارەی تۆمار</label>
+                    <input
+                      type="text"
+                      value={formData.registrationNumber || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label text-sm">
+                      ساڵ و شوێنی دەرچوون
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.issueYearPlace || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
                   </div>
                 </div>
               </div>
-              {/* Bottom Signature Section */}
-              <div className="grid grid-cols-2 gap-2 mt-auto pt-4">
-                <div className="modern-card p-4">
-                  <label className="block text-gray-700 font-bold text-center text-lg mb-2">
-                    ناوی سیانی فێرخواز
-                  </label>
-                  <div className="border-t-2 border-gray-400 mt-8"></div>
+            </div>
+            {/* Family Card Section */}
+            <div>
+              <div className="section-header-modern text-white text-center py-2 text-base">
+                <span className="font-bold tracking-wider">
+                  کارتی نیشتیمانی
+                </span>
+              </div>
+              <div className="modern-card p-3">
+                <div className="grid grid-cols-4 gap-2">
+                  <div className="form-group">
+                    <label className="form-label text-sm">ژمارەی کارت</label>
+                    <input
+                      type="text"
+                      value={formData.familyCardNumber || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label text-sm">شوێنی دەرچوون</label>
+                    <input
+                      type="text"
+                      value={formData.familyCardIssuePlace || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label text-sm">
+                      ڕێکەوتی دەرچوون
+                    </label>
+                    <input
+                      type="date"
+                      value={formData.familyCardIssueDate || ''}
+                      readOnly
+                      className="form-input h-8 text-sm text-right"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label text-sm">کۆدی خێزانی</label>
+                    <input
+                      type="text"
+                      value={formData.familyCode || ''}
+                      readOnly
+                      className="form-input h-8 text-sm"
+                    />
+                  </div>
                 </div>
-                <div className="modern-card p-4">
-                  <label className="block text-gray-700 font-bold text-center text-lg mb-2">
-                    ڕێکەوت / واژۆ
-                  </label>
-                  <div className="border-t-2 border-gray-400 mt-8"></div>
-                </div>
+              </div>
+            </div>
+            {/* Bottom Signature Section */}
+            <div className="grid grid-cols-2 gap-2 mt-auto pt-2">
+              <div className="modern-card p-3">
+                <label className="form-label text-center block mb-2 text-sm">
+                  ناوی سیانی فێرخواز
+                </label>
+                <div className="border-t border-gray-400 mt-12"></div>
+              </div>
+              <div className="modern-card p-3">
+                <label className="form-label text-center block mb-2 text-sm">
+                  ڕێکەوت / واژۆ
+                </label>
+                <div className="border-t border-gray-400 mt-12"></div>
               </div>
             </div>
           </div>
@@ -3516,55 +3423,59 @@ function MainForm({
     </div>
   )
 }
-
-function FormApp() {
-  const [formType, setFormType] = useState<'zansi' | 'wezhay' | null>(null)
-
-  const selectForm = (type: 'zansi' | 'wezhay') => {
-    setFormType(type)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const handleBackToSelection = () => {
-    setFormType(null)
-  }
-
-  if (!formType) {
-    return <SelectionPage onSelect={selectForm} />
-  }
-
-  return <MainForm formType={formType} onBack={handleBackToSelection} />
-}
-
 // ==================================================================
 // END: CODE FOR REGISTRATION FORM PAGE
 // ==================================================================
 
 
-// ==================================================================
-// NEW ROUTER COMPONENT
-// ==================================================================
-export function App() {
-  const [route, setRoute] = useState(window.location.pathname)
+// --- MAIN APP ROUTER ---
+function App() {
+  const [currentPage, setCurrentPage] = useState<'selection' | 'form' | 'admin'>('selection')
+  const [formType, setFormType] = useState<'zansi' | 'wezhay'>('zansi')
 
   useEffect(() => {
-    const handlePopState = () => {
-      setRoute(window.location.pathname)
-    }
-    window.addEventListener('popstate', handlePopState)
-    return () => {
-      window.removeEventListener('popstate', handlePopState)
+    // Basic routing based on URL path
+    const path = window.location.pathname
+    if (path.startsWith('/hello')) {
+      setCurrentPage('admin')
+    } else {
+      setCurrentPage('selection')
     }
   }, [])
+  
+  const handleSelect = (type: 'zansi' | 'wezhay') => {
+    setFormType(type)
+    setCurrentPage('form')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
-  if (route === '/hello') {
+  const handleBack = () => {
+    setCurrentPage('selection')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  if (currentPage === 'admin') {
     return <HelloPage />
   }
-  return <FormApp />
+
+  return (
+    <>
+      {currentPage === 'selection' && <SelectionPage onSelect={handleSelect} />}
+      {currentPage === 'form' && (
+        <MainForm formType={formType} onBack={handleBack} />
+      )}
+    </>
+  )
 }
 
 const container = document.getElementById('root')
 if (container) {
   const root = createRoot(container)
-  root.render(<App />)
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  )
+} else {
+  console.error('Failed to find the root element.')
 }

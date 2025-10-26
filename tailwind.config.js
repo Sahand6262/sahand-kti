@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Noto Naskh Arabic"', ...defaultTheme.fontFamily.sans],
+        sans: ['Almarai', ...defaultTheme.fontFamily.sans],
       },
     },
   },

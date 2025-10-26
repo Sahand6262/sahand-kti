@@ -4,6 +4,20 @@
 @tailwind utilities;
 /* DO NOT DELETE THESE TAILWIND IMPORTS, OTHERWISE THE STYLING WILL NOT RENDER AT ALL */
 
+/* Almarai Font Definitions */
+@font-face {
+  font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/almarai/v17/tsstApxBaigK_hM2pHsD-HM.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.gstatic.com/s/almarai/v17/tssvApxBaigK_hM2pWjM50c-d1I.woff2) format('woff2');
+}
+
 /* Modern Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
@@ -318,64 +332,57 @@ textarea:focus::placeholder {
 .wezhay-pdf-theme .section-header-modern,
 .wezhay-pdf-theme .section-header-blue,
 .wezhay-pdf-theme .section-header-gray {
-  @apply bg-[#572453];
+  @apply bg-purple-900;
 }
 .wezhay-pdf-theme .border-red-500 {
-  @apply border-[#572453];
+  @apply border-purple-900;
 }
 .wezhay-pdf-theme .border-red-200 {
-  @apply border-[#e4d3e3];
+  @apply border-purple-200;
+}
+.wezhay-pdf-theme .border-red-300 {
+  @apply border-purple-300;
 }
 .wezhay-pdf-theme .text-red-600 {
-  @apply text-[#572453];
+  @apply text-purple-900;
 }
 .wezhay-pdf-theme .text-red-700 {
-  @apply text-[#572453];
+  @apply text-purple-900;
 }
-.wezhay-pdf-theme .bg-red-600 {
-  @apply bg-[#572453];
-}
-.wezhay-pdf-theme .border-red-600 {
-  @apply border-[#572453];
+.wezhay-pdf-theme .bg-red-50 {
+  @apply bg-purple-50;
 }
 .wezhay-pdf-theme .bg-red-100 {
-  @apply bg-[#f7f2f7];
+  @apply bg-purple-100;
+}
+.wezhay-pdf-theme .bg-red-600 {
+  @apply bg-purple-900;
+}
+.wezhay-pdf-theme .border-red-600 {
+  @apply border-purple-900;
 }
 .wezhay-pdf-theme .badge-red {
-  @apply bg-[#572453];
+  @apply bg-purple-900;
 }
 .wezhay-pdf-theme .table-label-red {
-  @apply bg-[#572453];
+  @apply bg-purple-900;
 }
 .wezhay-pdf-theme .table-cell-red {
-  @apply border-[#e4d3e3] text-[#572453] focus:ring-[#d5b9d3];
+  @apply border-purple-200 text-purple-900 focus:ring-purple-400;
 }
 .wezhay-pdf-theme .modern-header-border {
-  @apply border-b-4 border-[#572453];
+  @apply border-b-4 border-purple-900;
 }
 .wezhay-pdf-theme .modern-footer-border {
-  @apply border-t-4 border-[#572453];
+  @apply border-t-4 border-purple-900;
 }
 .wezhay-pdf-theme .modern-photo-placeholder {
-  @apply border-2 border-[#572453] bg-gradient-to-br from-[#fbf7fb] to-[#fdf7fd];
+  @apply border-2 border-purple-900 bg-gradient-to-br from-purple-50 to-purple-100;
 }
 
 /* ================================================================== */
 /* START: CSS FOR /hello PAGE */
 /* ================================================================== */
-
-@font-face {
-  font-family: 'Noto Naskh Arabic';
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
-}
-@font-face {
-  font-family: 'Noto Naskh Arabic';
-  font-style: normal;
-  font-weight: 700;
-  src: url(https://fonts.gstatic.com/s/notonaskharabic/v24/RrQ5hz4o1M48N33smvsb-vxt3wRkY1Rgyw.woff2) format('woff2');
-}
 
 /* Smooth scrolling */
 html {
