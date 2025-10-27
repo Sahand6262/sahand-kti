@@ -5,6 +5,7 @@ import { toPng } from 'html-to-image'
 import saveAs from 'file-saver'
 import { SelectionPage } from './load'
 import { Footer } from './footer'
+import { ArrowRight } from 'lucide-react'
 
 // ==================================================================
 // START: CODE FOR /hello ADMIN PAGE
@@ -1247,7 +1248,7 @@ const FormContent: React.FC<FormContentProps> = ({
                   return (
                     <div
                       key={i}
-                      className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] flex h-full items-center justify-center text-white"
+                      className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 flex h-full items-center justify-center text-white"
                     >
                       {subject}
                     </div>
@@ -1270,7 +1271,7 @@ const FormContent: React.FC<FormContentProps> = ({
               })}
             </div>
             <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
-              <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
+              <div className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                 بە ژمارە
               </div>
               {formData.firstGradesNumeric.map((grade, i) => (
@@ -1287,7 +1288,7 @@ const FormContent: React.FC<FormContentProps> = ({
               ))}
             </div>
             <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
-              <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
+              <div className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                 بە نووسین
               </div>
               {formData.firstGradesWritten.map((grade, i) => (
@@ -1304,7 +1305,7 @@ const FormContent: React.FC<FormContentProps> = ({
               ))}
             </div>
             <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
-              <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
+              <div className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                 خولی دووەم
               </div>
               {formData.secondGradesNumeric.map((grade, i) => (
@@ -1321,7 +1322,7 @@ const FormContent: React.FC<FormContentProps> = ({
               ))}
             </div>
             <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
-              <div className="modern-table-label bg-gradient-to-br from-[#0C8FCB] to-[#175988] text-white">
+              <div className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                 بە نووسین
               </div>
               {formData.secondGradesWritten.map((grade, i) => (
@@ -1522,7 +1523,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
     </div>
     {/* Department Selection */}
     <div className="group">
-      <div className="modern-section-header bg-gradient-to-r from-blue-600 to-indigo-700">
+      <div className="modern-section-header bg-gradient-to-r from-blue-600 to-blue-700">
         <div className="flex items-center justify-center gap-3">
           <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
             <svg
@@ -1626,7 +1627,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
     </div>
     {/* Certificate Section */}
     <div className="group">
-      <div className="modern-section-header bg-gradient-to-r from-blue-600 to-indigo-700">
+      <div className="modern-section-header bg-gradient-to-r from-blue-600 to-blue-700">
         <div className="flex items-center justify-center gap-3">
           <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
             <svg
@@ -1719,7 +1720,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
     </div>
     {/* Nationality Section */}
     <div className="group">
-      <div className="modern-section-header bg-gradient-to-r from-gray-600 to-gray-700">
+      <div className="modern-section-header bg-gradient-to-r from-blue-600 to-blue-700">
         <div className="flex items-center justify-center gap-3">
           <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
             <svg
@@ -1823,7 +1824,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
     </div>
     {/* Family Card Section */}
     <div className="group">
-      <div className="modern-section-header bg-gradient-to-r from-gray-600 to-gray-700">
+      <div className="modern-section-header bg-gradient-to-r from-blue-600 to-blue-700">
         <div className="flex items-center justify-center gap-3">
           <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
             <svg
@@ -1951,8 +1952,7 @@ const FONT_EMBED_CSS = `
 }
 `
 // The logo URL.
-const LOGO_DATA_URL =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX////g4ODb29vY2Njp6end3d3w8PDt7e319fX4+Pj8/PzJyclKSkrHx8fPz89gYGCtra1bW1usrKyYmJjAwMBPT09FRUXR0dFpaWmfn597e3uBgYGenp5ycnJ2dnZubm5ISEgxMTFOTk5vb28dp3oFAAAEdklEQVR4nO2d7XqqMBCGYQxEpQh4UdT1+v+/8gAouplMmsysK9/3XF+wLdkkM5tNNgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACE56u0fG1tN21fbrPN9l4XbJ9u25ZfN21P30g33vV7+X+8/lR8L39I37+k239L38k30u0D6QZp+bL8vL6Tbjx0I93Y6Ea6MdSNdF+hO+l2oe5E9/qS7vwl3b/SjXSfTjcGupFugVvdSfePdGPDG+lGutfTjdW+pBusF2k2aXm5/Ld+la5/SNcPpFsf0vVD6QbpxkY30q2JbmT3w5Luh+lGupFuRHYjXV/S/YJupBuhbqSbB7qRbn50I9186Ea6UdSNdHegG+kGupFu3H8n3RzoRrqR7j50I91k6Ea60dSNdKOgG+lmupFu/H8n3RzoRrqR7h50I9146Ea6+dCNdCOpG+lGQjfS7UT30o10o6Ab6Sa6kW586Ea6+dCNdCOpG+lGQjfSDRPdSDeGuhHdTjdGupFuJHYj3Z8n3YVupBsT3Uh3bHwj3XjqRrqR7kZ2o9086Ea6+dCNdCOhG+lGQjfS7YluJBujK9E9s6T7Ybr50I10I92N7Ea6+dCNdOOgG+lGQjfS7UQ30o2JbqQbE91INz4/uJHuuw/dSDd+dCPddx+6ke4jdCNdaOhGuhE70b24/E66eZ0/6Ua6Y6EbqbqRbnx0I9186Ea6EdSNdKOgG+lmupFufOhGuvnQjXRj4XuiGyVdiW4UdCNdP6k76cZER7J7dEndaOhGuhHdTjcq6pPuhmlGupFuTJT0/yPddz+6kG4UdCOhG+nmQjfS/T91I93Y+L/pxkQ30o2JbqQbkZ3o/vY56eZE99LNiW6kGxPdSDeN6Ea6Ed2Jbnz031M30k2GbkR3ohtN3YhuRLeSuhtdCHc1uhDdSOqGdCd6Lhy6Ee6bB+hGuhHdjW50dSzdSAfS8u/lJ5LupBsf/90e+lU6/vP+fX33y/c39P8/s5t+H0y3F6RbE91IN6Y70Y2kbrbrE91gPkhXP0g3kh3XwDTSDZ+T/e1g3b8+S9dfk250dCO6kbqRbkR2JrpR1410Y6Eb6W4kdCO6Ud2NboRupBs3vJHugWmkGzO9kG4oRtqR1I10I6kb6W6kGzO9kW7oRtpR1I10I6kb6YZE99KNiW6kGxPdSDequtGNiW6kGzO9kW7oRtpR1I10I6kb6YZE99KNiW6kGzO9kW7oRtpR1I10I6kb6W6kGzO9kW7oRtpR1I10I6kb6YZE99KNiW6kGzO9kW7oRtpR1I10I6kb6YZE99KNiW6kGzO9kW7oRtpR1I10g/U76XaSuxHdSDequtHdhG6kGxPdSDeiG9GNpG6kG2e6EW6k+226Ed2NbmR1I9080o10QzaSG9GNdKOqG9GNdKOqG9GNdCOpG5EBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxUfgMA/37vKgnK0oAAAAASUVORK5CYII='
+const LOGO_DATA_URL = 'https://kti.edu.iq/photo/kti_52_0.png'
 
 const zansiDepartments = [
   'دەرمانسازی',
@@ -2366,7 +2366,7 @@ function MainForm({
       </div>
       {/* Success/Error Notifications */}
       {showSuccess && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
           <div className="bg-emerald-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
               className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600"
@@ -2388,7 +2388,7 @@ function MainForm({
         </div>
       )}
       {showError && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-white border-r-4 border-blue-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-blue-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
           <div className="bg-blue-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
               className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600"
@@ -2619,13 +2619,14 @@ function MainForm({
             onClick={handleSubmit}
             type="submit"
             disabled={isGenerating}
-            className={`w-full sm:w-auto group relative ${isGenerating ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-[#0C8FCB] to-[#175988] hover:from-[#175988] hover:to-[#0C8FCB] shadow-2xl hover:shadow-blue-500/50'} text-white px-6 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 rounded-xl sm:rounded-2xl transition-all duration-500 font-bold text-sm sm:text-base md:text-lg lg:text-xl flex items-center justify-center transform hover:scale-105 active:scale-95 overflow-hidden`}
+            className={`w-full sm:w-auto group relative overflow-hidden ${isGenerating ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40'} text-white font-bold px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 flex items-center justify-center gap-3 text-sm sm:text-base md:text-lg transform hover:scale-105`}
           >
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             <div className="relative flex items-center gap-2 sm:gap-3">
               {isGenerating ? (
                 <>
                   <svg
-                    className="animate-spin h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-white"
+                    className="animate-spin h-5 w-5 sm:h-6 sm:w-6 text-white"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -2648,12 +2649,16 @@ function MainForm({
                 </>
               ) : currentStep === 1 ? (
                 <>
-                  <span>هەنگاوی دواتر</span>
+                  <span className="relative">هەنگاوی دواتر</span>
+                  <ArrowRight
+                    size={20}
+                    className="relative rotate-180 group-hover:translate-x-1 transition-transform duration-300"
+                  />
                 </>
               ) : (
                 <>
                   <svg
-                    className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 group-hover:animate-bounce"
+                    className="h-5 w-5 sm:h-6 sm:w-6 group-hover:animate-bounce"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

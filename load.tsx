@@ -128,21 +128,6 @@ export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
         <div className="absolute top-[70%] right-[25%] w-24 h-24 border-2 border-purple-400/10 rotate-45 animate-float-slower"></div>
         <div className="absolute bottom-[15%] left-[35%] w-28 h-28 border-2 border-emerald-400/10 rounded-lg rotate-12 animate-float"></div>
         <div className="absolute top-[35%] right-[40%] w-20 h-20 border-2 border-amber-400/10 rounded-full animate-pulse-slower"></div>
-        {/* Hexagon Shapes */}
-        <svg
-          className="absolute top-[45%] left-[8%] w-28 h-28 text-blue-400/8 animate-float-slow"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <path d="M12,1L21.5,6.5V17.5L12,23L2.5,17.5V6.5L12,1z"></path>
-        </svg>
-        <svg
-          className="absolute bottom-[25%] right-[15%] w-24 h-24 text-purple-400/8 animate-float-slower"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <path d="M12,1L21.5,6.5V17.5L12,23L2.5,17.5V6.5L12,1z"></path>
-        </svg>
         {/* Sparkle Elements */}
         <div className="absolute top-[18%] left-[18%] text-blue-300/15 animate-pulse">
           <Sparkles size={30} />
@@ -243,9 +228,6 @@ export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight">
                 فۆڕمی تۆمارکردن
               </h1>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400 bg-clip-text text-transparent tracking-wide">
-                ساڵی خوێندنی ٢٠٢٥-٢٠٢٦
-              </h2>
             </div>
             {/* Enhanced Description */}
             <p className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto font-light px-4 lg:px-0">
