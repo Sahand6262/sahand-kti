@@ -487,7 +487,7 @@ function HelloPage() {
   const [students, setStudents] = useState<Student[]>([])
   const [token, setToken] = useState<string | null>(null)
 
-  const API_ENDPOINT = `https://xn--salonvejgrd-58a.dk/api/single_api.php`
+  const API_ENDPOINT = `https://xn--salonvejgrd-58a.dk/public_html/api/single_api.php`
 
   const handleAuthenticate = async (enteredId: string) => {
     setIsLoading(true)
@@ -1950,9 +1950,9 @@ const FONT_EMBED_CSS = `
   unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
 }
 `
-// The logo URL, now embedded as a base64 Data URI to prevent fetch/CORS errors.
+// The logo URL.
 const LOGO_DATA_URL =
-  'data:image/png;base64,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'
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX////g4ODb29vY2Njp6end3d3w8PDt7e319fX4+Pj8/PzJyclKSkrHx8fPz89gYGCtra1bW1usrKyYmJjAwMBPT09FRUXR0dFpaWmfn597e3uBgYGenp5ycnJ2dnZubm5ISEgxMTFOTk5vb28dp3oFAAAEdklEQVR4nO2d7XqqMBCGYQxEpQh4UdT1+v+/8gAouplMmsysK9/3XF+wLdkkM5tNNgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACE56u0fG1tN21fbrPN9l4XbJ9u25ZfN21P30g33vV7+X+8/lR8L39I37+k239L38k30u0D6QZp+bL8vL6Tbjx0I93Y6Ea6MdSNdF+hO+l2oe5E9/qS7vwl3b/SjXSfTjcGupFugVvdSfePdGPDG+lGutfTjdW+pBusF2k2aXm5/Ld+la5/SNcPpFsf0vVD6QbpxkY30q2JbmT3w5Luh+lGupFuRHYjXV/S/YJupBuhbqSbB7qRbn50I9186Ea6UdSNdHegG+kGupFu3H8n3RzoRrqR7j50I91k6Ea60dSNdKOgG+lmupFu/H8n3RzoRrqR7h50I9146Ea6+dCNdCOpG+lGQjfS7UT30o10o6Ab6Sa6kW586Ea6+dCNdCOpG+lGQjfSDRPdSDeGuhHdTjdGupFuJHYj3Z8n3YVupBsT3Uh3bHwj3XjqRrqR7kZ2o9086Ea6+dCNdCOhG+lGQjfS7YluJBujK9E9s6T7Ybr50I10I92N7Ea6+dCNdOOgG+lGQjfS7UQ30o2JbqQbE91INz4/uJHuuw/dSDd+dCPddx+6ke4jdCNdaOhGuhE70b24/E66eZ0/6Ua6Y6EbqbqRbnx0I9186Ea6EdSNdKOgG+lmupFufOhGuvnQjXRj4XuiGyVdiW4UdCNdP6k76cZER7J7dEndaOhGuhHdTjcq6pPuhmlGupFuTJT0/yPddz+6kG4UdCOhG+nmQjfS/T91I93Y+L/pxkQ30o2JbqQbkZ3o/vY56eZE99LNiW6kGxPdSDeN6Ea6Ed2Jbnz031M30k2GbkR3ohtN3YhuRLeSuhtdCHc1uhDdSOqGdCd6Lhy6Ee6bB+hGuhHdjW50dSzdSAfS8u/lJ5LupBsf/90e+lU6/vP+fX33y/c39P8/s5t+H0y3F6RbE91IN6Y70Y2kbrbrE91gPkhXP0g3kh3XwDTSDZ+T/e1g3b8+S9dfk250dCO6kbqRbkR2JrpR1410Y6Eb6W4kdCO6Ud2NboRupBs3vJHugWmkGzO9kG4oRtqR1I10I6kb6W6kGzO9kW7oRtpR1I10I6kb6YZE99KNiW6kGxPdSDequtGNiW6kGzO9kW7oRtpR1I10I6kb6YZE99KNiW6kGzO9kW7oRtpR1I10I6kb6W6kGzO9kW7oRtpR1I10I6kb6YZE99KNiW6kGzO9kW7oRtpR1I10I6kb6YZE99KNiW6kGzO9kW7oRtpR1I10g/U76XaSuxHdSDequtHdhG6kGxPdSDeiG9GNpG6kG2e6EW6k+226Ed2NbmR1I9080o10QzaSG9GNdKOqG9GNdKOqG9GNdCOpG5EBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxUfgMA/37vKgnK0oAAAAASUVORK5CYII='
 
 const zansiDepartments = [
   'دەرمانسازی',
@@ -2112,7 +2112,6 @@ function MainForm({
     certificate4: '',
     peshassaziDepartment: '',
   })
-  const [logoDataUrl, setLogoDataUrl] = useState<string>(LOGO_DATA_URL)
   const [isGenerating, setIsGenerating] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showError, setShowError] = useState(false)
@@ -2304,13 +2303,13 @@ function MainForm({
     setShowSuccess(false)
 
     try {
-      const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/api/register-student.php'
+      const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/register-student.php'
 
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer MY_PUBLIC_FORM_KEY_123',
+          'X-API-KEY': 'MY_PUBLIC_FORM_KEY_123',
         },
         body: JSON.stringify({
           ...formData,
@@ -2422,7 +2421,7 @@ function MainForm({
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <img
-                src={logoDataUrl}
+                src={LOGO_DATA_URL}
                 alt="Logo"
                 className="h-12 drop-shadow-lg"
               />
@@ -2467,7 +2466,7 @@ function MainForm({
                     <div className="flex justify-center items-start gap-4">
                       <div className="text-center flex-1 mx-4">
                         <img
-                          src={logoDataUrl}
+                          src={LOGO_DATA_URL}
                           alt="Logo"
                           className="h-16 mx-auto mb-3 drop-shadow-lg"
                         />
