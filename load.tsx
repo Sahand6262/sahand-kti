@@ -227,141 +227,54 @@ export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
         </svg>
       </div>
       {/* Hero Section with Enhanced Layout */}
-      <section className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            {/* Left Column - Hero Content with Better Spacing */}
-            <div className="space-y-6 md:space-y-8 text-center lg:text-right">
-              {/* Enhanced Badge */}
-              <div className="inline-flex items-center gap-2.5 bg-blue-500/20 backdrop-blur-xl px-4 py-2 rounded-full border border-blue-400/30 shadow-lg shadow-blue-500/10">
-                <Star size={16} className="text-blue-400" fill="currentColor" />
-                <span className="text-blue-100 text-sm md:text-base font-medium tracking-wide">
-                  پەیمانگای تەکنیکی کوردستان
-                </span>
-              </div>
-              {/* Enhanced Main Heading */}
-              <div className="space-y-3 md:space-y-4">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight">
-                  فۆڕمی تۆمارکردن
-                </h1>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400 bg-clip-text text-transparent tracking-wide">
-                  ساڵی خوێندنی ٢٠٢٥-٢٠٢٦
-                </h2>
-              </div>
-              {/* Enhanced Description */}
-              <p className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light px-4 lg:px-0">
-                دەرفەتی خوێندن لە یەکێک لە باشترین پەیمانگاکانی هەرێمی کوردستان.
-                جۆری خوێندنەکەت هەڵبژێرە و هەنگاوی یەکەم بنێ بۆ داهاتوویەکی
-                گەشاوە.
-              </p>
-              {/* Enhanced CTA Buttons */}
-              <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start pt-4">
-                <button
-                  onClick={scrollToDepartments}
-                  className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-10 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 text-base md:text-lg transform hover:scale-105"
-                >
-                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-                  <span className="relative">دەست پێبکە</span>
-                  <ArrowRight
-                    size={20}
-                    className="relative rotate-180 group-hover:translate-x-1 transition-transform duration-300"
-                  />
-                </button>
-                <button
-                  onClick={handleLearnMore}
-                  className="group bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white font-semibold py-4 px-10 rounded-xl border-2 border-white/30 hover:border-white/50 transition-all duration-300 flex items-center justify-center gap-3 text-base md:text-lg hover:shadow-xl hover:shadow-white/10 transform hover:scale-105"
-                >
-                  <span>زیاتر بزانە</span>
-                  <ExternalLink
-                    size={20}
-                    className="group-hover:translate-x-1 transition-transform duration-300"
-                  />
-                </button>
-              </div>
+      <section className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
+        <div className="w-full max-w-4xl mx-auto">
+          {/* Hero Content with Better Spacing */}
+          <div className="space-y-6 md:space-y-8 text-center">
+            {/* Enhanced Badge */}
+            <div className="inline-flex items-center gap-2.5 bg-blue-500/20 backdrop-blur-xl px-4 py-2 rounded-full border border-blue-400/30 shadow-lg shadow-blue-500/10">
+              <Star size={16} className="text-blue-400" fill="currentColor" />
+              <span className="text-blue-100 text-sm md:text-base font-medium tracking-wide">
+                پەیمانگای تەکنیکی کوردستان
+              </span>
             </div>
-            {/* Right Column - Enhanced Stats Card */}
-            <div className="w-full">
-              <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl rounded-3xl p-6 md:p-10 border border-white/20 shadow-2xl">
-                {/* Decorative corner elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-transparent rounded-tr-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tl from-purple-500/20 to-transparent rounded-bl-3xl"></div>
-                {/* Enhanced Header with Avatars */}
-                <div className="relative flex items-center gap-4 mb-8 pb-6 border-b border-white/20">
-                  <div className="flex -space-x-3">
-                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-4 border-slate-800 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                      م
-                    </div>
-                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-4 border-slate-800 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                      س
-                    </div>
-                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-4 border-slate-800 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                      ئ
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-white font-bold text-lg md:text-xl tracking-wide">
-                      قوتابیانی سەرکەوتوو
-                    </h3>
-                    <p className="text-gray-300 text-sm md:text-base font-light">
-                      بەشداری بکە لە تۆڕی ئێمە
-                    </p>
-                  </div>
-                </div>
-                {/* Enhanced Stats Grid */}
-                <div className="relative grid grid-cols-2 gap-4 md:gap-5 mb-6">
-                  {[
-                    {
-                      value: '١٠+',
-                      label: 'ساڵی ئەزموون',
-                      color: 'from-blue-500/20 to-blue-600/10',
-                    },
-                    {
-                      value: '٢٤/٧',
-                      label: 'پشتگیری قوتابیان',
-                      color: 'from-purple-500/20 to-purple-600/10',
-                    },
-                    {
-                      value: '٩٥٪',
-                      label: 'ڕێژەی سەرکەوتن',
-                      color: 'from-emerald-500/20 to-emerald-600/10',
-                    },
-                    {
-                      value: '١٢+',
-                      label: 'بەشی جیاواز',
-                      color: 'from-amber-500/20 to-amber-600/10',
-                    },
-                  ].map((stat, index) => (
-                    <div
-                      key={index}
-                      className={`relative bg-gradient-to-br ${stat.color} backdrop-blur-xl rounded-2xl p-5 md:p-6 border border-white/20 hover:border-white/30 transition-all duration-300 group hover:scale-105`}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="relative">
-                        <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">
-                          {stat.value}
-                        </div>
-                        <div className="text-gray-300 text-sm md:text-base font-light tracking-wide">
-                          {stat.label}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                {/* Enhanced Certification Badge */}
-                <div className="relative bg-gradient-to-r from-blue-500/30 to-blue-600/30 backdrop-blur-xl rounded-2xl p-5 border border-blue-400/40 flex items-center gap-4 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300">
-                  <div className="bg-blue-500/40 backdrop-blur-xl rounded-xl p-3">
-                    <Shield size={24} className="text-blue-200" />
-                  </div>
-                  <div>
-                    <div className="text-white font-bold text-base md:text-lg tracking-wide">
-                      پارێزراو و متمانەپێکراو
-                    </div>
-                    <div className="text-blue-100 text-sm font-light">
-                      بڕوانامەی ISO 9001
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Enhanced Main Heading */}
+            <div className="space-y-3 md:space-y-4">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight">
+                فۆڕمی تۆمارکردن
+              </h1>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400 bg-clip-text text-transparent tracking-wide">
+                ساڵی خوێندنی ٢٠٢٥-٢٠٢٦
+              </h2>
+            </div>
+            {/* Enhanced Description */}
+            <p className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto font-light px-4 lg:px-0">
+              دەرفەتی خوێندن لە یەکێک لە باشترین پەیمانگاکانی هەرێمی کوردستان.
+              جۆری خوێندنەکەت هەڵبژێرە و هەنگاوی یەکەم بنێ بۆ داهاتوویەکی گەشاوە.
+            </p>
+            {/* Enhanced CTA Buttons */}
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center pt-4">
+              <button
+                onClick={scrollToDepartments}
+                className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-10 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 text-base md:text-lg transform hover:scale-105"
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                <span className="relative">دەست پێبکە</span>
+                <ArrowRight
+                  size={20}
+                  className="relative rotate-180 group-hover:translate-x-1 transition-transform duration-300"
+                />
+              </button>
+              <button
+                onClick={handleLearnMore}
+                className="group bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white font-semibold py-4 px-10 rounded-xl border-2 border-white/30 hover:border-white/50 transition-all duration-300 flex items-center justify-center gap-3 text-base md:text-lg hover:shadow-xl hover:shadow-white/10 transform hover:scale-105"
+              >
+                <span>زیاتر بزانە</span>
+                <ExternalLink
+                  size={20}
+                  className="group-hover:translate-x-1 transition-transform duration-300"
+                />
+              </button>
             </div>
           </div>
         </div>
