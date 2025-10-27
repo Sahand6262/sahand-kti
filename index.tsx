@@ -14,6 +14,7 @@ import { Footer } from './footer'
 type Student = {
   id: number
   name: string
+  phone: string
 }
 type AuthModalProps = {
   onAuthenticate: (id: string) => void
@@ -143,6 +144,21 @@ const DocumentIcon = () => (
       strokeLinejoin="round"
       strokeWidth="1.5"
       d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+    />
+  </svg>
+)
+const PhoneIcon = () => (
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
     />
   </svg>
 )
@@ -288,8 +304,10 @@ const StudentList: React.FC<StudentListProps> = ({ students, userHi }) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const itemsPerPage = 10
-  const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredStudents = students.filter(
+    (student) =>
+      student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (student.phone && student.phone.includes(searchTerm)),
   )
   const totalPages = Math.ceil(filteredStudents.length / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
@@ -419,8 +437,9 @@ const StudentList: React.FC<StudentListProps> = ({ students, userHi }) => {
                           {student.name}
                         </h3>
                         <div className="flex items-center gap-2 text-gray-500 text-sm justify-center">
+                          <PhoneIcon />
                           <span className="font-mono" dir="ltr">
-                            {student.id}
+                            {student.phone || 'N/A'}
                           </span>
                         </div>
                       </div>
@@ -685,7 +704,10 @@ const FormContent: React.FC<FormContentProps> = ({
     <form className="space-y-6">
       {/* Personal Info */}
       <div className="group">
-        <div className="modern-section-header">
+        <div className="modern-section-header flex items-center justify-between px-4">
+          <span className="font-semibold text-sm">
+            {`فۆڕمی وەرگرتن (${getEducationTypeText()})`}
+          </span>
           <div className="flex items-center justify-center gap-3">
             <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <svg
@@ -706,6 +728,7 @@ const FormContent: React.FC<FormContentProps> = ({
               زانیاری کەسی
             </span>
           </div>
+          <span className="font-semibold text-sm">(٢٠٢٥-٢٠٢٦)</span>
         </div>
         <div className="modern-card-enhanced">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1596,7 +1619,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               ? 'دەرچووی پیشەیی(بازرگانی) دەتوانن بەشی(کارگێڕی کار،ژمێریاری،دیجیتاڵ میدیا و مارکێتینگ) پڕبکەنەوە،دواتر بەپێی داواکاری بەشەکەو ڕێژەی دەرچوونی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا،وەردەگیرێت.'
               : formType === 'peshassazi'
               ? 'دەرچووی پیشەیی(پیشەسازی):- بەشەکانی(تەکنەلۆجیای زانیاری،چاکردنەوەی کۆمپیوتەر) دەتوانن لە بەشی(تەکنەلۆژیای زانیاری،تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن)بخوێنن. بەشەکانی(وێنەی ئەندازەی) دەتوانن لە بەشی (ئەندازیاری دیکۆر) بخوێنن. پێی خواستی خۆت و گونجاندنی بەشەکەت، هەڵبژاردنەکەت پڕبکەوە، بەڵام بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا و توێژینەوەی زانستی وەردەگیرێت.'
-              : 'بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی (١٤/١٠/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی (٧)، دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی هەڵبژاردنی یەکەم پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی دیکە لە ئەگەری هەبوونی کورسی بەتاڵ لەو بەشانە و بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا، وەردەگیرێت.'}
+              : 'بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی (١٤\/١٠\/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی (٧)، دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی هەڵبژاردنی یەکەم پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی دیکە لە ئەگەری هەبوونی کورسی بەتاڵ لەو بەشانە و بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا، وەردەگیرێت.'}
           </p>
         </div>
       </div>
@@ -1909,16 +1932,22 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
 // By embedding this directly, we ensure the PDF looks exactly like the screen.
 const FONT_EMBED_CSS = `
 @font-face {
-  font-family: 'Almarai';
+  font-family: 'Noto Sans Arabic';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/almarai/v17/tsstApxBaigK_hM2pHsD-HM.woff2) format('woff2');
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrO2xbvremmoDR2hw2wXTh-o-w6-d1xWOW.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
 }
 @font-face {
-  font-family: 'Almarai';
+  font-family: 'Noto Sans Arabic';
   font-style: normal;
   font-weight: 700;
-  src: url(https://fonts.gstatic.com/s/almarai/v17/tssvApxBaigK_hM2pWjM50c-d1I.woff2) format('woff2');
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrO2xbvremmoDR2hw2wXTh-o-w6-d1xWOW.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
 }
 `
 // The logo URL.
@@ -1980,6 +2009,21 @@ function MainForm({
       departments = zansiDepartments
       pdfThemeClass = '' // Default red theme
       break
+  }
+
+  const getPdfEducationTypeText = () => {
+    switch (formType) {
+      case 'zansi':
+        return 'زانستی'
+      case 'wezhay':
+        return 'وێژەیی'
+      case 'peshassazi':
+        return 'پیشەسازی'
+      case 'bazrgani':
+        return 'بازرگانی'
+      default:
+        return ''
+    }
   }
 
   const [currentStep, setCurrentStep] = useState(1)
@@ -2136,6 +2180,15 @@ function MainForm({
       ...prevState,
       [name]: type === 'checkbox' ? checked : sanitizedValue,
     }))
+    
+    // Clear the error for the field being edited
+    if (errors[name]) {
+        setErrors(prevErrors => {
+            const newErrors = { ...prevErrors };
+            delete newErrors[name];
+            return newErrors;
+        });
+    }
   }
   const handleArrayChange = (
     arrayName: keyof FormData,
@@ -2174,6 +2227,20 @@ function MainForm({
     setCurrentStep(1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+  
+  const validateStep1 = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!formData.personalName.trim()) {
+        newErrors.personalName = 'تکایە ناوی چواری بنووسە';
+    }
+    if (!formData.phone1.trim()) {
+        newErrors.phone1 = 'تکایە ژمارەی مۆبایل بنووسە';
+    } else if (!/^[0-9+\-\s]{6,20}$/.test(formData.phone1)) {
+        newErrors.phone1 = 'تکایە ژمارەیەکی دروست بنووسە';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const generatePDF = async () => {
     try {
@@ -2253,7 +2320,12 @@ function MainForm({
     e.preventDefault()
 
     if (currentStep === 1) {
-      handleNextStep()
+      if (validateStep1()) {
+        handleNextStep()
+      } else {
+        setShowError(true);
+        setErrorMessage('تکایە خانە داواکراوەکان پڕبکەرەوە.');
+      }
       return
     }
 
@@ -2263,9 +2335,6 @@ function MainForm({
     setShowSuccess(false)
 
     try {
-      // NOTE TO USER: Replace this URL with your actual PHP API endpoint.
-      // Ensure your PHP server is running and accessible from this app.
-      // Also, remember to set your database password in the PHP file.
       const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/register-student.php'
 
       const response = await fetch(API_ENDPOINT, {
@@ -2274,7 +2343,10 @@ function MainForm({
           'Content-Type': 'application/json',
           'X-API-KEY': 'MY_PUBLIC_FORM_KEY_123',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          phone: formData.phone1, // Map phone1 to the 'phone' field for the API
+        }),
       })
 
       if (!response.ok) {
@@ -2315,7 +2387,7 @@ function MainForm({
 
   return (
     <div
-      className="min-h-screen bg-white rtl relative overflow-hidden font-bold"
+      className="min-h-screen bg-white rtl relative overflow-hidden font-sans"
       dir="rtl"
     >
       {/* Animated Background Blobs */}
@@ -2649,7 +2721,7 @@ function MainForm({
         {/* Page 1 for PDF - DESKTOP ONLY */}
         <div
           ref={pageOnePrintRef}
-          className={`bg-white flex flex-col font-bold ${pdfThemeClass}`}
+          className={`bg-white flex flex-col font-sans ${pdfThemeClass}`}
           style={{
             width: '210mm',
             height: 'auto',
@@ -2686,9 +2758,15 @@ function MainForm({
               <div className="space-y-2">
                 {/* Personal Info */}
                 <div>
-                  <div className="section-header-modern text-white text-center py-3 text-lg">
+                  <div className="section-header-modern text-white flex items-center justify-between py-3 px-4 text-lg">
+                    <span className="font-bold tracking-wider text-base">
+                      {`فۆڕمی وەرگرتن (${getPdfEducationTypeText()})`}
+                    </span>
                     <span className="font-bold tracking-wider">
                       زانیاری کەسی
+                    </span>
+                    <span className="font-bold tracking-wider text-base">
+                      {`(٢٠٢٥-٢٠٢٦)`}
                     </span>
                   </div>
                   <div className="modern-card p-4 space-y-3">
@@ -3187,7 +3265,7 @@ function MainForm({
         {/* Page 2 for PDF - DESKTOP ONLY */}
         <div
           ref={pageTwoPrintRef}
-          className={`bg-white flex flex-col font-bold ${pdfThemeClass}`}
+          className={`bg-white flex flex-col font-sans ${pdfThemeClass}`}
           style={{
             width: '210mm',
             height: 'auto',
@@ -3344,7 +3422,7 @@ function MainForm({
                   ? 'دەرچووی پیشەیی(بازرگانی) دەتوانن بەشی(کارگێڕی کار،ژمێریاری،دیجیتاڵ میدیا و مارکێتینگ) پڕبکەنەوە،دواتر بەپێی داواکاری بەشەکەو ڕێژەی دەرچوونی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا،وەردەگیرێت.'
                   : formType === 'peshassazi'
                   ? 'دەرچووی پیشەیی(پیشەسازی):- بەشەکانی(تەکنەلۆجیای زانیاری،چاکردنەوەی کۆمپیوتەر) دەتوانن لە بەشی(تەکنەلۆژیای زانیاری،تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن)بخوێنن. بەشەکانی(وێنەی ئەندازەی) دەتوانن لە بەشی (ئەندازیاری دیکۆر) بخوێنن. پێی خواستی خۆت و گونجاندنی بەشەکەت، هەڵبژاردنەکەت پڕبکەوە، بەڵام بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا و توێژینەوەی زانستی وەردەگیرێت.'
-                  : 'بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی (١٤/١٠/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی (٧)، دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی هەڵبژاردنی یەکەم پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی دیکە لە ئەگەری هەبوونی کورسی بەتاڵ لەو بەشانە و بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا، وەردەگیرێت.'}
+                  : 'بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی (١٤\/١٠\/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی (٧)، دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی هەڵبژاردنی یەکەم پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی دیکە لە ئەگەری هەبوونی کورسی بەتاڵ لەو بەشانە و بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا، وەردەگیرێت.'}
               </div>
             </div>
             {/* Certificate Section */}

@@ -2,11 +2,11 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Almarai', ...defaultTheme.fontFamily.sans],
+        sans: ['Noto Sans Arabic', ...defaultTheme.fontFamily.sans],
       },
     },
   },

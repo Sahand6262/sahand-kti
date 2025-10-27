@@ -4,20 +4,6 @@
 @tailwind utilities;
 /* DO NOT DELETE THESE TAILWIND IMPORTS, OTHERWISE THE STYLING WILL NOT RENDER AT ALL */
 
-/* Almarai Font Definitions */
-@font-face {
-  font-family: 'Almarai';
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/almarai/v17/tsstApxBaigK_hM2pHsD-HM.woff2) format('woff2');
-}
-@font-face {
-  font-family: 'Almarai';
-  font-style: normal;
-  font-weight: 700;
-  src: url(https://fonts.gstatic.com/s/almarai/v17/tssvApxBaigK_hM2pWjM50c-d1I.woff2) format('woff2');
-}
-
 /* Modern Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
