@@ -9,6 +9,15 @@ import {
   CheckCircle2,
   Star,
   ExternalLink,
+  Award,
+  BookMarked,
+  Lightbulb,
+  Target,
+  Trophy,
+  Users,
+  Sparkles,
+  Atom,
+  FlaskConical,
 } from 'lucide-react'
 const LOGO_DATA_URL = 'https://kti.edu.iq/photo/kti_52_0.png'
 const BACKGROUND_IMAGE = 'https://kti.edu.iq/photo/kti_53_01702585603.jpg'
@@ -23,42 +32,42 @@ export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
     {
       id: 'zansi' as const,
       title: 'زانستی',
-      description: 'بەشە زانستییەکان',
       details: 'بۆ قوتابیانی لقی زانست',
       icon: GraduationCap,
       gradient: 'from-blue-500/20 via-blue-400/10 to-transparent',
       iconColor: 'text-blue-400',
       borderGlow: 'group-hover:shadow-blue-500/50',
+      bgGlow: 'from-blue-500/10 to-blue-600/5',
     },
     {
       id: 'wezhay' as const,
       title: 'وێژەیی',
-      description: 'بەشە وێژەییەکان',
       details: 'بۆ قوتابیانی لقی ئەدەبی',
       icon: BookOpen,
       gradient: 'from-purple-500/20 via-purple-400/10 to-transparent',
       iconColor: 'text-purple-400',
       borderGlow: 'group-hover:shadow-purple-500/50',
+      bgGlow: 'from-purple-500/10 to-purple-600/5',
     },
     {
       id: 'peshassazi' as const,
       title: 'پیشەسازی',
-      description: 'بەشە پیشەسازییەکان',
       details: 'بۆ قوتابیانی لقی پیشەیی',
       icon: HardHat,
       gradient: 'from-emerald-500/20 via-emerald-400/10 to-transparent',
       iconColor: 'text-emerald-400',
       borderGlow: 'group-hover:shadow-emerald-500/50',
+      bgGlow: 'from-emerald-500/10 to-emerald-600/5',
     },
     {
       id: 'bazrgani' as const,
       title: 'بازرگانی',
-      description: 'بەشە بازرگانییەکان',
       details: 'بۆ قوتابیانی لقی بازرگانی',
       icon: Briefcase,
       gradient: 'from-amber-500/20 via-amber-400/10 to-transparent',
       iconColor: 'text-amber-400',
       borderGlow: 'group-hover:shadow-amber-500/50',
+      bgGlow: 'from-amber-500/10 to-amber-600/5',
     },
   ]
   const handleLearnMore = () => {
@@ -71,228 +80,382 @@ export const SelectionPage: React.FC<SelectionPageProps> = ({ onSelect }) => {
     })
   }
   return (
-    <div className="min-h-screen w-full bg-slate-950 relative" dir="rtl">
-      {/* Background Image with 70% Dark Overlay */}
+    <div
+      className="min-h-screen w-full bg-slate-950 relative overflow-x-hidden"
+      dir="rtl"
+    >
+      {/* Background Image with Enhanced Overlay */}
       <div className="fixed inset-0 z-0">
         <img
           src={BACKGROUND_IMAGE}
           alt="Kurdistan Technical Institute"
           className="w-full h-full object-cover"
         />
-        {/* 70% dark overlay */}
-        <div className="absolute inset-0 bg-slate-950/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/80"></div>
       </div>
-      {/* Main Content */}
-      <div className="container mx-auto max-w-7xl px-4 md:px-6 relative z-10 py-8 md:py-12 lg:py-16 min-h-screen flex items-center">
-        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 w-full">
-          {/* Left Side - Hero Text & Department Cards */}
-          <div className="space-y-4 md:space-y-6">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-xl px-2.5 md:px-3 py-1 md:py-1.5 rounded-full border border-blue-400/30">
-              <Star
-                size={12}
-                className="text-blue-400 md:hidden"
-                fill="currentColor"
+      {/* Institute-Themed Decorative Elements */}
+      <div className="fixed inset-0 z-[1] pointer-events-none overflow-hidden">
+        {/* Floating Institute Icons */}
+        <div className="absolute top-[10%] left-[5%] text-blue-400/10 animate-float-slow">
+          <GraduationCap size={80} strokeWidth={1.5} />
+        </div>
+        <div className="absolute top-[15%] right-[8%] text-purple-400/10 animate-float-slower">
+          <BookMarked size={60} strokeWidth={1.5} />
+        </div>
+        <div className="absolute top-[40%] left-[10%] text-emerald-400/10 animate-float">
+          <Award size={70} strokeWidth={1.5} />
+        </div>
+        <div className="absolute top-[60%] right-[12%] text-amber-400/10 animate-float-slowest">
+          <Trophy size={65} strokeWidth={1.5} />
+        </div>
+        <div className="absolute bottom-[20%] left-[15%] text-blue-400/10 animate-float-slow">
+          <Lightbulb size={55} strokeWidth={1.5} />
+        </div>
+        <div className="absolute bottom-[30%] right-[6%] text-purple-400/10 animate-float-slower">
+          <Target size={75} strokeWidth={1.5} />
+        </div>
+        <div className="absolute top-[25%] right-[25%] text-emerald-400/10 animate-float">
+          <Users size={50} strokeWidth={1.5} />
+        </div>
+        <div className="absolute bottom-[40%] left-[20%] text-amber-400/10 animate-float-slowest">
+          <Atom size={60} strokeWidth={1.5} />
+        </div>
+        <div className="absolute top-[50%] right-[20%] text-blue-400/10 animate-float-slow">
+          <FlaskConical size={55} strokeWidth={1.5} />
+        </div>
+        {/* Geometric Shapes */}
+        <div className="absolute top-[20%] left-[30%] w-32 h-32 border-2 border-blue-400/10 rounded-full animate-pulse-slow"></div>
+        <div className="absolute top-[70%] right-[25%] w-24 h-24 border-2 border-purple-400/10 rotate-45 animate-float-slower"></div>
+        <div className="absolute bottom-[15%] left-[35%] w-28 h-28 border-2 border-emerald-400/10 rounded-lg rotate-12 animate-float"></div>
+        <div className="absolute top-[35%] right-[40%] w-20 h-20 border-2 border-amber-400/10 rounded-full animate-pulse-slower"></div>
+        {/* Hexagon Shapes */}
+        <svg
+          className="absolute top-[45%] left-[8%] w-28 h-28 text-blue-400/8 animate-float-slow"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12,1L21.5,6.5V17.5L12,23L2.5,17.5V6.5L12,1z"></path>
+        </svg>
+        <svg
+          className="absolute bottom-[25%] right-[15%] w-24 h-24 text-purple-400/8 animate-float-slower"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12,1L21.5,6.5V17.5L12,23L2.5,17.5V6.5L12,1z"></path>
+        </svg>
+        {/* Sparkle Elements */}
+        <div className="absolute top-[18%] left-[18%] text-blue-300/15 animate-pulse">
+          <Sparkles size={30} />
+        </div>
+        <div className="absolute top-[55%] right-[18%] text-purple-300/15 animate-pulse-slow">
+          <Sparkles size={25} />
+        </div>
+        <div className="absolute bottom-[35%] left-[25%] text-emerald-300/15 animate-pulse-slower">
+          <Sparkles size={28} />
+        </div>
+        {/* Small Floating Particles */}
+        {Array.from({
+          length: 40,
+        }).map((_, i) => {
+          const size = 2 + Math.random() * 4
+          const top = Math.random() * 100
+          const left = Math.random() * 100
+          const animationDuration = 20 + Math.random() * 40
+          const opacity = 0.05 + Math.random() * 0.15
+          const colors = [
+            'bg-blue-400',
+            'bg-purple-400',
+            'bg-emerald-400',
+            'bg-amber-400',
+          ]
+          const color = colors[Math.floor(Math.random() * colors.length)]
+          return (
+            <div
+              key={i}
+              className={`absolute rounded-full ${color}`}
+              style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                top: `${top}%`,
+                left: `${left}%`,
+                opacity: opacity,
+                animation: `float ${animationDuration}s ease-in-out infinite`,
+              }}
+            />
+          )
+        })}
+        {/* Circuit-like Lines */}
+        <svg
+          width="100%"
+          height="100%"
+          className="absolute inset-0 opacity-[0.03]"
+        >
+          <defs>
+            <linearGradient
+              id="instituteGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#60a5fa" />
+              <stop offset="50%" stopColor="#a78bfa" />
+              <stop offset="100%" stopColor="#34d399" />
+            </linearGradient>
+          </defs>
+          {Array.from({
+            length: 8,
+          }).map((_, i) => {
+            const startX = Math.random() * 100
+            const startY = Math.random() * 100
+            const endX = Math.random() * 100
+            const endY = Math.random() * 100
+            return (
+              <line
+                key={i}
+                x1={`${startX}%`}
+                y1={`${startY}%`}
+                x2={`${endX}%`}
+                y2={`${endY}%`}
+                stroke="url(#instituteGradient)"
+                strokeWidth="1"
+                strokeDasharray="4,8"
+                className="animate-pulse-slow"
               />
-              <Star
-                size={14}
-                className="text-blue-400 hidden md:block"
-                fill="currentColor"
-              />
-              <span className="text-blue-100 text-xs font-medium tracking-wide">
-                پەیمانگای تەکنیکی کوردستان
-              </span>
+            )
+          })}
+        </svg>
+      </div>
+      {/* Hero Section with Enhanced Layout */}
+      <section className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {/* Left Column - Hero Content with Better Spacing */}
+            <div className="space-y-6 md:space-y-8 text-center lg:text-right">
+              {/* Enhanced Badge */}
+              <div className="inline-flex items-center gap-2.5 bg-blue-500/20 backdrop-blur-xl px-4 py-2 rounded-full border border-blue-400/30 shadow-lg shadow-blue-500/10">
+                <Star size={16} className="text-blue-400" fill="currentColor" />
+                <span className="text-blue-100 text-sm md:text-base font-medium tracking-wide">
+                  پەیمانگای تەکنیکی کوردستان
+                </span>
+              </div>
+              {/* Enhanced Main Heading */}
+              <div className="space-y-3 md:space-y-4">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight">
+                  فۆڕمی تۆمارکردن
+                </h1>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400 bg-clip-text text-transparent tracking-wide">
+                  ساڵی خوێندنی ٢٠٢٥-٢٠٢٦
+                </h2>
+              </div>
+              {/* Enhanced Description */}
+              <p className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light px-4 lg:px-0">
+                دەرفەتی خوێندن لە یەکێک لە باشترین پەیمانگاکانی هەرێمی کوردستان.
+                جۆری خوێندنەکەت هەڵبژێرە و هەنگاوی یەکەم بنێ بۆ داهاتوویەکی
+                گەشاوە.
+              </p>
+              {/* Enhanced CTA Buttons */}
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start pt-4">
+                <button
+                  onClick={scrollToDepartments}
+                  className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-10 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 text-base md:text-lg transform hover:scale-105"
+                >
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                  <span className="relative">دەست پێبکە</span>
+                  <ArrowRight
+                    size={20}
+                    className="relative rotate-180 group-hover:translate-x-1 transition-transform duration-300"
+                  />
+                </button>
+                <button
+                  onClick={handleLearnMore}
+                  className="group bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white font-semibold py-4 px-10 rounded-xl border-2 border-white/30 hover:border-white/50 transition-all duration-300 flex items-center justify-center gap-3 text-base md:text-lg hover:shadow-xl hover:shadow-white/10 transform hover:scale-105"
+                >
+                  <span>زیاتر بزانە</span>
+                  <ExternalLink
+                    size={20}
+                    className="group-hover:translate-x-1 transition-transform duration-300"
+                  />
+                </button>
+              </div>
             </div>
-            {/* Main Heading */}
-            <div className="space-y-1 md:space-y-2">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight tracking-tight">
-                فۆڕمی تۆمارکردن
-              </h1>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-blue-400 tracking-wide">
-                ساڵی خوێندنی ٢٠٢٥-٢٠٢٦
-              </h2>
-            </div>
-            {/* Description */}
-            <p className="text-sm md:text-base text-gray-300 leading-relaxed max-w-xl font-light">
-              دەرفەتی خوێندن لە یەکێک لە باشترین پەیمانگاکانی هەرێمی کوردستان.
-              جۆری خوێندنەکەت هەڵبژێرە و هەنگاوی یەکەم بنێ بۆ داهاتوویەکی
-              گەشاوە.
-            </p>
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row flex-wrap gap-2 md:gap-3">
-              <button
-                onClick={scrollToDepartments}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 md:py-3 px-5 md:px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 text-sm"
-              >
-                دەست پێبکە
-                <ArrowRight
-                  size={16}
-                  className="md:w-[18px] md:h-[18px] rotate-180"
-                />
-              </button>
-              <button
-                onClick={handleLearnMore}
-                className="bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white font-semibold py-2.5 md:py-3 px-5 md:px-6 rounded-lg border border-white/30 hover:border-white/50 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
-              >
-                زیاتر بزانە
-                <ExternalLink size={16} className="md:w-[18px] md:h-[18px]" />
-              </button>
-            </div>
-            {/* Department Cards Section */}
-            <div className="pt-2 md:pt-4" ref={departmentSectionRef}>
-              <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-3 md:mb-4 tracking-wide">
-                بەشەکان هەڵبژێرە
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3">
-                {categories.map((category) => {
-                  const Icon = category.icon
-                  const isHovered = hoveredCard === category.id
-                  return (
-                    <button
-                      key={category.id}
-                      onClick={() => onSelect(category.id)}
-                      onMouseEnter={() => setHoveredCard(category.id)}
-                      onMouseLeave={() => setHoveredCard(null)}
-                      className="group relative"
+            {/* Right Column - Enhanced Stats Card */}
+            <div className="w-full">
+              <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl rounded-3xl p-6 md:p-10 border border-white/20 shadow-2xl">
+                {/* Decorative corner elements */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-transparent rounded-tr-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tl from-purple-500/20 to-transparent rounded-bl-3xl"></div>
+                {/* Enhanced Header with Avatars */}
+                <div className="relative flex items-center gap-4 mb-8 pb-6 border-b border-white/20">
+                  <div className="flex -space-x-3">
+                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-4 border-slate-800 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                      م
+                    </div>
+                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-4 border-slate-800 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                      س
+                    </div>
+                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-4 border-slate-800 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                      ئ
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-lg md:text-xl tracking-wide">
+                      قوتابیانی سەرکەوتوو
+                    </h3>
+                    <p className="text-gray-300 text-sm md:text-base font-light">
+                      بەشداری بکە لە تۆڕی ئێمە
+                    </p>
+                  </div>
+                </div>
+                {/* Enhanced Stats Grid */}
+                <div className="relative grid grid-cols-2 gap-4 md:gap-5 mb-6">
+                  {[
+                    {
+                      value: '١٠+',
+                      label: 'ساڵی ئەزموون',
+                      color: 'from-blue-500/20 to-blue-600/10',
+                    },
+                    {
+                      value: '٢٤/٧',
+                      label: 'پشتگیری قوتابیان',
+                      color: 'from-purple-500/20 to-purple-600/10',
+                    },
+                    {
+                      value: '٩٥٪',
+                      label: 'ڕێژەی سەرکەوتن',
+                      color: 'from-emerald-500/20 to-emerald-600/10',
+                    },
+                    {
+                      value: '١٢+',
+                      label: 'بەشی جیاواز',
+                      color: 'from-amber-500/20 to-amber-600/10',
+                    },
+                  ].map((stat, index) => (
+                    <div
+                      key={index}
+                      className={`relative bg-gradient-to-br ${stat.color} backdrop-blur-xl rounded-2xl p-5 md:p-6 border border-white/20 hover:border-white/30 transition-all duration-300 group hover:scale-105`}
                     >
-                      {/* Glassmorphism Card */}
-                      <div
-                        className={`relative bg-white/5 backdrop-blur-2xl rounded-lg md:rounded-xl p-3 md:p-4 border border-white/10 transition-all duration-300 hover:bg-white/10 hover:scale-105 ${category.borderGlow} hover:shadow-2xl h-full`}
-                      >
-                        {/* Gradient Overlay */}
-                        <div
-                          className={`absolute inset-0 bg-gradient-to-br ${category.gradient} rounded-lg md:rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                        ></div>
-                        {/* Content */}
-                        <div className="relative z-10 space-y-2 md:space-y-3 text-right">
-                          {/* Icon */}
-                          <div className="inline-flex">
-                            <div className="bg-white/10 backdrop-blur-xl rounded-lg p-2 md:p-2.5 group-hover:scale-110 transition-transform duration-300">
-                              <Icon
-                                size={20}
-                                className={`${category.iconColor} md:w-6 md:h-6`}
-                                strokeWidth={2}
-                              />
-                            </div>
-                          </div>
-                          {/* Text */}
-                          <div className="space-y-0.5 md:space-y-1">
-                            <h4 className="text-base md:text-lg font-bold text-white tracking-wide">
-                              {category.title}
-                            </h4>
-                            <p className="text-xs text-gray-300 font-light">
-                              {category.details}
-                            </p>
-                          </div>
-                          {/* Action Arrow */}
-                          <div className="flex items-center justify-end pt-1 md:pt-2">
-                            <ArrowRight
-                              size={14}
-                              className="text-gray-400 group-hover:text-white transform rotate-180 group-hover:translate-x-1 transition-all duration-300 md:w-4 md:h-4"
-                            />
-                          </div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative">
+                        <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">
+                          {stat.value}
                         </div>
-                        {/* Hover Indicator */}
-                        {isHovered && (
-                          <div className="absolute top-2 left-2">
-                            <CheckCircle2
-                              size={16}
-                              className={`${category.iconColor} md:w-[18px] md:h-[18px]`}
-                            />
-                          </div>
-                        )}
-                        {/* Glass Reflection */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent rounded-lg md:rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="text-gray-300 text-sm md:text-base font-light tracking-wide">
+                          {stat.label}
+                        </div>
                       </div>
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-          {/* Right Side - Stats Card */}
-          <div className="space-y-3 md:space-y-4">
-            {/* Stats Card with Glassmorphism */}
-            <div className="bg-white/5 backdrop-blur-2xl rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/10 shadow-2xl">
-              {/* Header with Avatars */}
-              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6 pb-3 md:pb-4 border-b border-white/10">
-                <div className="flex -space-x-2">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-slate-800 flex items-center justify-center text-white font-bold text-xs md:text-sm">
-                    م
-                  </div>
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-slate-800 flex items-center justify-center text-white font-bold text-xs md:text-sm">
-                    س
-                  </div>
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-slate-800 flex items-center justify-center text-white font-bold text-xs md:text-sm">
-                    ئ
-                  </div>
+                    </div>
+                  ))}
                 </div>
-                <div>
-                  <h3 className="text-white font-bold text-sm md:text-base tracking-wide">
-                    قوتابیانی سەرکەوتوو
-                  </h3>
-                  <p className="text-gray-400 text-xs font-light">
-                    بەشداری بکە لە تۆڕی ئێمە
-                  </p>
-                </div>
-              </div>
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-2 md:gap-3 mb-3 md:mb-4">
-                {/* Stat 1 */}
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-lg md:rounded-xl p-3 md:p-4 border border-white/10">
-                  <div className="text-2xl md:text-3xl font-black text-white mb-0.5 md:mb-1 tracking-tight">
-                    ١٠+
+                {/* Enhanced Certification Badge */}
+                <div className="relative bg-gradient-to-r from-blue-500/30 to-blue-600/30 backdrop-blur-xl rounded-2xl p-5 border border-blue-400/40 flex items-center gap-4 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300">
+                  <div className="bg-blue-500/40 backdrop-blur-xl rounded-xl p-3">
+                    <Shield size={24} className="text-blue-200" />
                   </div>
-                  <div className="text-gray-400 text-xs font-light tracking-wide">
-                    ساڵی ئەزموون
-                  </div>
-                </div>
-                {/* Stat 2 */}
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-lg md:rounded-xl p-3 md:p-4 border border-white/10">
-                  <div className="text-2xl md:text-3xl font-black text-white mb-0.5 md:mb-1 tracking-tight">
-                    ٢٤/٧
-                  </div>
-                  <div className="text-gray-400 text-xs font-light tracking-wide">
-                    پشتگیری قوتابیان
-                  </div>
-                </div>
-                {/* Stat 3 */}
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-lg md:rounded-xl p-3 md:p-4 border border-white/10">
-                  <div className="text-2xl md:text-3xl font-black text-white mb-0.5 md:mb-1 tracking-tight">
-                    ٩٥٪
-                  </div>
-                  <div className="text-gray-400 text-xs font-light tracking-wide">
-                    ڕێژەی سەرکەوتن
-                  </div>
-                </div>
-                {/* Stat 4 */}
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-lg md:rounded-xl p-3 md:p-4 border border-white/10">
-                  <div className="text-2xl md:text-3xl font-black text-white mb-0.5 md:mb-1 tracking-tight">
-                    ١٢+
-                  </div>
-                  <div className="text-gray-400 text-xs font-light tracking-wide">
-                    بەشی جیاواز
-                  </div>
-                </div>
-              </div>
-              {/* Certification Badge */}
-              <div className="bg-gradient-to-r from-blue-500/20 to-blue-600/20 backdrop-blur-xl rounded-lg md:rounded-xl p-2.5 md:p-3 border border-blue-400/30 flex items-center gap-2 md:gap-3">
-                <div className="bg-blue-500/30 backdrop-blur-xl rounded-lg p-1.5 md:p-2">
-                  <Shield size={18} className="text-blue-300 md:w-5 md:h-5" />
-                </div>
-                <div>
-                  <div className="text-white font-bold text-xs md:text-sm tracking-wide">
-                    پارێزراو و متمانەپێکراو
-                  </div>
-                  <div className="text-blue-200 text-xs font-light">
-                    بڕوانامەی ISO 9001
+                  <div>
+                    <div className="text-white font-bold text-base md:text-lg tracking-wide">
+                      پارێزراو و متمانەپێکراو
+                    </div>
+                    <div className="text-blue-100 text-sm font-light">
+                      بڕوانامەی ISO 9001
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+      {/* Enhanced Department Cards Section */}
+      <section
+        ref={departmentSectionRef}
+        className="relative z-10 py-16 md:py-24 px-4 sm:px-6 lg:px-8"
+      >
+        <div className="w-full max-w-7xl mx-auto">
+          {/* Enhanced Section Title */}
+          <div className="text-center mb-12 md:mb-16">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 tracking-tight">
+              بەشەکان هەڵبژێرە
+            </h3>
+            <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+              لقی گونجاو هەڵبژێرە و بەشداری بکە لە داهاتوویەکی درەوشاوە
+            </p>
+          </div>
+          {/* Enhanced Department Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+            {categories.map((category) => {
+              const Icon = category.icon
+              const isHovered = hoveredCard === category.id
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => onSelect(category.id)}
+                  onMouseEnter={() => setHoveredCard(category.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                  className="group relative"
+                >
+                  <div
+                    className={`relative bg-white/5 backdrop-blur-2xl rounded-2xl p-6 md:p-7 border-2 border-white/10 transition-all duration-500 hover:bg-white/10 hover:scale-105 ${category.borderGlow} hover:shadow-2xl h-full flex flex-col`}
+                  >
+                    {/* Enhanced gradient overlay */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${category.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                    ></div>
+                    {/* Glow effect */}
+                    <div
+                      className={`absolute -inset-1 bg-gradient-to-br ${category.bgGlow} rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                    ></div>
+                    <div className="relative z-10 flex flex-col h-full text-right">
+                      {/* Enhanced Icon Container */}
+                      <div className="inline-flex mb-6">
+                        <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
+                          <Icon
+                            size={32}
+                            className={category.iconColor}
+                            strokeWidth={2}
+                          />
+                        </div>
+                      </div>
+                      {/* Content with better spacing */}
+                      <div className="space-y-3 flex-grow">
+                        <h4 className="text-xl md:text-2xl font-black text-white tracking-wide group-hover:text-shadow-lg">
+                          {category.title}
+                        </h4>
+                        <p className="text-base text-gray-300 font-light leading-relaxed">
+                          {category.details}
+                        </p>
+                      </div>
+                      {/* Enhanced Arrow indicator */}
+                      <div className="flex items-center justify-end pt-6 mt-auto">
+                        <div className="flex items-center gap-2 text-gray-400 group-hover:text-white transition-colors duration-300">
+                          <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            هەڵبژاردن
+                          </span>
+                          <ArrowRight
+                            size={20}
+                            className="transform rotate-180 group-hover:translate-x-2 transition-all duration-300"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {/* Enhanced hover indicator */}
+                    {isHovered && (
+                      <div className="absolute top-4 left-4 animate-pulse">
+                        <CheckCircle2
+                          size={24}
+                          className={category.iconColor}
+                        />
+                      </div>
+                    )}
+                    {/* Shine effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

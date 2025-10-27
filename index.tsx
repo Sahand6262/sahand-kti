@@ -2486,7 +2486,7 @@ function MainForm({
         </div>
       </header>
 
-      <main className="relative z-10 flex flex-col items-center px-[5px] py-4 md:py-8">
+      <main className="relative z-10 flex flex-col items-center px-2.5 py-4 md:py-8">
         {/* A4 Page Container - Responsive for viewing, fixed for PDF */}
         <div className="w-full mx-auto">
           {currentStep === 1 ? (
