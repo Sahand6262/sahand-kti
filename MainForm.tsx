@@ -1805,7 +1805,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
     setShowSuccess(false)
 
     try {
-      const API_ENDPOINT = 'https://apply.kti.edu.iq/secure_student_insert.php'
+      const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/secure_student_insert.php'
 
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
@@ -1819,39 +1819,24 @@ export function MainForm({ formType, onBack }: MainFormProps) {
           phone: formData.phone1,
         }),
       })
-      
-      const responseText = await response.text();
 
       if (!response.ok) {
-        try {
-          const errorResult = JSON.parse(responseText);
-          const message = errorResult.message || errorResult.error || 'هەڵەیەک لە لایەنی سێرڤەرەوە ڕوویدا.';
-          throw new Error(message);
-        } catch (e) {
-          throw new Error(`هەڵەیەک لە سێرڤەرەوە ڕوویدا. کۆدی هەڵە: ${response.status}`);
-        }
+        throw new Error('هەڵەیەک لە ناردنی فۆڕمەکە ڕوویدا. تکایە دواتر هەوڵبدەوە.')
       }
 
-      const result = JSON.parse(responseText);
+      const result = await response.json()
 
       if (!result.success) {
-        throw new Error(result.error || result.message || 'سێرڤەر هەڵەیەکی گەڕاندەوە. تکایە دڵنیابەرەوە لە زانیارییەکانت.');
+        throw new Error(result.error || result.message || 'سێرڤەر هەڵەیەکی گەڕاندەوە. تکایە دڵنیابەرەوە لە زانیارییەکانت.')
       }
 
-      setSuccessMessage('زانیارییەکان بە سەرکەوتوویی نێردرا! ئامادەکاری بۆ داگرتنی PDF.');
-      setShowSuccess(true);
+      setSuccessMessage('زانیارییەکان بە سەرکەوتوویی نێردرا! ئامادەکاری بۆ داگرتنی PDF.')
+      setShowSuccess(true)
 
-      await generatePDF();
-
+      await generatePDF()
     } catch (error) {
       console.error('Submission or PDF generation failed:', error)
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        setErrorMessage('پەیوەندی کردن بە سێرڤەرەوە سەرکەوتوو نەبوو. تکایە لە هێڵی ئینتەرنێت دڵنیابەرەوە.')
-      } else if (error instanceof Error) {
-        setErrorMessage(error.message)
-      } else {
-        setErrorMessage('هەڵەیەکی چاوەڕواننەکراو ڕوویدا. تکایە دووبارە هەوڵ بدەوە.')
-      }
+      setErrorMessage('هەڵەیەکی چاوەڕواننەکراو ڕوویدا. تکایە دووبارە هەوڵ بدەوە.')
       setShowError(true)
     } finally {
       setIsGenerating(false)
