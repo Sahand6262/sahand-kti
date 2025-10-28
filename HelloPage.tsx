@@ -383,7 +383,8 @@ export function HelloPage() {
   const [error, setError] = useState<string | null>(null)
   const [students, setStudents] = useState<Student[]>([])
 
-  const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/single_api.php'
+  const API_ENDPOINT =
+    'https://xn--salonvejgrd-58a.dk/public_html/api/single_api.php'
 
   const clearSession = useCallback(() => {
     localStorage.removeItem('authToken')
