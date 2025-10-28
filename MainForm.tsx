@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState, useRef } from 'react'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
@@ -1333,7 +1335,7 @@ const FormPageTwo = ({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656-.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
               />
             </svg>
           </div>
@@ -1489,6 +1491,8 @@ export function MainForm({ formType, onBack }: MainFormProps) {
       break
   }
 
+  const API_ENDPOINT =
+    'https://xn--salonvejgrd-58a.dk/public_html/api/secure_student_insert.php'
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
     personalName: '',
@@ -1784,8 +1788,6 @@ export function MainForm({ formType, onBack }: MainFormProps) {
     setShowSuccess(false)
 
     try {
-      const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/secure_student_insert.php'
-
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -1799,22 +1801,48 @@ export function MainForm({ formType, onBack }: MainFormProps) {
       })
 
       if (!response.ok) {
-        throw new Error('هەڵەیەک لە ناردنی فۆڕمەکە ڕوویدا. تکایە دواتر هەوڵبدەوە.')
+        let serverError = 'هەڵەیەک لە ناردنی فۆڕمەکە ڕوویدا.'
+        try {
+          const errorResult = await response.json()
+          serverError =
+            errorResult.message ||
+            errorResult.error ||
+            `${serverError} (Status: ${response.status})`
+        } catch (e) {
+          serverError = `${serverError} (Status: ${response.status})`
+        }
+        throw new Error(serverError)
       }
 
       const result = await response.json()
 
       if (!result.success) {
-        throw new Error(result.error || result.message || 'سێرڤەر هەڵەیەکی گەڕاندەوە. تکایە دڵنیابەرەوە لە زانیارییەکانت.')
+        throw new Error(
+          result.message ||
+            result.error ||
+            'سێرڤەر هەڵەیەکی گەڕاندەوە. تکایە دڵنیابەرەوە لە زانیارییەکانت.',
+        )
       }
 
-      setSuccessMessage('زانیارییەکان بە سەرکەوتوویی نێردرا! ئامادەکاری بۆ داگرتنی PDF.')
+      setSuccessMessage(
+        'زانیارییەکان بە سەرکەوتوویی نێردرا! ئامادەکاری بۆ داگرتنی PDF.',
+      )
       setShowSuccess(true)
 
       await generatePDF()
     } catch (error) {
       console.error('Submission or PDF generation failed:', error)
-      setErrorMessage('هەڵەیەکی چاوەڕواننەکراو ڕوویدا. تکایە دووبارە هەوڵ بدەوە.')
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        setErrorMessage(
+          'پەیوەندی کردن بە سێرڤەرەوە سەرکەوتوو نەبوو. تکایە لە هێڵی ئینتەرنێت دڵنیابەرەوە.',
+        )
+      } else if (error instanceof Error) {
+        setErrorMessage(error.message)
+      } else {
+        setErrorMessage(
+          'هەڵەیەکی چاوەڕواننەکراو ڕوویدا. تکایە دووبارە هەوڵ بدەوە.',
+        )
+      }
       setShowError(true)
     } finally {
       setIsGenerating(false)
