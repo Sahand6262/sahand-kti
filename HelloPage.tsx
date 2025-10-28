@@ -11,6 +11,7 @@ import {
   DocumentIcon,
   PhoneIcon,
 } from './Icons'
+import { LogOut } from 'lucide-react'
 
 // --- TYPE DEFINITIONS ---
 type Student = {
@@ -25,7 +26,7 @@ type AuthModalProps = {
 }
 type StudentListProps = {
   students: Student[]
-  userHi: string
+  onLogout: () => void
 }
 
 // --- AUTHENTICATION MODAL ---
@@ -179,7 +180,7 @@ const Pagination = memo(
 )
 
 // --- STUDENT LIST VIEW ---
-const StudentList = ({ students, userHi }: StudentListProps) => {
+const StudentList = ({ students, onLogout }: StudentListProps) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
@@ -230,6 +231,14 @@ const StudentList = ({ students, userHi }: StudentListProps) => {
               لیستی فێرخوازان
             </h1>
           </div>
+          <button
+            onClick={onLogout}
+            className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
+            aria-label="Logout"
+          >
+            <LogOut size={18} />
+            <span>چوونەدەرەوە</span>
+          </button>
         </div>
       </header>
       <main className="container mx-auto p-6 max-w-7xl relative flex-grow">
@@ -370,85 +379,149 @@ const StudentList = ({ students, userHi }: StudentListProps) => {
 export function HelloPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isAuthenticating, setIsAuthenticating] = useState(true) // For initial load
   const [error, setError] = useState<string | null>(null)
-  const [userHi, setUserHi] = useState<string>('')
   const [students, setStudents] = useState<Student[]>([])
-  const [token, setToken] = useState<string | null>(null)
 
-  const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/single_api.php'
+  const API_ENDPOINT =
+    'https://xn--salonvejgrd-58a.dk/public_html/api/single_api.php'
 
-  const handleAuthenticate = useCallback(async (enteredId: string) => {
-    setIsLoading(true)
-    setError(null)
-    try {
-      // Step 1: Login to get JWT
-      const loginResponse = await fetch(API_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user_hi: enteredId }),
-      })
-
-      if (!loginResponse.ok) {
-        let errorMessage = 'ناسنامەکە هەڵەیە یان ڕێگەپێنەدراوە'
-        try {
-          const errorResult = await loginResponse.json()
-          errorMessage =
-            errorResult.message || errorResult.error || errorMessage
-        } catch (e) {
-          // Response was not JSON, use default error message
-        }
-        throw new Error(errorMessage)
-      }
-
-      const loginResult = await loginResponse.json()
-      if (!loginResult.success || !loginResult.token) {
-        const errorMessage =
-          loginResult.message || loginResult.error || 'نەتوانرا تۆکن وەربگیرێت'
-        throw new Error(errorMessage)
-      }
-
-      const receivedToken = loginResult.token
-      setToken(receivedToken)
-
-      // Step 2: Fetch students using JWT with a GET request
-      const studentsResponse = await fetch(API_ENDPOINT, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${receivedToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
-
-      if (!studentsResponse.ok) {
-        throw new Error('هەڵەیەک لە وەرگرتنی داتای فێرخوازان ڕوویدا')
-      }
-
-      const studentsResult = await studentsResponse.json()
-      if (studentsResult.success) {
-        setStudents(studentsResult.students || [])
-        setUserHi(enteredId)
-        setIsAuthenticated(true)
-      } else {
-        throw new Error(
-          studentsResult.message || 'نەتوانرا داتای فێرخوازان وەربگیرێت',
-        )
-      }
-    } catch (err) {
-      if (err instanceof TypeError && err.message === 'Failed to fetch') {
-        setError(
-          'پەیوەندی کردن بە سێرڤەرەوە سەرکەوتوو نەبوو. تکایە لە هێڵی ئینتەرنێت دڵنیابەرەوە.',
-        )
-      } else if (err instanceof Error) {
-        setError(err.message)
-      } else {
-        setError('هەڵەیەکی چاوەڕواننەکراو ڕوویدا')
-      }
-    } finally {
-      setIsLoading(false)
-    }
+  const clearSession = useCallback(() => {
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('tokenExpiresAt')
+    setIsAuthenticated(false)
   }, [])
+
+  const fetchStudents = useCallback(
+    async (token: string) => {
+      setIsLoading(true)
+      setError(null)
+      try {
+        const studentsResponse = await fetch(API_ENDPOINT, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (studentsResponse.status === 401) {
+          clearSession()
+          // No need to throw error, just de-authenticate. The login form will show.
+          return
+        }
+
+        if (!studentsResponse.ok) {
+          throw new Error('هەڵەیەک لە وەرگرتنی داتای فێرخوازان ڕوویدا')
+        }
+
+        const studentsResult = await studentsResponse.json()
+        if (studentsResult.success) {
+          setStudents(studentsResult.students || [])
+          setIsAuthenticated(true)
+        } else {
+          throw new Error(
+            studentsResult.message || 'نەتوانرا داتای فێرخوازان وەربگیرێت',
+          )
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message)
+        } else {
+          setError('هەڵەیەکی چاوەڕواننەکراو ڕوویدا')
+        }
+        clearSession()
+      } finally {
+        setIsLoading(false)
+        setIsAuthenticating(false)
+      }
+    },
+    [clearSession],
+  )
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authToken')
+    const storedExpiry = localStorage.getItem('tokenExpiresAt')
+
+    if (storedToken && storedExpiry) {
+      if (new Date(storedExpiry) > new Date()) {
+        fetchStudents(storedToken)
+      } else {
+        clearSession()
+        setIsAuthenticating(false)
+      }
+    } else {
+      setIsAuthenticating(false)
+    }
+  }, [fetchStudents, clearSession])
+
+  const handleAuthenticate = useCallback(
+    async (enteredId: string) => {
+      setIsLoading(true)
+      setError(null)
+      try {
+        const loginResponse = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_hi: enteredId }),
+        })
+
+        if (!loginResponse.ok) {
+          let errorMessage = 'ناسنامەکە هەڵەیە یان ڕێگەپێنەدراوە'
+          try {
+            const errorResult = await loginResponse.json()
+            errorMessage =
+              errorResult.message || errorResult.error || errorMessage
+          } catch (e) {
+            /* Ignore */
+          }
+          throw new Error(errorMessage)
+        }
+
+        const loginResult = await loginResponse.json()
+        if (!loginResult.success || !loginResult.token) {
+          throw new Error(
+            loginResult.message ||
+              loginResult.error ||
+              'نەتوانرا تۆکن وەربگیرێت',
+          )
+        }
+
+        localStorage.setItem('authToken', loginResult.token)
+        localStorage.setItem('tokenExpiresAt', loginResult.expires_at)
+
+        await fetchStudents(loginResult.token)
+      } catch (err) {
+        if (err instanceof TypeError && err.message === 'Failed to fetch') {
+          setError(
+            'پەیوەندی کردن بە سێرڤەرەوە سەرکەوتوو نەبوو. تکایە لە هێڵی ئینتەرنێت دڵنیابەرەوە.',
+          )
+        } else if (err instanceof Error) {
+          setError(err.message)
+        } else {
+          setError('هەڵەیەکی چاوەڕواننەکراو ڕوویدا')
+        }
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [fetchStudents],
+  )
+
+  const handleLogout = useCallback(() => {
+    clearSession()
+  }, [clearSession])
+
+  if (isAuthenticating) {
+    return (
+      <div className="fixed inset-0 bg-white flex items-center justify-center">
+        <div className="flex items-center gap-3 text-lg font-semibold text-gray-700">
+          <span className="w-6 h-6 border-2 border-gray-700 border-t-transparent rounded-full animate-spin" />
+          <span>پشکنین...</span>
+        </div>
+      </div>
+    )
+  }
 
   if (!isAuthenticated) {
     return (
@@ -460,5 +533,5 @@ export function HelloPage() {
     )
   }
 
-  return <StudentList students={students} userHi={userHi} />
+  return <StudentList students={students} onLogout={handleLogout} />
 }
