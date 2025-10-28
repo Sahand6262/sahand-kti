@@ -705,10 +705,7 @@ const FormContent: React.FC<FormContentProps> = ({
     <form className="space-y-6">
       {/* Personal Info */}
       <div className="group">
-        <div className="modern-section-header flex items-center justify-between px-4">
-          <span className="font-semibold text-sm">
-            {`فۆڕمی وەرگرتن (${getEducationTypeText()})`}
-          </span>
+        <div className="modern-section-header flex items-center justify-center px-4">
           <div className="flex items-center justify-center gap-3">
             <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <svg
@@ -729,7 +726,6 @@ const FormContent: React.FC<FormContentProps> = ({
               زانیاری کەسی
             </span>
           </div>
-          <span className="font-semibold text-sm">(٢٠٢٥-٢٠٢٦)</span>
         </div>
         <div className="modern-card-enhanced">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -884,7 +880,7 @@ const FormContent: React.FC<FormContentProps> = ({
             </div>
             <div className="form-group-modern">
               <label className="modern-label">
-                ژ. مۆبایل (٢) (ئارەزوومەندانە)
+                ژ. مۆبایل (٢)
               </label>
               <input
                 type="text"
@@ -896,7 +892,7 @@ const FormContent: React.FC<FormContentProps> = ({
               />
             </div>
             <div className="form-group-modern">
-              <label className="modern-label">ئیمەیڵ (ئارەزوومەندانە)</label>
+              <label className="modern-label">ئیمەیڵ</label>
               <input
                 type="email"
                 name="email"
@@ -1522,7 +1518,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
       </div>
     </div>
     {/* Department Selection */}
-    <div className="group">
+    <div id="department-selection-section" className="group">
       <div className="modern-section-header bg-gradient-to-r from-blue-600 to-blue-700">
         <div className="flex items-center justify-center gap-3">
           <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
@@ -1541,7 +1537,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
             </svg>
           </div>
           <span className="font-bold tracking-wider text-lg">
-            بەشەکانی پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
+            بەشەکانی پەیمانگە
           </span>
         </div>
       </div>
@@ -1619,7 +1615,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
             {formType === 'bazrgani'
               ? 'دەرچووی پیشەیی(بازرگانی) دەتوانن بەشی(کارگێڕی کار،ژمێریاری،دیجیتاڵ میدیا و مارکێتینگ) پڕبکەنەوە،دواتر بەپێی داواکاری بەشەکەو ڕێژەی دەرچوونی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا،وەردەگیرێت.'
               : formType === 'peshassazi'
-              ? 'دەرچووی پیشەیی(پیشەسازی):- بەشەکانی(تەکنەلۆجیای زانیاری،چاکردنەوەی کۆمپیوتەر) دەتوانن لە بەشی(تەکنەلۆژیای زانیاری،تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن)بخوێنن. بەشەکانی(وێنەی ئەندازەی) دەتوانن لە بەشی (ئەندازیاری دیکۆر) بخوێنن. پێی خواستی خۆت و گونجاندنی بەشەکەت، هەڵبژاردنەکەت پڕبکەوە، بەڵام بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا و توێژینەوەی زانستی وەردەگیرێت.'
+              ? 'دەرچووی پیشەیی(پیشەسازی):- بەشەکانی(تەکنەلۆجیای زانیاری،چاکردنەوەی کۆمپیوتەر) دەتوانن لە بەشی(تەکنەلۆژیای زانیاری،تەکنەلۆژیای ڕۆبۆتینگ و ئۆتۆمەیشن)بخوێنن. بەشەکانی(وێنەی ئەندازەی) دەتوانن لە بەشی (ئەندازیاری دیکۆر) بخوێنن. پێی خواستی خۆت و گونجاندنی بەشەکەت، هەڵبژاردنەکەت پڕبکەوە، بەڵام بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و mەرجەکانی وەزارەتی خوێندنی باڵا و توێژینەوەی زانستی وەردەگیرێت.'
               : 'بە پێی ڕێنمایی و مەرجەکانی وەرگرتن، ژمارە (١٩٣٥٠) لە ڕێکەوتی (١٤\/١٠\/٢٠٢٥) بۆ ساڵی خوێندنی(٢٠٢٥ - ٢٠٢٦) بڕگەی یەکەم خاڵی (٧)، دەتوانیت (٣) هەڵبژاردن پڕبکەیتەوە، بەڵام بە گشتی هەڵبژاردنی یەکەم پێوەری سەرەکی وەرگرتنە و دوو هەڵبژاردنەکەی دیکە لە ئەگەری هەبوونی کورسی بەتاڵ لەو بەشانە و بە پێی داواکاری بەشەکە و کۆنمرەی فێرخواز و مەرجەکانی وەزارەتی خوێندنی باڵا، وەردەگیرێت.'}
           </p>
         </div>
@@ -2175,11 +2171,12 @@ function MainForm({
   }
   const handleDepartmentToggle = (departmentName: string) => {
     setFormData((prev) => {
+      const maxChoices = formType === 'wezhay' ? 2 : 3
       const selections = [...prev.departmentChoices]
       const existingIndex = selections.indexOf(departmentName)
       if (existingIndex > -1) {
         selections.splice(existingIndex, 1)
-      } else if (selections.length < 3) {
+      } else if (selections.length < maxChoices) {
         selections.push(departmentName)
       }
       return { ...prev, departmentChoices: selections }
@@ -2197,18 +2194,39 @@ function MainForm({
   }
   
   const validateStep1 = () => {
-    const newErrors: { [key: string]: string } = {};
-    if (!formData.personalName.trim()) {
-        newErrors.personalName = 'تکایە ناوی چواری بنووسە';
+    const newErrors: { [key: string]: string } = {}
+    if (!formData.personalName.trim())
+      newErrors.personalName = 'تکایە ناوی چواری بنووسە'
+    if (!formData.phone1.trim())
+      newErrors.phone1 = 'تکایە ژمارەی مۆبایل بنووسە'
+    return newErrors
+  }
+
+  const validateStep2 = () => {
+    const newErrors: { [key: string]: string } = {}
+    // All fields are optional in step 2 now
+    return newErrors
+  }
+
+  const handleValidationErrors = (errors: { [key: string]: string }) => {
+    setShowError(true)
+    setErrorMessage('تکایە هەموو خانە داواکراوەکان بە دروستی پڕبکەرەوە.')
+    const firstErrorField = Object.keys(errors)[0]
+    if (!firstErrorField) return
+
+    const element = document.querySelector<HTMLElement>(
+      `[name="${firstErrorField}"]`,
+    )
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      element.focus()
+    } else if (firstErrorField === 'departmentChoices') {
+      const departmentSection = document.getElementById(
+        'department-selection-section',
+      )
+      departmentSection?.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
-    if (!formData.phone1.trim()) {
-        newErrors.phone1 = 'تکایە ژمارەی مۆبایل بنووسە';
-    } else if (!/^[0-9+\-\s]{6,20}$/.test(formData.phone1)) {
-        newErrors.phone1 = 'تکایە ژمارەیەکی دروست بنووسە';
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  }
 
   const generatePDF = async () => {
     try {
@@ -2271,11 +2289,12 @@ function MainForm({
         'FAST',
       )
 
-      // Use file-saver to handle the download across all browsers
-      console.log('Generating Blob for file-saver...')
+      // Use file-saver to handle the download across all browsers and devices,
+      // providing a consistent direct download experience.
+      console.log('Generating Blob to trigger direct download...')
       const pdfBlob = pdf.output('blob')
       saveAs(pdfBlob, 'Kurdistan_Technical_Institute_Form.pdf')
-      console.log('PDF download triggered via file-saver.')
+      console.log('PDF download triggered via file-saver for all devices.')
     } catch (error) {
       console.error('PDF generation failed:', error)
       throw new Error(
@@ -2288,17 +2307,27 @@ function MainForm({
     e.preventDefault()
 
     if (currentStep === 1) {
-      if (validateStep1()) {
-        handleNextStep()
+      const validationErrors = validateStep1()
+      setErrors(validationErrors)
+      if (Object.keys(validationErrors).length > 0) {
+        handleValidationErrors(validationErrors)
       } else {
-        setShowError(true);
-        setErrorMessage('تکایە خانە داواکراوەکان پڕبکەرەوە.');
+        handleNextStep()
       }
       return
     }
 
     // This is the final submission on step 2
     setIsGenerating(true)
+    const validationErrors = validateStep2()
+    setErrors(validationErrors)
+
+    if (Object.keys(validationErrors).length > 0) {
+      handleValidationErrors(validationErrors)
+      setIsGenerating(false) // Re-enable button
+      return
+    }
+
     setShowError(false)
     setShowSuccess(false)
 
@@ -2366,7 +2395,7 @@ function MainForm({
       </div>
       {/* Success/Error Notifications */}
       {showSuccess && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm transition-none">
           <div className="bg-emerald-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
               className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600"
@@ -2388,7 +2417,7 @@ function MainForm({
         </div>
       )}
       {showError && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-blue-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-blue-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm transition-none">
           <div className="bg-blue-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
               className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600"
@@ -2731,15 +2760,9 @@ function MainForm({
               <div className="space-y-2">
                 {/* Personal Info */}
                 <div>
-                  <div className="section-header-modern text-white flex items-center justify-between py-3 px-4 text-lg">
-                    <span className="font-bold tracking-wider text-base">
-                      {`فۆڕمی وەرگرتن (${getPdfEducationTypeText()})`}
-                    </span>
+                  <div className="section-header-modern text-white flex items-center justify-center py-3 px-4 text-lg">
                     <span className="font-bold tracking-wider">
                       زانیاری کەسی
-                    </span>
-                    <span className="font-bold tracking-wider text-base">
-                      {`(٢٠٢٥-٢٠٢٦)`}
                     </span>
                   </div>
                   <div className="modern-card p-4 space-y-3">
@@ -3357,7 +3380,7 @@ function MainForm({
             <div>
               <div className="section-header-modern text-white text-center py-2 text-base">
                 <span className="font-bold tracking-wider">
-                  بەشەکانی پەیمانگە بۆ ساڵی خوێندنی (٢٠٢٥-٢٠٢٦)
+                  بەشەکانی پەیمانگە
                 </span>
               </div>
               <div className="modern-card p-3">

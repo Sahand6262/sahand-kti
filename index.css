@@ -162,12 +162,6 @@ button:hover:not(:disabled) {
 button:active:not(:disabled) {
   transform: translateY(0);
 }
-/* Smooth Transitions */
-* {
-  transition-property: color, background-color, border-color, opacity, box-shadow, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 200ms;
-}
 /* Print Styles */
 @media print {
   body {
