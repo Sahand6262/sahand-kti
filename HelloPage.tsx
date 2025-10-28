@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useMemo, useCallback, memo, useRef } from 'react'
 import { Footer } from './footer'
 import {
@@ -471,7 +472,6 @@ export function HelloPage() {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
           },
         })
 
