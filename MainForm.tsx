@@ -1,11 +1,47 @@
 
 
+
 import React, { useEffect, useState, useRef } from 'react'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
 import saveAs from 'file-saver'
 import { Footer } from './footer'
 import { ArrowRight } from 'lucide-react'
+
+// --- SECURITY UTILITIES ---
+const isSuspicious = (value: string): boolean => {
+  if (typeof value !== 'string' || !value) return false
+
+  // Common XSS patterns
+  const xssPatterns = [
+    /<script/i,
+    /onerror\s*=/i,
+    /onload\s*=/i,
+    /javascript:/i,
+    /src\s*=\s*['"]?\s*javascript:/i,
+    /<svg\/onload/i,
+    /<\s*img\s*src\s*=\s*['"]?x['"]?\s*onerror/i,
+    /<\s*iframe/i,
+    /onmouseover\s*=/i,
+  ]
+
+  // Common SQL injection patterns
+  const sqlPatterns = [
+    /(\s|\+)+(select|union|insert|update|delete|drop|alter|--|;)\s/i,
+    /('|"|\s)(or|and)(\s|\+)+(\w+)\s*=\s*(\w+)/i, // e.g. ' or 1=1
+    /(\s|\+)+like(\s|\+)+/i,
+    /(\s|\+)+limit(\s|\+)+/i,
+  ]
+
+  const allPatterns = [...xssPatterns, ...sqlPatterns]
+
+  return allPatterns.some((pattern) => pattern.test(value))
+}
+
+const sanitizeInput = (value: string): string => {
+  if (typeof value !== 'string') return value
+  return value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
 
 // --- TYPE DEFINITIONS ---
 type FormData = {
@@ -1335,7 +1371,7 @@ const FormPageTwo = ({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656-.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
               />
             </svg>
           </div>
@@ -1583,6 +1619,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
+  const [isBlocked, setIsBlocked] = useState(false)
   const pageOnePrintRef = useRef(null)
   const pageTwoPrintRef = useRef(null)
 
@@ -1598,10 +1635,25 @@ export function MainForm({ formType, onBack }: MainFormProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
+
+    if (isSuspicious(value)) {
+      console.error('Malicious activity detected. Blocking user.', {
+        field: name,
+        value,
+      })
+      setIsBlocked(true)
+      return
+    }
+
     let sanitizedValue: string | boolean = value
 
-    if (type === 'text' || type === 'email' || type === 'date' || type === 'tel') {
-      sanitizedValue = value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    if (
+      type === 'text' ||
+      type === 'email' ||
+      type === 'date' ||
+      type === 'tel'
+    ) {
+      sanitizedValue = sanitizeInput(value)
     }
     if (
       name === 'examTestNumbers' ||
@@ -1632,9 +1684,18 @@ export function MainForm({ formType, onBack }: MainFormProps) {
     index: number,
     value: string,
   ) => {
+    if (isSuspicious(value)) {
+      console.error('Malicious activity detected. Blocking user.', {
+        field: `${arrayName}[${index}]`,
+        value,
+      })
+      setIsBlocked(true)
+      return
+    }
+
     setFormData((prevState) => {
       const newArray = [...(prevState[arrayName] as string[])]
-      newArray[index] = value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      newArray[index] = sanitizeInput(value)
       return {
         ...prevState,
         [arrayName]: newArray,
@@ -1849,6 +1910,29 @@ export function MainForm({ formType, onBack }: MainFormProps) {
       setIsCoolingDown(true)
       setTimeout(() => setIsCoolingDown(false), 5000)
     }
+  }
+
+  if (isBlocked) {
+    return (
+      <div
+        className="min-h-screen bg-gray-100 flex items-center justify-center text-center p-4"
+        dir="rtl"
+      >
+        <div className="bg-white p-10 rounded-2xl shadow-2xl">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">
+            ڕێگەپێدان ڕەتکرایەوە
+          </h2>
+          <p className="text-gray-700">
+            چالاکی گوماناوی دۆزرایەوە. لەبەر هۆکاری ئاسایش، چوونەژوورەوەتان بلۆک
+            کراوە.
+          </p>
+          <p className="text-gray-500 text-sm mt-4">
+            (Malicious activity detected. For security, your access has been
+            blocked.)
+          </p>
+        </div>
+      </div>
+    )
   }
 
   return (

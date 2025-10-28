@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback, memo } from 'react'
+import React, { useEffect, useState, useMemo, useCallback, memo, useRef } from 'react'
 import { Footer } from './footer'
 import {
   UserIcon,
@@ -29,16 +29,77 @@ type StudentListProps = {
   onLogout: () => void
 }
 
+// --- SECURITY UTILITY ---
+const isSuspicious = (value: string): boolean => {
+  if (typeof value !== 'string' || !value) return false
+
+  // Common XSS patterns
+  const xssPatterns = [
+    /<script/i,
+    /onerror\s*=/i,
+    /onload\s*=/i,
+    /javascript:/i,
+    /src\s*=\s*['"]?\s*javascript:/i,
+    /<svg\/onload/i,
+    /<\s*img\s*src\s*=\s*['"]?x['"]?\s*onerror/i,
+    /<\s*iframe/i,
+    /onmouseover\s*=/i,
+  ]
+
+  // Common SQL injection patterns
+  const sqlPatterns = [
+    /(\s|\+)+(select|union|insert|update|delete|drop|alter|--|;)\s/i,
+    /('|"|\s)(or|and)(\s|\+)+(\w+)\s*=\s*(\w+)/i, // e.g. ' or 1=1
+    /(\s|\+)+like(\s|\+)+/i,
+    /(\s|\+)+limit(\s|\+)+/i,
+  ]
+
+  const allPatterns = [...xssPatterns, ...sqlPatterns]
+
+  return allPatterns.some((pattern) => pattern.test(value))
+}
+
 // --- AUTHENTICATION MODAL ---
 const AuthModal = memo(
   ({ onAuthenticate, isLoading, error }: AuthModalProps) => {
     const [userHi, setUserHi] = useState('')
+    const [isLockedOut, setIsLockedOut] = useState(false)
+    const [lockoutTimer, setLockoutTimer] = useState(0)
+    const attemptsRef = useRef(0)
+    const MAX_ATTEMPTS = 5
+    const LOCKOUT_DURATION = 30 // seconds
+
+    useEffect(() => {
+      // If there is a new error prop and the loading has finished, it means an attempt failed.
+      if (error && !isLoading) {
+        attemptsRef.current += 1
+        if (attemptsRef.current >= MAX_ATTEMPTS) {
+          setIsLockedOut(true)
+          setLockoutTimer(LOCKOUT_DURATION)
+          const interval = setInterval(() => {
+            setLockoutTimer((prev) => {
+              if (prev <= 1) {
+                clearInterval(interval)
+                setIsLockedOut(false)
+                attemptsRef.current = 0
+                return 0
+              }
+              return prev - 1
+            })
+          }, 1000)
+        }
+      }
+    }, [error, isLoading])
 
     const attemptLogin = useCallback(() => {
-      if (userHi.trim() && !isLoading) {
+      if (userHi.trim() && !isLoading && !isLockedOut) {
+        if (isSuspicious(userHi)) {
+          console.error('Blocked login attempt due to suspicious input.')
+          return
+        }
         onAuthenticate(userHi)
       }
-    }, [userHi, isLoading, onAuthenticate])
+    }, [userHi, isLoading, isLockedOut, onAuthenticate])
 
     const handleSubmit = useCallback(
       (e: React.FormEvent) => {
@@ -80,7 +141,15 @@ const AuthModal = memo(
                 />
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-black to-gray-800 opacity-0 group-focus-within:opacity-5 transition-opacity pointer-events-none" />
               </div>
-              {error && (
+              {isLockedOut && (
+                <div className="bg-yellow-50 border-2 border-yellow-100 rounded-xl p-4 text-center">
+                  <p className="text-yellow-700 font-medium">
+                    هەوڵی زۆر هەڵە درا. تکایە دوای {lockoutTimer} چرکە
+                    هەوڵبدەرەوە.
+                  </p>
+                </div>
+              )}
+              {error && !isLockedOut && (
                 <div className="bg-red-50 border-2 border-red-100 rounded-xl p-4 animate-shake text-center">
                   <p className="text-red-600 text-sm font-medium mb-3">
                     {error}
@@ -97,7 +166,7 @@ const AuthModal = memo(
               )}
               <button
                 type="submit"
-                disabled={isLoading || !userHi.trim()}
+                disabled={isLoading || !userHi.trim() || isLockedOut}
                 className="w-full bg-black text-white px-5 py-4 rounded-xl font-semibold text-lg hover:bg-gray-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0"
               >
                 {isLoading ? (
