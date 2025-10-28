@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { jsPDF } from 'jspdf'
@@ -236,7 +237,11 @@ const AuthModal: React.FC<AuthModalProps> = ({
               className="w-full bg-black text-white px-5 py-4 rounded-xl font-semibold text-lg hover:bg-gray-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0"
             >
               {isLoading ? (
-                <span className="flex items-center justify-center gap-2">
+                <span
+                  className="flex items-center justify-center gap-2"
+                  role="status"
+                  aria-live="polite"
+                >
                   <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   دڵنیابوونەوە...
                 </span>
@@ -322,7 +327,7 @@ const StudentList: React.FC<StudentListProps> = ({ students, userHi }) => {
       behavior: 'smooth',
     })
   }
-  
+
   useEffect(() => {
     setCurrentPage(1)
   }, [searchTerm])
@@ -502,7 +507,7 @@ function HelloPage() {
         },
         body: JSON.stringify({ user_hi: enteredId }),
       })
-      
+
       if (!loginResponse.ok) {
         let errorMessage = 'ناسنامەکە هەڵەیە یان ڕێگەپێنەدراوە'
         try {
@@ -513,13 +518,14 @@ function HelloPage() {
         }
         throw new Error(errorMessage)
       }
-      
+
       const loginResult = await loginResponse.json()
       if (!loginResult.success || !loginResult.token) {
-        const errorMessage = loginResult.message || loginResult.error || 'نەتوانرا تۆکن وەربگیرێت'
+        const errorMessage =
+          loginResult.message || loginResult.error || 'نەتوانرا تۆکن وەربگیرێت'
         throw new Error(errorMessage)
       }
-      
+
       const receivedToken = loginResult.token
       setToken(receivedToken)
 
@@ -527,7 +533,7 @@ function HelloPage() {
       const studentsResponse = await fetch(API_ENDPOINT, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${receivedToken}`,
+          Authorization: `Bearer ${receivedToken}`,
           'Content-Type': 'application/json',
         },
       })
@@ -536,28 +542,33 @@ function HelloPage() {
         let errorMessage = 'هەڵەیەک لە وەرگرتنی داتای فێرخوازان ڕوویدا'
         try {
           const errorResult = await studentsResponse.json()
-          errorMessage = errorResult.message || errorResult.error || errorMessage
+          errorMessage =
+            errorResult.message || errorResult.error || errorMessage
         } catch (e) {
           // Response was not JSON, use default error message
         }
         throw new Error(errorMessage)
       }
-      
+
       const studentsResult = await studentsResponse.json()
       if (studentsResult.success) {
         setStudents(studentsResult.students || [])
         setUserHi(enteredId)
         setIsAuthenticated(true)
       } else {
-        throw new Error(studentsResult.message || 'نەتوانرا داتای فێرخوازان وەربگیرێت')
+        throw new Error(
+          studentsResult.message || 'نەتوانرا داتای فێرخوازان وەربگیرێت',
+        )
       }
     } catch (err) {
       if (err instanceof TypeError && err.message === 'Failed to fetch') {
-        setError('پەیوەندی کردن بە سێرڤەرەوە سەرکەوتوو نەبوو. تکایە لە هێڵی ئینتەرنێتەکەت دڵنیابەرەوە.')
+        setError(
+          'پەیوەندی کردن بە سێرڤەرەوە سەرکەوتوو نەبوو. تکایە لە هێڵی ئینتەرنێتەکەت دڵنیابەرەوە.',
+        )
       } else if (err instanceof Error) {
         if (err.message.includes('Missing or invalid Authorization header')) {
           setError(
-            'ڕێگەپێدان سەرکەوتوو نەبوو. کێشەکە زۆربەی کات لە فایلی .htaccess دایە. تکایە دڵنیابە کە ئەم دێڕانەی تێدایە بۆ ناردنی زانیارییەکانی ڕێگەپێدان: RewriteEngine On و RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]'
+            'ڕێگەپێدان سەرکەوتوو نەبوو. کێشەکە زۆربەی کات لە فایلی .htaccess دایە. تکایە دڵنیابە کە ئەم دێڕانەی تێدایە بۆ ناردنی زانیارییەکانی ڕێگەپێدان: RewriteEngine On و RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]',
           )
         } else {
           setError(err.message)
@@ -589,7 +600,6 @@ function HelloPage() {
 // ==================================================================
 // END: CODE FOR /hello ADMIN PAGE
 // ==================================================================
-
 
 // ==================================================================
 // START: CODE FOR REGISTRATION FORM PAGE
@@ -736,11 +746,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="personalName"
                 value={formData.personalName}
                 onChange={handleChange}
-                className={`modern-input ${errors.personalName ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.personalName ? 'border-red-500' : ''}`}
                 placeholder="ناوی چواری"
               />
               {errors.personalName && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.personalName}
                 </p>
               )}
@@ -772,7 +782,7 @@ const FormContent: React.FC<FormContentProps> = ({
                 </label>
               </div>
               {errors.gender && (
-                <p className="text-blue-700 text-xs mt-1">{errors.gender}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.gender}</p>
               )}
             </div>
             <div className="form-group-modern">
@@ -782,10 +792,10 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="birthYear"
                 value={formData.birthYear}
                 onChange={handleChange}
-                className={`modern-input text-right ${errors.birthYear ? 'border-blue-500' : ''}`}
+                className={`modern-input text-right ${errors.birthYear ? 'border-red-500' : ''}`}
               />
               {errors.birthYear && (
-                <p className="text-blue-700 text-xs mt-1">{errors.birthYear}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.birthYear}</p>
               )}
             </div>
           </div>
@@ -797,11 +807,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                className={`modern-input ${errors.address ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.address ? 'border-red-500' : ''}`}
                 placeholder="پارێزگا"
               />
               {errors.address && (
-                <p className="text-blue-700 text-xs mt-1">{errors.address}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.address}</p>
               )}
             </div>
             <div className="form-group-modern">
@@ -811,11 +821,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="cityArea"
                 value={formData.cityArea}
                 onChange={handleChange}
-                className={`modern-input ${errors.cityArea ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.cityArea ? 'border-red-500' : ''}`}
                 placeholder="شار/ناوچە"
               />
               {errors.cityArea && (
-                <p className="text-blue-700 text-xs mt-1">{errors.cityArea}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.cityArea}</p>
               )}
             </div>
             <div className="form-group-modern">
@@ -825,11 +835,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="neighborhood"
                 value={formData.neighborhood}
                 onChange={handleChange}
-                className={`modern-input ${errors.neighborhood ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.neighborhood ? 'border-red-500' : ''}`}
                 placeholder="گەڕەک"
               />
               {errors.neighborhood && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.neighborhood}
                 </p>
               )}
@@ -841,11 +851,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                className={`modern-input ${errors.city ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.city ? 'border-red-500' : ''}`}
                 placeholder="کۆڵان"
               />
               {errors.city && (
-                <p className="text-blue-700 text-xs mt-1">{errors.city}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.city}</p>
               )}
             </div>
             <div className="form-group-modern">
@@ -855,11 +865,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="district"
                 value={formData.district}
                 onChange={handleChange}
-                className={`modern-input ${errors.district ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.district ? 'border-red-500' : ''}`}
                 placeholder="خانوو"
               />
               {errors.district && (
-                <p className="text-blue-700 text-xs mt-1">{errors.district}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.district}</p>
               )}
             </div>
           </div>
@@ -871,17 +881,15 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="phone1"
                 value={formData.phone1}
                 onChange={handleChange}
-                className={`modern-input ${errors.phone1 ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.phone1 ? 'border-red-500' : ''}`}
                 placeholder="07XX XXX XXXX"
               />
               {errors.phone1 && (
-                <p className="text-blue-700 text-xs mt-1">{errors.phone1}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.phone1}</p>
               )}
             </div>
             <div className="form-group-modern">
-              <label className="modern-label">
-                ژ. مۆبایل (٢)
-              </label>
+              <label className="modern-label">ژ. مۆبایل (٢)</label>
               <input
                 type="text"
                 name="phone2"
@@ -911,11 +919,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="guardianName"
                 value={formData.guardianName || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.guardianName ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.guardianName ? 'border-red-500' : ''}`}
                 placeholder="ناوی بەخێوکەر"
               />
               {errors.guardianName && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.guardianName}
                 </p>
               )}
@@ -927,11 +935,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="guardianRelation"
                 value={formData.guardianRelation || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.guardianRelation ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.guardianRelation ? 'border-red-500' : ''}`}
                 placeholder="پلەی خزمایەتی"
               />
               {errors.guardianRelation && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.guardianRelation}
                 </p>
               )}
@@ -943,11 +951,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="guardianOccupation"
                 value={formData.guardianOccupation || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.guardianOccupation ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.guardianOccupation ? 'border-red-500' : ''}`}
                 placeholder="پیشە"
               />
               {errors.guardianOccupation && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.guardianOccupation}
                 </p>
               )}
@@ -959,11 +967,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="guardianPhone"
                 value={formData.guardianPhone || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.guardianPhone ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.guardianPhone ? 'border-red-500' : ''}`}
                 placeholder="07XX XXX XXXX"
               />
               {errors.guardianPhone && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.guardianPhone}
                 </p>
               )}
@@ -1008,10 +1016,10 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="graduationYear"
                 value={formData.graduationYear}
                 onChange={handleChange}
-                className={`modern-input text-right ${errors.graduationYear ? 'border-blue-500' : ''}`}
+                className={`modern-input text-right ${errors.graduationYear ? 'border-red-500' : ''}`}
               />
               {errors.graduationYear && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.graduationYear}
                 </p>
               )}
@@ -1043,7 +1051,7 @@ const FormContent: React.FC<FormContentProps> = ({
                 </label>
               </div>
               {errors.educationSystem && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.educationSystem}
                 </p>
               )}
@@ -1077,7 +1085,7 @@ const FormContent: React.FC<FormContentProps> = ({
                 </label>
               </div>
               {errors.examRound && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.examRound}
                 </p>
               )}
@@ -1089,14 +1097,14 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="examTestNumbers"
                 value={formData.examTestNumbers}
                 onChange={handleChange}
-                className={`modern-input ${errors.examTestNumbers ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.examTestNumbers ? 'border-red-500' : ''}`}
                 placeholder="٠١٢٣٤٥٦٧٨٩٠١٢"
                 maxLength={13}
                 inputMode="numeric"
                 autoComplete="off"
               />
               {errors.examTestNumbers && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.examTestNumbers}
                 </p>
               )}
@@ -1129,10 +1137,10 @@ const FormContent: React.FC<FormContentProps> = ({
           </div>
         </div>
         <div className="modern-card-enhanced">
-          <div className="bg-white rounded-xl border-2 border-blue-200 p-6 shadow-md mb-6">
+          <div className="bg-white rounded-xl border-2 border-yellow-300 p-6 shadow-md mb-6">
             <div className="flex items-start gap-3">
               <svg
-                className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5"
+                className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -1158,11 +1166,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="province"
                 value={formData.province}
                 onChange={handleChange}
-                className={`modern-input ${errors.province ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.province ? 'border-red-500' : ''}`}
                 placeholder="پارێزگا"
               />
               {errors.province && (
-                <p className="text-blue-700 text-xs mt-1">{errors.province}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.province}</p>
               )}
             </div>
             <div className="form-group-modern">
@@ -1172,11 +1180,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="education"
                 value={formData.education}
                 onChange={handleChange}
-                className={`modern-input ${errors.education ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.education ? 'border-red-500' : ''}`}
                 placeholder="پەروەردە"
               />
               {errors.education && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.education}
                 </p>
               )}
@@ -1188,11 +1196,11 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="district2"
                 value={formData.district2}
                 onChange={handleChange}
-                className={`modern-input ${errors.district2 ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.district2 ? 'border-red-500' : ''}`}
                 placeholder="گەڕەک"
               />
               {errors.district2 && (
-                <p className="text-blue-700 text-xs mt-1">{errors.district2}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.district2}</p>
               )}
             </div>
             <div className="form-group-modern">
@@ -1202,10 +1210,10 @@ const FormContent: React.FC<FormContentProps> = ({
                 name="studyYear"
                 value={formData.studyYear}
                 onChange={handleChange}
-                className={`modern-input text-right ${errors.studyYear ? 'border-blue-500' : ''}`}
+                className={`modern-input text-right ${errors.studyYear ? 'border-red-500' : ''}`}
               />
               {errors.studyYear && (
-                <p className="text-blue-700 text-xs mt-1">{errors.studyYear}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.studyYear}</p>
               )}
             </div>
           </div>
@@ -1222,13 +1230,13 @@ const FormContent: React.FC<FormContentProps> = ({
                     name="peshassaziDepartment"
                     value={formData.peshassaziDepartment || ''}
                     onChange={handleChange}
-                    className={`modern-input ${errors.peshassaziDepartment ? 'border-blue-500' : ''}`}
+                    className={`modern-input ${errors.peshassaziDepartment ? 'border-red-500' : ''}`}
                     placeholder="بەشی پیشەسازی"
                   />
                 </div>
               </div>
               {errors.peshassaziDepartment && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.peshassaziDepartment}
                 </p>
               )}
@@ -1398,11 +1406,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="instituteName"
                 value={formData.instituteName || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.instituteName ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.instituteName ? 'border-red-500' : ''}`}
                 placeholder="ناوی خوێندنگە"
               />
               {errors.instituteName && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.instituteName}
                 </p>
               )}
@@ -1414,11 +1422,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="directorName"
                 value={formData.directorName || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.directorName ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.directorName ? 'border-red-500' : ''}`}
                 placeholder="ناوی بەڕێوەبەر"
               />
               {errors.directorName && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.directorName}
                 </p>
               )}
@@ -1430,11 +1438,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="directorPhone"
                 value={formData.directorPhone || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.directorPhone ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.directorPhone ? 'border-red-500' : ''}`}
                 placeholder="07XX XXX XXXX"
               />
               {errors.directorPhone && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.directorPhone}
                 </p>
               )}
@@ -1486,11 +1494,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="educationDirectorName"
                 value={formData.educationDirectorName || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.educationDirectorName ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.educationDirectorName ? 'border-red-500' : ''}`}
                 placeholder="ناوی بەڕێوەبەرێتی"
               />
               {errors.educationDirectorName && (
-                <p className="text-blue-700 text-xs mt-1">
+                <p className="text-red-600 text-xs mt-1">
                   {errors.educationDirectorName}
                 </p>
               )}
@@ -1502,11 +1510,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
                 name="decision"
                 value={formData.decision || ''}
                 onChange={handleChange}
-                className={`modern-input ${errors.decision ? 'border-blue-500' : ''}`}
+                className={`modern-input ${errors.decision ? 'border-red-500' : ''}`}
                 placeholder="قەزا..."
               />
               {errors.decision && (
-                <p className="text-blue-700 text-xs mt-1">{errors.decision}</p>
+                <p className="text-red-600 text-xs mt-1">{errors.decision}</p>
               )}
             </div>
             <div className="form-group-modern">
@@ -1541,7 +1549,9 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
           </span>
         </div>
       </div>
-      <div className="modern-card-enhanced">
+      <div
+        className={`modern-card-enhanced ${errors.departmentChoices ? 'border-red-500' : ''}`}
+      >
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {departments.map((dept, i) => {
             const selectionIndex = formData.departmentChoices.indexOf(dept)
@@ -1566,7 +1576,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
           })}
         </div>
         {errors.departmentChoices && (
-          <p className="text-blue-700 text-xs mt-2 text-center">
+          <p className="text-red-600 text-xs mt-2 text-center">
             {errors.departmentChoices}
           </p>
         )}
@@ -1654,11 +1664,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="certificate1"
               value={formData.certificate1 || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.certificate1 ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.certificate1 ? 'border-red-500' : ''}`}
               placeholder="..."
             />
             {errors.certificate1 && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.certificate1}
               </p>
             )}
@@ -1670,11 +1680,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="certificate2"
               value={formData.certificate2 || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.certificate2 ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.certificate2 ? 'border-red-500' : ''}`}
               placeholder="..."
             />
             {errors.certificate2 && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.certificate2}
               </p>
             )}
@@ -1686,11 +1696,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="certificate3"
               value={formData.certificate3 || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.certificate3 ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.certificate3 ? 'border-red-500' : ''}`}
               placeholder="..."
             />
             {errors.certificate3 && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.certificate3}
               </p>
             )}
@@ -1702,11 +1712,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="certificate4"
               value={formData.certificate4 || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.certificate4 ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.certificate4 ? 'border-red-500' : ''}`}
               placeholder="..."
             />
             {errors.certificate4 && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.certificate4}
               </p>
             )}
@@ -1762,7 +1772,7 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
           </label>
         </div>
         {errors.nationality2 && (
-          <p className="text-blue-700 text-xs -mt-4 mb-4">
+          <p className="text-red-600 text-xs -mt-4 mb-4">
             {errors.nationality2}
           </p>
         )}
@@ -1774,11 +1784,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="nationalityNumber"
               value={formData.nationalityNumber || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.nationalityNumber ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.nationalityNumber ? 'border-red-500' : ''}`}
               placeholder="ژمارەی ڕەگەزنامە"
             />
             {errors.nationalityNumber && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.nationalityNumber}
               </p>
             )}
@@ -1790,11 +1800,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="registrationNumber"
               value={formData.registrationNumber || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.registrationNumber ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.registrationNumber ? 'border-red-500' : ''}`}
               placeholder="ژمارەی تۆمار"
             />
             {errors.registrationNumber && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.registrationNumber}
               </p>
             )}
@@ -1806,11 +1816,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="issueYearPlace"
               value={formData.issueYearPlace || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.issueYearPlace ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.issueYearPlace ? 'border-red-500' : ''}`}
               placeholder="ساڵ و شوێن..."
             />
             {errors.issueYearPlace && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.issueYearPlace}
               </p>
             )}
@@ -1851,11 +1861,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="familyCardNumber"
               value={formData.familyCardNumber || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.familyCardNumber ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.familyCardNumber ? 'border-red-500' : ''}`}
               placeholder="ژمارەی کارت"
             />
             {errors.familyCardNumber && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.familyCardNumber}
               </p>
             )}
@@ -1867,11 +1877,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="familyCardIssuePlace"
               value={formData.familyCardIssuePlace || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.familyCardIssuePlace ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.familyCardIssuePlace ? 'border-red-500' : ''}`}
               placeholder="شوێنی دەرچوون"
             />
             {errors.familyCardIssuePlace && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.familyCardIssuePlace}
               </p>
             )}
@@ -1883,10 +1893,10 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="familyCardIssueDate"
               value={formData.familyCardIssueDate || ''}
               onChange={handleChange}
-              className={`modern-input text-right ${errors.familyCardIssueDate ? 'border-blue-500' : ''}`}
+              className={`modern-input text-right ${errors.familyCardIssueDate ? 'border-red-500' : ''}`}
             />
             {errors.familyCardIssueDate && (
-              <p className="text-blue-700 text-xs mt-1">
+              <p className="text-red-600 text-xs mt-1">
                 {errors.familyCardIssueDate}
               </p>
             )}
@@ -1898,11 +1908,11 @@ const SecondFormContent: React.FC<SecondFormContentProps> = ({
               name="familyCode"
               value={formData.familyCode || ''}
               onChange={handleChange}
-              className={`modern-input ${errors.familyCode ? 'border-blue-500' : ''}`}
+              className={`modern-input ${errors.familyCode ? 'border-red-500' : ''}`}
               placeholder="کۆدی خێزانی"
             />
             {errors.familyCode && (
-              <p className="text-blue-700 text-xs mt-1">{errors.familyCode}</p>
+              <p className="text-red-600 text-xs mt-1">{errors.familyCode}</p>
             )}
           </div>
         </div>
@@ -2135,23 +2145,30 @@ function MainForm({
     if (type === 'text' || type === 'email' || type === 'date') {
       sanitizedValue = value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
     }
+    if (
+      name === 'examTestNumbers' ||
+      name.includes('phone') ||
+      name.includes('Phone')
+    ) {
+      // Allow only numbers for specific fields
+      sanitizedValue = value.replace(/\D/g, '')
+    }
     if (name === 'examTestNumbers') {
-      // This specific field has its own numeric-only sanitization
-      sanitizedValue = value.replace(/\D/g, '').slice(0, 13)
+      sanitizedValue = (sanitizedValue as string).slice(0, 13)
     }
 
     setFormData((prevState) => ({
       ...prevState,
       [name]: type === 'checkbox' ? checked : sanitizedValue,
     }))
-    
+
     // Clear the error for the field being edited
     if (errors[name]) {
-        setErrors(prevErrors => {
-            const newErrors = { ...prevErrors };
-            delete newErrors[name];
-            return newErrors;
-        });
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors }
+        delete newErrors[name]
+        return newErrors
+      })
     }
   }
   const handleArrayChange = (
@@ -2181,6 +2198,14 @@ function MainForm({
       }
       return { ...prev, departmentChoices: selections }
     })
+    // Clear error on interaction
+    if (errors.departmentChoices) {
+      setErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors.departmentChoices
+        return newErrors
+      })
+    }
   }
 
   const handleNextStep = () => {
@@ -2192,19 +2217,22 @@ function MainForm({
     setCurrentStep(1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-  
+
+  const phoneRegex = /^(075|077|078)\d{8}$/
   const validateStep1 = () => {
     const newErrors: { [key: string]: string } = {}
     if (!formData.personalName.trim())
       newErrors.personalName = 'تکایە ناوی چواری بنووسە'
     if (!formData.phone1.trim())
       newErrors.phone1 = 'تکایە ژمارەی مۆبایل بنووسە'
+    else if (!phoneRegex.test(formData.phone1))
+      newErrors.phone1 = 'ژمارەی مۆبایل هەڵەیە'
     return newErrors
   }
 
   const validateStep2 = () => {
     const newErrors: { [key: string]: string } = {}
-    // All fields are optional in step 2 now
+    // All fields in step 2 are now optional.
     return newErrors
   }
 
@@ -2332,7 +2360,8 @@ function MainForm({
     setShowSuccess(false)
 
     try {
-      const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/register-student.php'
+      const API_ENDPOINT =
+        'https://xn--salonvejgrd-58a.dk/public_html/api/register-student.php'
 
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
@@ -2395,7 +2424,10 @@ function MainForm({
       </div>
       {/* Success/Error Notifications */}
       {showSuccess && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm transition-none">
+        <div
+          role="alert"
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-emerald-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm transition-none"
+        >
           <div className="bg-emerald-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
               className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600"
@@ -2417,10 +2449,13 @@ function MainForm({
         </div>
       )}
       {showError && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-blue-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm transition-none">
-          <div className="bg-blue-100 rounded-full p-2 ml-2 sm:ml-4">
+        <div
+          role="alert"
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] sm:w-auto max-w-lg bg-white border-r-4 border-red-500 text-gray-800 px-4 sm:px-8 py-3 sm:py-5 rounded-2xl shadow-2xl z-50 flex items-center animate-fade-in-up backdrop-blur-sm transition-none"
+        >
+          <div className="bg-red-100 rounded-full p-2 ml-2 sm:ml-4">
             <svg
-              className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600"
+              className="h-5 w-5 sm:h-6 sm:w-6 text-red-600"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -2429,7 +2464,7 @@ function MainForm({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
               />
             </svg>
           </div>
@@ -3607,13 +3642,30 @@ function MainForm({
 // END: CODE FOR REGISTRATION FORM PAGE
 // ==================================================================
 
-
 // --- MAIN APP ROUTER ---
 function App() {
-  const [currentPage, setCurrentPage] = useState<'selection' | 'form' | 'admin'>('selection')
-  const [formType, setFormType] = useState<'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani'>('zansi')
+  const [currentPage, setCurrentPage] = useState<
+    'selection' | 'form' | 'admin'
+  >('selection')
+  const [formType, setFormType] = useState<
+    'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani'
+  >('zansi')
 
   useEffect(() => {
+    // Register service worker for production readiness
+    if ('serviceWorker' in navigator && process.env.NODE_ENV !== 'development') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration)
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError)
+          })
+      })
+    }
+
     // Basic routing based on URL path
     const path = window.location.pathname
     if (path.startsWith('/hello')) {
@@ -3622,8 +3674,10 @@ function App() {
       setCurrentPage('selection')
     }
   }, [])
-  
-  const handleSelect = (type: 'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani') => {
+
+  const handleSelect = (
+    type: 'zansi' | 'wezhay' | 'peshassazi' | 'bazrgani',
+  ) => {
     setFormType(type)
     setCurrentPage('form')
     window.scrollTo({ top: 0, behavior: 'smooth' })
