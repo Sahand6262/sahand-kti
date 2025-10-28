@@ -533,9 +533,10 @@ export function HelloPage() {
       })
 
       if (studentsResponse.status === 401) {
-        throw new Error(
-          'دانیشتنەکەت بەسەرچووە یان نادروستە. تکایە دووبارە بچۆ ژوورەوە.',
-        )
+        // Token is invalid/expired. Log the user out.
+        clearSession()
+        setError('دانیشتنەکەت بەسەرچووە. تکایە دووبارە بچۆ ژوورەوە.')
+        return // Exit early, the finally block will clean up loading state.
       }
 
       if (!studentsResponse.ok) {
@@ -568,7 +569,7 @@ export function HelloPage() {
     } finally {
       setIsLoading(false)
     }
-  }, [clearSession])
+  }, [clearSession, setError])
 
   const handleRetryFetch = useCallback(() => {
     fetchStudents()
