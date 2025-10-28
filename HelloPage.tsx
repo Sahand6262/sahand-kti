@@ -533,10 +533,15 @@ export function HelloPage() {
       })
 
       if (studentsResponse.status === 401) {
-        // Token is invalid/expired. Log the user out.
         clearSession()
         setError('دانیشتنەکەت بەسەرچووە. تکایە دووبارە بچۆ ژوورەوە.')
-        return // Exit early, the finally block will clean up loading state.
+        return
+      }
+      
+      if (studentsResponse.status === 403) {
+        clearSession()
+        setError('ڕێگەپێدان ڕەتکرایەوە. تکایە پەیوەندی بە بەڕێوەبەرەوە بکە.')
+        return
       }
 
       if (!studentsResponse.ok) {
