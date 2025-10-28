@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {
   MapPin,
   PhoneCall,
@@ -11,12 +11,12 @@ import {
   Code,
 } from 'lucide-react'
 export const Footer: React.FC = () => {
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     })
-  }
+  }, [])
   return (
     <footer
       className="bg-gray-900 text-white relative overflow-hidden"

@@ -9,6 +9,9 @@ const urlsToCache = [
   // We cache the main entry points and static assets.
   '/load.tsx',
   '/footer.tsx',
+  '/HelloPage.tsx',
+  '/MainForm.tsx',
+  '/Icons.tsx',
   'https://kti.edu.iq/photo/kti_52_0.png',
   'https://kti.edu.iq/photo/kti_53_01702585603.jpg',
 ];

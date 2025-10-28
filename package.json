@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "@google/genai": "^0.7.0",
-    "file-saver": "^2.0.5",
-    "html-to-image": "^1.11.11",
-    "jspdf": "^3.0.3",
-    "lucide-react": "^0.400.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.1.15"
+    "jspdf": "^2.5.1",
+    "html-to-image": "^1.11.11",
+    "file-saver": "^2.0.5",
+    "tailwindcss": "^4.1.15",
+    "lucide-react": "^0.400.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

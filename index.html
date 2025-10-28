@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KTI Registration Form</title>
+    <link rel="icon" href="https://kti.edu.iq/photo/kti_52_0.png">
+
+    <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://esm.sh">
+    <link rel="preload" href="https://kti.edu.iq/photo/kti_53_01702585603.jpg" as="image">
+    <link rel="modulepreload" href="/index.tsx">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -508,7 +516,15 @@
       .bazrgani-pdf-theme .modern-photo-placeholder {
         @apply border-2 border-blue-700 bg-gradient-to-br from-blue-50 to-blue-100;
       }
-
+      .honeypot {
+        position: absolute;
+        left: -5000px;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
     </style>
 </head>
 <body>
