@@ -511,85 +511,85 @@ export function HelloPage() {
     localStorage.removeItem('userHi')
     setIsAuthenticated(false)
     setStudents([])
+    setStudentsError(null)
   }, [])
 
-  const fetchStudents = useCallback(
-    async (token: string) => {
-      setIsLoading(true)
-      setStudentsError(null)
+  const fetchStudents = useCallback(async () => {
+    const token = localStorage.getItem('authToken')
+    if (!token) {
+      clearSession()
+      return
+    }
 
-      try {
-        const studentsResponse = await fetch(API_ENDPOINT, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+    setIsLoading(true)
+    setStudentsError(null)
 
-        if (studentsResponse.status === 401) {
-          clearSession()
-          return
-        }
+    try {
+      const studentsResponse = await fetch(API_ENDPOINT, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
-        if (!studentsResponse.ok) {
-          let serverError = 'هەڵەیەک لە وەرگرتنی داتای فێرخوازان ڕوویدا'
-          try {
-            const errorResult = await studentsResponse.json()
-            serverError =
-              errorResult.message || errorResult.error || serverError
-          } catch (e) {
-            /* Ignore if response is not json */
-          }
-          throw new Error(serverError)
-        }
-
-        const studentsResult = await studentsResponse.json()
-        if (studentsResult.success) {
-          setStudents(studentsResult.students || [])
-        } else {
-          throw new Error(
-            studentsResult.message || 'نەتوانرا داتای فێرخوازان وەربگیرێت',
-          )
-        }
-      } catch (err) {
-        if (err instanceof Error) {
-          setStudentsError(err.message)
-        } else {
-          setStudentsError('هەڵەیەکی چاوەڕواننەکراو ڕوویدا')
-        }
-      } finally {
-        setIsLoading(false)
-        setIsAuthenticating(false)
+      if (studentsResponse.status === 401) {
+        throw new Error(
+          'دانیشتنەکەت بەسەرچووە یان نادروستە. تکایە دووبارە بچۆ ژوورەوە.',
+        )
       }
-    },
-    [clearSession],
-  )
+
+      if (!studentsResponse.ok) {
+        let serverError = 'هەڵەیەک لە وەرگرتنی داتای فێرخوازان ڕوویدا'
+        try {
+          const errorResult = await studentsResponse.json()
+          serverError =
+            errorResult.message || errorResult.error || serverError
+        } catch (e) {
+          /* Ignore if response is not json */
+        }
+        throw new Error(serverError)
+      }
+
+      const studentsResult = await studentsResponse.json()
+      if (studentsResult.success) {
+        setStudents(studentsResult.students || [])
+      } else {
+        throw new Error(
+          studentsResult.message || 'نەتوانرا داتای فێرخوازان وەربگیرێت',
+        )
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setStudentsError(err.message)
+      } else {
+        setStudentsError('هەڵەیەکی چاوەڕواننەکراو ڕوویدا')
+      }
+      setStudents([])
+    } finally {
+      setIsLoading(false)
+    }
+  }, [clearSession])
 
   const handleRetryFetch = useCallback(() => {
-    const token = localStorage.getItem('authToken')
-    if (token) {
-      fetchStudents(token)
-    }
+    fetchStudents()
   }, [fetchStudents])
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken')
     const storedExpiry = localStorage.getItem('tokenExpiresAt')
-    const storedUserHi = localStorage.getItem('userHi')
 
     if (
       storedToken &&
       storedExpiry &&
-      storedUserHi &&
       new Date(storedExpiry) > new Date()
     ) {
       setIsAuthenticated(true)
-      fetchStudents(storedToken)
+      fetchStudents()
     } else {
       clearSession()
-      setIsAuthenticating(false)
     }
-  }, [fetchStudents, clearSession])
+    setIsAuthenticating(false)
+  }, [clearSession, fetchStudents])
 
   const handleAuthenticate = useCallback(
     async (enteredId: string) => {
@@ -628,7 +628,7 @@ export function HelloPage() {
         localStorage.setItem('userHi', enteredId)
 
         setIsAuthenticated(true)
-        await fetchStudents(loginResult.token)
+        await fetchStudents()
       } catch (err) {
         if (err instanceof TypeError && err.message === 'Failed to fetch') {
           setError(
