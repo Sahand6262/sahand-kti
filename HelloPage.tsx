@@ -466,7 +466,7 @@ export function HelloPage() {
       setError(null)
       try {
         const studentsResponse = await fetch(API_ENDPOINT, {
-          method: 'GET',
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
