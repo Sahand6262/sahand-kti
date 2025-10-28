@@ -1524,8 +1524,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
       break
   }
 
-  const API_ENDPOINT =
-    'https://xn--salonvejgrd-58a.dk/public_html/api/secure_student_insert.php'
+  const API_ENDPOINT = '/api/students/submit'
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
     personalName: '',

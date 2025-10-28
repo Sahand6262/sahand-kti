@@ -8,6 +8,14 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/students/auth",
+      "destination": "https://xn--salonvejgrd-58a.dk/public_html/api/single_api.php"
+    },
+    {
+      "source": "/api/students/submit",
+      "destination": "https://xn--salonvejgrd-58a.dk/public_html/api/secure_student_insert.php"
+    },
     { "source": "/((?!\\.).*)", "destination": "/index.html" }
   ]
 }
