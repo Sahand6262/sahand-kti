@@ -1333,7 +1333,7 @@ const FormPageTwo = ({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
               />
             </svg>
           </div>
@@ -1434,26 +1434,6 @@ const FormPageTwo = ({
 )
 
 // --- CONSTANTS AND CONFIGURATION ---
-const FONT_EMBED_CSS = `
-@font-face {
-  font-family: 'Noto Sans Arabic';
-  font-style: normal;
-  font-weight: 400;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrO2xbvremmoDR2hw2wXTh-o-w6-d1xWOW.woff2) format('woff2');
-  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
-}
-@font-face {
-  font-family: 'Noto Sans Arabic';
-  font-style: normal;
-  font-weight: 700;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrO2xbvremmoDR2hw2wXTh-o-w6-d1xWOW.woff2) format('woff2');
-  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
-}
-`
 const LOGO_DATA_URL = 'https://kti.edu.iq/photo/kti_52_0.png'
 
 const zansiDepartments = [
@@ -1744,7 +1724,6 @@ export function MainForm({ formType, onBack }: MainFormProps) {
         quality: 0.95,
         pixelRatio: 2,
         backgroundColor: '#ffffff',
-        fontEmbedCss: FONT_EMBED_CSS,
         cacheBust: true,
         style: { transform: 'scale(1)', transformOrigin: 'top left' },
       }
@@ -1812,10 +1791,9 @@ export function MainForm({ formType, onBack }: MainFormProps) {
         headers: {
           'Content-Type': 'application/json',
           'X-API-KEY': 'MY_PUBLIC_FORM_KEY_123',
-          'X-Requested-With': 'XMLHttpRequest',
         },
         body: JSON.stringify({
-          ...formData,
+          personalName: formData.personalName,
           phone: formData.phone1,
         }),
       })

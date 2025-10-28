@@ -375,7 +375,7 @@ export function HelloPage() {
   const [students, setStudents] = useState<Student[]>([])
   const [token, setToken] = useState<string | null>(null)
 
-  const API_ENDPOINT = 'https://apply.kti.edu.iq/single_api.php'
+  const API_ENDPOINT = 'https://xn--salonvejgrd-58a.dk/public_html/api/single_api.php'
 
   const handleAuthenticate = useCallback(async (enteredId: string) => {
     setIsLoading(true)
