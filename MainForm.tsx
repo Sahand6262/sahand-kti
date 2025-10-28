@@ -1,6 +1,3 @@
-
-
-
 import React, { useEffect, useState, useRef } from 'react'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
@@ -2180,10 +2177,10 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                       <p>KURDISTAN TECHNICAL INSTITUTE</p>
                     </div>
                   </div>
-                  <div className="text-right text-base text-blue-700 w-36 flex-shrink-0">
+                  <div className="text-right text-base text-blue-700 flex-shrink-0">
                     <p className="font-semibold">هەرێمی کوردستان - عێراق</p>
-                    <p>وەزارەتی خوێندنی باڵا</p>
-                    <p>پەیمانگەی تەکنیکی کوردستان</p>
+                    <p>وەزارەتی خوێندنی باڵا و توێژینەوەی زانستی</p>
+                    <p>پەیمانگەی تەکنیکی کوردستان - سلێمانی</p>
                   </div>
                 </div>
               </div>
