@@ -457,6 +457,7 @@ export function HelloPage() {
   const clearSession = useCallback(() => {
     localStorage.removeItem('authToken')
     localStorage.removeItem('tokenExpiresAt')
+    localStorage.removeItem('userHi')
     setIsAuthenticated(false)
   }, [])
 
@@ -464,6 +465,16 @@ export function HelloPage() {
     async (token: string) => {
       setIsLoading(true)
       setError(null)
+      const userHi = localStorage.getItem('userHi')
+
+      if (!userHi) {
+        // If userHi is missing, session is invalid
+        clearSession()
+        setIsLoading(false)
+        setIsAuthenticating(false)
+        return
+      }
+
       try {
         const studentsResponse = await fetch(API_ENDPOINT, {
           method: 'POST',
@@ -471,6 +482,7 @@ export function HelloPage() {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({ user_hi: userHi }),
         })
 
         if (studentsResponse.status === 401) {
@@ -510,15 +522,17 @@ export function HelloPage() {
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken')
     const storedExpiry = localStorage.getItem('tokenExpiresAt')
+    const storedUserHi = localStorage.getItem('userHi')
 
-    if (storedToken && storedExpiry) {
-      if (new Date(storedExpiry) > new Date()) {
-        fetchStudents(storedToken)
-      } else {
-        clearSession()
-        setIsAuthenticating(false)
-      }
+    if (
+      storedToken &&
+      storedExpiry &&
+      storedUserHi &&
+      new Date(storedExpiry) > new Date()
+    ) {
+      fetchStudents(storedToken)
     } else {
+      clearSession()
       setIsAuthenticating(false)
     }
   }, [fetchStudents, clearSession])
@@ -557,6 +571,7 @@ export function HelloPage() {
 
         localStorage.setItem('authToken', loginResult.token)
         localStorage.setItem('tokenExpiresAt', loginResult.expires_at)
+        localStorage.setItem('userHi', enteredId)
 
         await fetchStudents(loginResult.token)
       } catch (err) {
