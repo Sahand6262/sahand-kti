@@ -28,6 +28,9 @@ type AuthModalProps = {
 type StudentListProps = {
   students: Student[]
   onLogout: () => void
+  error: string | null
+  onRetry: () => void
+  isLoading: boolean
 }
 
 // --- SECURITY UTILITY ---
@@ -250,7 +253,13 @@ const Pagination = memo(
 )
 
 // --- STUDENT LIST VIEW ---
-const StudentList = ({ students, onLogout }: StudentListProps) => {
+const StudentList = ({
+  students,
+  onLogout,
+  error,
+  onRetry,
+  isLoading,
+}: StudentListProps) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
@@ -311,133 +320,173 @@ const StudentList = ({ students, onLogout }: StudentListProps) => {
           </button>
         </div>
       </header>
-      <main className="container mx-auto p-6 max-w-7xl relative flex-grow">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
-            <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
-              <div className="relative flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
-                  <UsersIcon />
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
-                کۆی گشتی
-              </p>
-              <p className="text-5xl font-bold text-black">{students.length}</p>
-            </div>
-          </div>
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
-            <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
-              <div className="relative flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
-                  <FilterIcon />
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
-                ئەنجامی گەڕان
-              </p>
-              <p className="text-5xl font-bold text-black">
-                {filteredStudents.length}
-              </p>
-            </div>
-          </div>
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
-            <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
-              <div className="relative flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
-                  <DocumentIcon />
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
-                پەڕە
-              </p>
-              <p className="text-5xl font-bold text-black">
-                {currentPage} / {totalPages || 1}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="mb-10">
-          <div className="relative group">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-14 pr-6 py-5 bg-white border-2 border-gray-200 rounded-2xl text-lg text-black placeholder-gray-400 focus:outline-none focus:border-black transition-all duration-300 shadow-lg focus:shadow-xl group-hover:border-gray-300"
-              placeholder="گەڕان..."
-              aria-label="Search students"
-            />
-            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-black transition-colors">
-              <SearchIcon />
-            </div>
-          </div>
-        </div>
-        {currentStudents.length > 0 ? (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-              {currentStudents.map((student, index) => (
-                <div
-                  key={student.id}
-                  className="relative group animate-fade-in-up"
-                  style={{
-                    animationDelay: `${index * 50}ms`,
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity" />
-                  <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 rounded-2xl p-6 hover:border-black transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-black/5 rounded-full -mr-12 -mt-12 group-hover:bg-black transition-colors duration-300" />
-                    <div className="relative flex flex-col items-center text-center h-full">
-                      <div className="relative mb-5">
-                        <div className="absolute inset-0 bg-black rounded-2xl blur-md opacity-0 group-hover:opacity-20 transition-opacity" />
-                        <div className="relative w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center group-hover:from-black group-hover:to-gray-900 group-hover:text-white transition-all duration-300 shadow-md">
-                          <UserIcon />
-                        </div>
-                      </div>
-                      <div className="flex-grow flex flex-col justify-center">
-                        <h3 className="text-lg font-bold text-black break-all mb-3 group-hover:scale-105 transition-transform">
-                          {student.name}
-                        </h3>
-                        <div className="flex items-center gap-2 text-gray-500 text-sm justify-center">
-                          <PhoneIcon />
-                          <span className="font-mono" dir="ltr">
-                            {student.phone || 'N/A'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {totalPages > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </>
-        ) : (
-          <div className="text-center py-24 animate-fade-in">
+      <main className="container mx-auto p-6 max-w-7xl relative flex-grow flex flex-col">
+        {error ? (
+          <div className="flex flex-col items-center justify-center flex-grow text-center p-6 animate-fade-in">
             <div className="relative inline-block mb-8">
-              <div className="absolute inset-0 bg-black rounded-2xl blur-2xl opacity-10" />
-              <div className="relative w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl mx-auto flex items-center justify-center text-gray-400 shadow-lg">
-                <SearchIcon />
+              <div className="absolute inset-0 bg-red-500 rounded-2xl blur-2xl opacity-20" />
+              <div className="relative w-24 h-24 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl mx-auto flex items-center justify-center text-red-500 shadow-lg">
+                <svg
+                  className="w-12 h-12"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
               </div>
             </div>
             <p className="text-2xl text-black font-bold mb-2">
-              هیچ فێرخوازێک نەدۆزرایەوە
+              هەڵەیەک ڕوویدا
             </p>
-            <p className="text-gray-600 text-base">
-              تکایە گەڕانی دیکە هەوڵ بدە
+            <p className="text-gray-600 text-base max-w-md mx-auto mb-6">
+              {error}
             </p>
+            <button
+              onClick={onRetry}
+              disabled={isLoading}
+              className="bg-black text-white px-8 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-colors duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'چاوەڕوانی...' : 'دووبارە هەوڵبدەوە'}
+            </button>
           </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
+                <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
+                  <div className="relative flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
+                      <UsersIcon />
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
+                    کۆی گشتی
+                  </p>
+                  <p className="text-5xl font-bold text-black">
+                    {students.length}
+                  </p>
+                </div>
+              </div>
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
+                <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
+                  <div className="relative flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
+                      <FilterIcon />
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
+                    ئەنجامی گەڕان
+                  </p>
+                  <p className="text-5xl font-bold text-black">
+                    {filteredStudents.length}
+                  </p>
+                </div>
+              </div>
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-10 transition-opacity" />
+                <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-black overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full -mr-16 -mt-16 group-hover:bg-black transition-colors duration-300" />
+                  <div className="relative flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white shadow-lg">
+                      <DocumentIcon />
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">
+                    پەڕە
+                  </p>
+                  <p className="text-5xl font-bold text-black">
+                    {currentPage} / {totalPages || 1}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="mb-10">
+              <div className="relative group">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-14 pr-6 py-5 bg-white border-2 border-gray-200 rounded-2xl text-lg text-black placeholder-gray-400 focus:outline-none focus:border-black transition-all duration-300 shadow-lg focus:shadow-xl group-hover:border-gray-300"
+                  placeholder="گەڕان..."
+                  aria-label="Search students"
+                />
+                <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-black transition-colors">
+                  <SearchIcon />
+                </div>
+              </div>
+            </div>
+            {currentStudents.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                  {currentStudents.map((student, index) => (
+                    <div
+                      key={student.id}
+                      className="relative group animate-fade-in-up"
+                      style={{
+                        animationDelay: `${index * 50}ms`,
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-800 rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity" />
+                      <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 rounded-2xl p-6 hover:border-black transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 overflow-hidden">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-black/5 rounded-full -mr-12 -mt-12 group-hover:bg-black transition-colors duration-300" />
+                        <div className="relative flex flex-col items-center text-center h-full">
+                          <div className="relative mb-5">
+                            <div className="absolute inset-0 bg-black rounded-2xl blur-md opacity-0 group-hover:opacity-20 transition-opacity" />
+                            <div className="relative w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center group-hover:from-black group-hover:to-gray-900 group-hover:text-white transition-all duration-300 shadow-md">
+                              <UserIcon />
+                            </div>
+                          </div>
+                          <div className="flex-grow flex flex-col justify-center">
+                            <h3 className="text-lg font-bold text-black break-all mb-3 group-hover:scale-105 transition-transform">
+                              {student.name}
+                            </h3>
+                            <div className="flex items-center gap-2 text-gray-500 text-sm justify-center">
+                              <PhoneIcon />
+                              <span className="font-mono" dir="ltr">
+                                {student.phone || 'N/A'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {totalPages > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                )}
+              </>
+            ) : (
+              <div className="text-center py-24 animate-fade-in">
+                <div className="relative inline-block mb-8">
+                  <div className="absolute inset-0 bg-black rounded-2xl blur-2xl opacity-10" />
+                  <div className="relative w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl mx-auto flex items-center justify-center text-gray-400 shadow-lg">
+                    <SearchIcon />
+                  </div>
+                </div>
+                <p className="text-2xl text-black font-bold mb-2">
+                  هیچ فێرخوازێک نەدۆزرایەوە
+                </p>
+                <p className="text-gray-600 text-base">
+                  تکایە گەڕانی دیکە هەوڵ بدە
+                </p>
+              </div>
+            )}
+          </>
         )}
       </main>
       <Footer />
@@ -449,8 +498,9 @@ const StudentList = ({ students, onLogout }: StudentListProps) => {
 export function HelloPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [isAuthenticating, setIsAuthenticating] = useState(true) // For initial load
-  const [error, setError] = useState<string | null>(null)
+  const [isAuthenticating, setIsAuthenticating] = useState(true)
+  const [error, setError] = useState<string | null>(null) // For login errors
+  const [studentsError, setStudentsError] = useState<string | null>(null)
   const [students, setStudents] = useState<Student[]>([])
 
   const API_ENDPOINT = '/api/students/auth'
@@ -460,12 +510,13 @@ export function HelloPage() {
     localStorage.removeItem('tokenExpiresAt')
     localStorage.removeItem('userHi')
     setIsAuthenticated(false)
+    setStudents([])
   }, [])
 
   const fetchStudents = useCallback(
     async (token: string) => {
       setIsLoading(true)
-      setError(null)
+      setStudentsError(null)
 
       try {
         const studentsResponse = await fetch(API_ENDPOINT, {
@@ -477,18 +528,24 @@ export function HelloPage() {
 
         if (studentsResponse.status === 401) {
           clearSession()
-          // No need to throw error, just de-authenticate. The login form will show.
           return
         }
 
         if (!studentsResponse.ok) {
-          throw new Error('هەڵەیەک لە وەرگرتنی داتای فێرخوازان ڕوویدا')
+          let serverError = 'هەڵەیەک لە وەرگرتنی داتای فێرخوازان ڕوویدا'
+          try {
+            const errorResult = await studentsResponse.json()
+            serverError =
+              errorResult.message || errorResult.error || serverError
+          } catch (e) {
+            /* Ignore if response is not json */
+          }
+          throw new Error(serverError)
         }
 
         const studentsResult = await studentsResponse.json()
         if (studentsResult.success) {
           setStudents(studentsResult.students || [])
-          setIsAuthenticated(true)
         } else {
           throw new Error(
             studentsResult.message || 'نەتوانرا داتای فێرخوازان وەربگیرێت',
@@ -496,11 +553,10 @@ export function HelloPage() {
         }
       } catch (err) {
         if (err instanceof Error) {
-          setError(err.message)
+          setStudentsError(err.message)
         } else {
-          setError('هەڵەیەکی چاوەڕواننەکراو ڕوویدا')
+          setStudentsError('هەڵەیەکی چاوەڕواننەکراو ڕوویدا')
         }
-        clearSession()
       } finally {
         setIsLoading(false)
         setIsAuthenticating(false)
@@ -508,6 +564,13 @@ export function HelloPage() {
     },
     [clearSession],
   )
+
+  const handleRetryFetch = useCallback(() => {
+    const token = localStorage.getItem('authToken')
+    if (token) {
+      fetchStudents(token)
+    }
+  }, [fetchStudents])
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken')
@@ -520,6 +583,7 @@ export function HelloPage() {
       storedUserHi &&
       new Date(storedExpiry) > new Date()
     ) {
+      setIsAuthenticated(true)
       fetchStudents(storedToken)
     } else {
       clearSession()
@@ -563,6 +627,7 @@ export function HelloPage() {
         localStorage.setItem('tokenExpiresAt', loginResult.expires_at)
         localStorage.setItem('userHi', enteredId)
 
+        setIsAuthenticated(true)
         await fetchStudents(loginResult.token)
       } catch (err) {
         if (err instanceof TypeError && err.message === 'Failed to fetch') {
@@ -606,5 +671,13 @@ export function HelloPage() {
     )
   }
 
-  return <StudentList students={students} onLogout={handleLogout} />
+  return (
+    <StudentList
+      students={students}
+      onLogout={handleLogout}
+      error={studentsError}
+      onRetry={handleRetryFetch}
+      isLoading={isLoading}
+    />
+  )
 }
