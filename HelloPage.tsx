@@ -465,24 +465,14 @@ export function HelloPage() {
     async (token: string) => {
       setIsLoading(true)
       setError(null)
-      const userHi = localStorage.getItem('userHi')
-
-      if (!userHi) {
-        // If userHi is missing, session is invalid
-        clearSession()
-        setIsLoading(false)
-        setIsAuthenticating(false)
-        return
-      }
 
       try {
         const studentsResponse = await fetch(API_ENDPOINT, {
-          method: 'POST',
+          method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ user_hi: userHi }),
         })
 
         if (studentsResponse.status === 401) {
