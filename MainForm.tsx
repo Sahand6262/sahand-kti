@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
@@ -1524,7 +1525,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
       break
   }
 
-  const API_ENDPOINT = '/api/students/submit'
+  const API_ENDPOINT = '/api/submit'
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
     personalName: '',

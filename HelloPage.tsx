@@ -1,4 +1,5 @@
 
+
 import React, { useEffect, useState, useMemo, useCallback, memo, useRef } from 'react'
 import { Footer } from './footer'
 import {
@@ -503,7 +504,7 @@ export function HelloPage() {
   const [studentsError, setStudentsError] = useState<string | null>(null)
   const [students, setStudents] = useState<Student[]>([])
 
-  const API_ENDPOINT = '/api/students/auth'
+  const API_ENDPOINT = '/api/admin'
 
   const clearSession = useCallback(() => {
     localStorage.removeItem('authToken')
@@ -533,15 +534,10 @@ export function HelloPage() {
       })
 
       if (studentsResponse.status === 401) {
+        // Token is invalid/expired. Log the user out.
         clearSession()
         setError('دانیشتنەکەت بەسەرچووە. تکایە دووبارە بچۆ ژوورەوە.')
-        return
-      }
-      
-      if (studentsResponse.status === 403) {
-        clearSession()
-        setError('ڕێگەپێدان ڕەتکرایەوە. تکایە پەیوەندی بە بەڕێوەبەرەوە بکە.')
-        return
+        return // Exit early, the finally block will clean up loading state.
       }
 
       if (!studentsResponse.ok) {
