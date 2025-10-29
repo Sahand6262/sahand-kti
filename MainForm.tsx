@@ -1561,10 +1561,10 @@ export function MainForm({ formType, onBack }: MainFormProps) {
       'کۆنمرەی پۆلی ١٢',
       'ڕێژەی دەرچوون',
     ],
-    firstGradesNumeric: Array(10).fill(''),
-    firstGradesWritten: Array(10).fill(''),
-    secondGradesNumeric: Array(10).fill(''),
-    secondGradesWritten: Array(10).fill(''),
+    firstGradesNumeric: Array(9).fill(''),
+    firstGradesWritten: Array(9).fill(''),
+    secondGradesNumeric: Array(9).fill(''),
+    secondGradesWritten: Array(9).fill(''),
     fatherName: '',
     motherName: '',
     nationality: '',
@@ -2508,14 +2508,14 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                       زانیاری سەبارەت بە نمرەی فێرخواز
                     </span>
                   </div>
-                  <div className="modern-card p-4 space-y-3">
-                    <div className="bg-red-50 border border-red-200 p-2 rounded-lg text-red-700 text-center text-sm">
+                  <div className="modern-card py-4 space-y-3">
+                    <div className="bg-red-50 border border-red-200 p-2 rounded-lg text-red-700 text-center text-sm mx-4">
                       <p>
                         بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم
                         بەشەدا هەبێت، ئێمە لێی بەرپرس نین.
                       </p>
                     </div>
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-4 gap-2 px-4">
                       <div className="form-group">
                         <label className="form-label text-base">پارێزگا</label>
                         <input
@@ -2563,7 +2563,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                       </div>
                     </div>
                     {formType === 'peshassazi' && (
-                      <div className="pt-2">
+                      <div className="pt-2 px-4">
                         <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-1">
                           <label className="form-label text-base flex-shrink-0 mb-0 px-2">
                             ئامادەی پیشەسازی
@@ -2581,7 +2581,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                         </div>
                       </div>
                     )}
-                    <div className="table-container p-1 space-y-0.5 overflow-hidden">
+                    <div className="table-container py-1 space-y-0.5 overflow-hidden">
                       <div className="grid grid-cols-10 gap-0.5">
                         {formData.subjects.map((subject, i) => (
                           <input
@@ -2593,7 +2593,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0.5">
+                      <div className="grid grid-cols-10 gap-0.5">
                         <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە ژمارە
                         </div>
@@ -2607,7 +2607,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0.5">
+                      <div className="grid grid-cols-10 gap-0.5">
                         <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە نووسین
                         </div>
@@ -2621,7 +2621,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0.5">
+                      <div className="grid grid-cols-10 gap-0.5">
                         <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           خولی دووەم
                         </div>
@@ -2635,7 +2635,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0.5">
+                      <div className="grid grid-cols-10 gap-0.5">
                         <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە نووسین
                         </div>
