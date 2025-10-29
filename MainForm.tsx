@@ -2581,21 +2581,20 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                         </div>
                       </div>
                     )}
-                    <div className="table-container p-1 space-y-[1px] overflow-hidden">
-                      <div className="grid grid-cols-11 gap-[1px]">
-                        <div></div>
+                    <div className="table-container p-1 space-y-0.5 overflow-hidden">
+                      <div className="grid grid-cols-10 gap-0.5">
                         {formData.subjects.map((subject, i) => (
                           <input
                             key={i}
                             type="text"
                             value={subject}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[9px] p-0.5"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-[1px]">
-                        <div className="table-label-red flex items-center justify-center text-[8px] leading-tight p-0 h-6 rounded">
+                      <div className="grid grid-cols-11 gap-0.5">
+                        <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە ژمارە
                         </div>
                         {formData.firstGradesNumeric.map((grade, i) => (
@@ -2604,12 +2603,12 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                             type="text"
                             value={grade}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[9px] p-0.5"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-[1px]">
-                        <div className="table-label-red flex items-center justify-center text-[8px] leading-tight p-0 h-6 rounded">
+                      <div className="grid grid-cols-11 gap-0.5">
+                        <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە نووسین
                         </div>
                         {formData.firstGradesWritten.map((grade, i) => (
@@ -2618,12 +2617,12 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                             type="text"
                             value={grade}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[9px] p-0.5"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-[1px]">
-                        <div className="table-label-red flex items-center justify-center text-[8px] leading-tight p-0 h-6 rounded">
+                      <div className="grid grid-cols-11 gap-0.5">
+                        <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           خولی دووەم
                         </div>
                         {formData.secondGradesNumeric.map((grade, i) => (
@@ -2632,12 +2631,12 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                             type="text"
                             value={grade}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[9px] p-0.5"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-[1px]">
-                        <div className="table-label-red flex items-center justify-center text-[8px] leading-tight p-0 h-6 rounded">
+                      <div className="grid grid-cols-11 gap-0.5">
+                        <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە نووسین
                         </div>
                         {formData.secondGradesWritten.map((grade, i) => (
@@ -2646,7 +2645,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                             type="text"
                             value={grade}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[9px] p-0.5"
                           />
                         ))}
                       </div>
