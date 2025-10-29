@@ -2509,7 +2509,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                       زانیاری سەبارەت بە نمرەی فێرخواز
                     </span>
                   </div>
-                  <div className="modern-card py-4 space-y-3">
+                  <div className="modern-card pt-4 space-y-3">
                     <div className="bg-red-50 border border-red-200 p-2 rounded-lg text-red-700 text-center text-sm mx-4">
                       <p>
                         بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم
@@ -2582,7 +2582,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                         </div>
                       </div>
                     )}
-                    <div className="table-container py-1 space-y-0.5 overflow-hidden">
+                    <div className="space-y-0.5 overflow-hidden">
                       <div className="grid grid-cols-11 gap-0.5">
                         {formData.subjects.map((subject, i) => (
                           <input
