@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react'
 import { jsPDF } from 'jspdf'
 import { toPng } from 'html-to-image'
@@ -2509,7 +2508,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                       زانیاری سەبارەت بە نمرەی فێرخواز
                     </span>
                   </div>
-                  <div className="modern-card p-1 space-y-3">
+                  <div className="modern-card p-4 space-y-3">
                     <div className="bg-red-50 border border-red-200 p-2 rounded-lg text-red-700 text-center text-sm">
                       <p>
                         بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم
@@ -2582,20 +2581,21 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                         </div>
                       </div>
                     )}
-                    <div className="table-container p-0 space-y-px overflow-x-hidden">
-                      <div className="grid grid-cols-10 gap-0">
+                    <div className="table-container p-1 space-y-[1px] overflow-hidden">
+                      <div className="grid grid-cols-11 gap-[1px]">
+                        <div></div>
                         {formData.subjects.map((subject, i) => (
                           <input
                             key={i}
                             type="text"
                             value={subject}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[7px] p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0">
-                        <div className="table-label-red flex items-center justify-center text-[7px] p-0 h-7">
+                      <div className="grid grid-cols-11 gap-[1px]">
+                        <div className="table-label-red flex items-center justify-center text-[8px] leading-tight p-0 h-6 rounded">
                           بە ژمارە
                         </div>
                         {formData.firstGradesNumeric.map((grade, i) => (
@@ -2604,12 +2604,12 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                             type="text"
                             value={grade}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[7px] p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0">
-                        <div className="table-label-red flex items-center justify-center text-[7px] p-0 h-7">
+                      <div className="grid grid-cols-11 gap-[1px]">
+                        <div className="table-label-red flex items-center justify-center text-[8px] leading-tight p-0 h-6 rounded">
                           بە نووسین
                         </div>
                         {formData.firstGradesWritten.map((grade, i) => (
@@ -2618,12 +2618,12 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                             type="text"
                             value={grade}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[7px] p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0">
-                        <div className="table-label-red flex items-center justify-center text-[7px] p-0 h-7">
+                      <div className="grid grid-cols-11 gap-[1px]">
+                        <div className="table-label-red flex items-center justify-center text-[8px] leading-tight p-0 h-6 rounded">
                           خولی دووەم
                         </div>
                         {formData.secondGradesNumeric.map((grade, i) => (
@@ -2632,12 +2632,12 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                             type="text"
                             value={grade}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[7px] p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-11 gap-0">
-                        <div className="table-label-red flex items-center justify-center text-[7px] p-0 h-7">
+                      <div className="grid grid-cols-11 gap-[1px]">
+                        <div className="table-label-red flex items-center justify-center text-[8px] leading-tight p-0 h-6 rounded">
                           بە نووسین
                         </div>
                         {formData.secondGradesWritten.map((grade, i) => (
@@ -2646,7 +2646,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                             type="text"
                             value={grade}
                             readOnly
-                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[7px] p-0"
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-6 text-[8px] leading-tight p-0"
                           />
                         ))}
                       </div>
