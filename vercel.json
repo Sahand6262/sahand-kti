@@ -1,4 +1,3 @@
-
 {
   "headers": [
     {
@@ -9,8 +8,14 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/admin", "destination": "https://apply.kti.edu.iq/single_api.php" },
-    { "source": "/api/submit", "destination": "https://apply.kti.edu.iq/secure_student_insert.php" },
+    {
+      "source": "/api/admin",
+      "destination": "https://apply.kti.edu.iq/single_api.php"
+    },
+    {
+      "source": "/api/submit",
+      "destination": "https://apply.kti.edu.iq/secure_student_insert.php"
+    },
     { "source": "/((?!\\.).*)", "destination": "/index.html" }
   ]
 }
