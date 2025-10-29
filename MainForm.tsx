@@ -746,10 +746,10 @@ const FormPageOne = ({
             </div>
           )}
           <div className="modern-table-container mt-6">
-            <div className="grid grid-cols-3 md:grid-cols-10 gap-2 pt-4">
+            <div className="grid grid-cols-3 md:grid-cols-11 gap-2 pt-4">
               {formData.subjects.map((subject, i) => {
-                const isHeaderCell = i === 0 || i === 8 || i === 9
-                const placeholderText = i > 0 && i < 8 ? `وانە ${i}` : ''
+                const isHeaderCell = i === 0 || i === 9 || i === 10
+                const placeholderText = i > 0 && i < 9 ? `وانە ${i}` : ''
 
                 if (isHeaderCell) {
                   return (
@@ -779,7 +779,7 @@ const FormPageOne = ({
                 )
               })}
             </div>
-            <div className="grid grid-cols-4 md:grid-cols-10 gap-2 pt-4">
+            <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
               <div className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                 بە ژمارە
               </div>
@@ -798,7 +798,7 @@ const FormPageOne = ({
                 />
               ))}
             </div>
-            <div className="grid grid-cols-4 md:grid-cols-10 gap-2 pt-4">
+            <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
               <div className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                 بە نووسین
               </div>
@@ -817,7 +817,7 @@ const FormPageOne = ({
                 />
               ))}
             </div>
-            <div className="grid grid-cols-4 md:grid-cols-10 gap-2 pt-4">
+            <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
               <div className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                 خولی دووەم
               </div>
@@ -836,7 +836,7 @@ const FormPageOne = ({
                 />
               ))}
             </div>
-            <div className="grid grid-cols-4 md:grid-cols-10 gap-2 pt-4">
+            <div className="grid grid-cols-4 md:grid-cols-11 gap-2 pt-4">
               <div className="modern-table-label bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                 بە نووسین
               </div>
@@ -1558,13 +1558,14 @@ export function MainForm({ formType, onBack }: MainFormProps) {
       '',
       '',
       '',
+      '',
       'کۆنمرەی پۆلی ١٢',
       'ڕێژەی دەرچوون',
     ],
-    firstGradesNumeric: Array(9).fill(''),
-    firstGradesWritten: Array(9).fill(''),
-    secondGradesNumeric: Array(9).fill(''),
-    secondGradesWritten: Array(9).fill(''),
+    firstGradesNumeric: Array(10).fill(''),
+    firstGradesWritten: Array(10).fill(''),
+    secondGradesNumeric: Array(10).fill(''),
+    secondGradesWritten: Array(10).fill(''),
     fatherName: '',
     motherName: '',
     nationality: '',
@@ -2508,7 +2509,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                       زانیاری سەبارەت بە نمرەی فێرخواز
                     </span>
                   </div>
-                  <div className="modern-card py-4 px-0 space-y-3">
+                  <div className="modern-card py-4 space-y-3">
                     <div className="bg-red-50 border border-red-200 p-2 rounded-lg text-red-700 text-center text-sm mx-4">
                       <p>
                         بەڕێوەبەری بەڕێز: هەر کەم و کورتییەک لە پڕکردنەوەی ئەم
@@ -2582,29 +2583,18 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                       </div>
                     )}
                     <div className="table-container py-1 space-y-0.5 overflow-hidden">
-                      <div className="grid grid-cols-10 gap-0.5">
-                        {formData.subjects.map((subject, i) => {
-                          const isHeaderCell = i === 0 || i === 8 || i === 9
-                          const className = "border border-gray-300 text-center font-medium rounded bg-white h-7 text-[9px] p-0.5"
-                          if (isHeaderCell) {
-                            return (
-                              <div key={i} className={`${className} flex items-center justify-center`}>
-                                {subject}
-                              </div>
-                            )
-                          }
-                          return (
-                            <input
-                              key={i}
-                              type="text"
-                              value={subject}
-                              readOnly
-                              className={className}
-                            />
-                          )
-                        })}
+                      <div className="grid grid-cols-11 gap-0.5">
+                        {formData.subjects.map((subject, i) => (
+                          <input
+                            key={i}
+                            type="text"
+                            value={subject}
+                            readOnly
+                            className="border border-gray-300 text-center font-medium rounded bg-white h-7 text-[9px] p-0.5"
+                          />
+                        ))}
                       </div>
-                      <div className="grid grid-cols-10 gap-0.5">
+                      <div className="grid grid-cols-11 gap-0.5">
                         <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە ژمارە
                         </div>
@@ -2618,7 +2608,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-10 gap-0.5">
+                      <div className="grid grid-cols-11 gap-0.5">
                         <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە نووسین
                         </div>
@@ -2632,7 +2622,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-10 gap-0.5">
+                      <div className="grid grid-cols-11 gap-0.5">
                         <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           خولی دووەم
                         </div>
@@ -2646,7 +2636,7 @@ export function MainForm({ formType, onBack }: MainFormProps) {
                           />
                         ))}
                       </div>
-                      <div className="grid grid-cols-10 gap-0.5">
+                      <div className="grid grid-cols-11 gap-0.5">
                         <div className="table-label-red flex items-center justify-center text-[9px] p-0.5">
                           بە نووسین
                         </div>
